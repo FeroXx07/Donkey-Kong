@@ -16,17 +16,7 @@ ModulePlayer::ModulePlayer()
 	// idle animation - just one sprite
 	idleAnim.PushBack({ 66, 1, 32, 14 });
 
-	// move upwards
-	upAnim.PushBack({ 100, 1, 32, 14 });
-	upAnim.PushBack({ 132, 0, 32, 14 });
-	upAnim.loop = false;
-	upAnim.speed = 0.1f;
-
-	// Move down
-	downAnim.PushBack({ 33, 1, 32, 14 });
-	downAnim.PushBack({ 0, 1, 32, 14 });
-	downAnim.loop = false;
-	downAnim.speed = 0.1f;
+	
 }
 
 ModulePlayer::~ModulePlayer()
@@ -40,7 +30,7 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/ship.png"); // arcade version
+	texture = App->textures->Load("Assets/Background.png"); // arcade version
 	currentAnimation = &idleAnim;
 
 	laserFx = App->audio->LoadFx("Assets/laser.wav");
@@ -69,7 +59,7 @@ update_status ModulePlayer::Update()
 		position.x += speed;
 	}
 
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
+	/*if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
 		position.y += speed;
 		if (currentAnimation != &downAnim)
@@ -87,7 +77,7 @@ update_status ModulePlayer::Update()
 			upAnim.Reset();
 			currentAnimation = &upAnim;
 		}
-	}
+	}*/
 
 
 

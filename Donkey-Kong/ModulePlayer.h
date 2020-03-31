@@ -48,8 +48,7 @@ public:
 
 	// A set of animations
 	Animation idleAnim;
-	Animation upAnim;
-	Animation downAnim;
+
 
 	// TODO 3: Add a collider to the player
 
