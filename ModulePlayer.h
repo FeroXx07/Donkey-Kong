@@ -47,9 +47,12 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	// A set of animations
-	Animation idleAnim;
+	Animation leftIdleAnim;
+	Animation rightIdleAnim;
 	Animation leftAnim;
 	Animation rightAnim;
+	Animation jumpAnim;
+	Animation climbAnim;
 
 
 

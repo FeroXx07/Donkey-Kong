@@ -13,18 +13,40 @@
 
 ModulePlayer::ModulePlayer()
 {
-	// idle animation - just one sprite
-	idleAnim.PushBack({ 66, 24, 12, 16 });
-	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
+	// left idle animation
+	leftIdleAnim.PushBack({ 66, 24, 12, 16 });
+	leftIdleAnim.loop = true;
+	leftIdleAnim.speed = 0.1f;
 
-	leftAnim.PushBack({ 66, 24, 12, 16 });
+	// right idle animation
+	rightIdleAnim.PushBack({ 66, 41, 12, 16 });
+	rightIdleAnim.loop = true;
+	rightIdleAnim.speed = 0.1f;
+
+	leftAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
+	leftAnim.PushBack({ 113, 24, 15, 15 }); // movement left 2
+	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
 	leftAnim.loop = true;
 	leftAnim.speed = 0.1f;
 
-	rightAnim.PushBack({ 66, 24, 12, 16 });
+
+	rightAnim.PushBack({ 89, 41, 15, 16 });
+	rightAnim.PushBack({ 113, 41, 15, 15 });
+	rightAnim.PushBack({ 66, 41, 12, 16 });
 	rightAnim.loop = true;
 	rightAnim.speed = 0.1f;
+
+	jumpAnim.PushBack({ 66, 24, 12, 16 });
+	jumpAnim.loop = true;
+	jumpAnim.speed = 0.1f;
+
+	climbAnim.PushBack({ 138, 24, 13, 16 }); // climb movement 1
+	climbAnim.PushBack({ 138, 40, 13, 16 }); // climb movement 2
+	climbAnim.PushBack({ 161, 25, 14, 15 }); // when already up 1
+	climbAnim.PushBack({184, 27, 16, 12 }); // when already up 2
+	climbAnim.PushBack({ 208, 25, 16, 15 }); // idle up
+	climbAnim.loop = true;
+	climbAnim.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -38,13 +60,12 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/BackgroundTRANSPERENT.png"); // arcade version
-	currentAnimation = &idleAnim;
+	texture = App->textures->Load("Assets/Background.png"); // arcade version
 
+	//Starting position of the Mario
 	position.x = 0;
-	position.y = 0;
-
-	
+	position.y = 232;
+	currentAnimation = &rightIdleAnim; 
 
 	return ret;
 }
@@ -81,19 +102,29 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 	{
 		position.y -= speed;
-		
+		if (currentAnimation != &climbAnim)
+		{
+			rightAnim.Reset();
+			currentAnimation = &climbAnim;
+		}
 	}
 
-	
+	// If last movement was left, set the current animation back to left idle
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP)
+		currentAnimation = &leftIdleAnim;
+	// If last movement was right, set the current animation back to left idle
+	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP)
+		currentAnimation = &rightIdleAnim;
 
-	// If no up/down movement detected, set the current animation back to idle
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE
-		&& App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
-		currentAnimation = &idleAnim;
-
-	
+	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP)
+		currentAnimation = &rightIdleAnim;
 
 	currentAnimation->Update();
+
+	if (position.x < 0) position.x = 0;
+	if (position.x > 211) position.x = 211;
+	if (position.y < 0) position.y = 0;
+
 
 	if (destroyed)
 	{
