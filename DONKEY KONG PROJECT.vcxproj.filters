@@ -51,6 +51,12 @@
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Archivos de origen\Modulos</Filter>
     </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollisions.cpp">
+      <Filter>Archivos de origen\Modulos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MemLeaks.h">
@@ -93,6 +99,12 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ModulePlayer.h">
+      <Filter>Archivos de origen\Modulos</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollisions.h">
       <Filter>Archivos de origen\Modulos</Filter>
     </ClInclude>
   </ItemGroup>

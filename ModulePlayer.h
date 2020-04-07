@@ -55,9 +55,6 @@ public:
 	Animation climbAnim;
 
 
-
-	
-
 	// A flag to detect when the player has been destroyed
 	bool destroyed = false;
 

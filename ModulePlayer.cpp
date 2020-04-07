@@ -29,7 +29,6 @@ ModulePlayer::ModulePlayer()
 	leftAnim.loop = true;
 	leftAnim.speed = 0.1f;
 
-
 	rightAnim.PushBack({ 89, 41, 15, 16 });
 	rightAnim.PushBack({ 113, 41, 15, 15 });
 	rightAnim.PushBack({ 66, 41, 12, 16 });
