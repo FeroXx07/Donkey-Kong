@@ -4,7 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
-
+#include "ModuleCollisions.h"
 #include "ModuleAudio.h"
 
 
@@ -64,6 +64,8 @@ bool ModulePlayer::Start()
 	//Starting position of the Mario
 	position.x = 0;
 	position.y = 232;
+
+	playerCollider = App->collisions->AddCollider({ position.x-1,position.y,13,16 }, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
 
 	return ret;
@@ -118,11 +120,14 @@ update_status ModulePlayer::Update()
 	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP)
 		currentAnimation = &rightIdleAnim;
 
+	playerCollider->SetPos(position.x, position.y);
+
 	currentAnimation->Update();
 
-	if (position.x < 0) position.x = 0;
-	if (position.x > 211) position.x = 211;
-	if (position.y < 0) position.y = 0;
+	//The camera limits for the player
+	//if (position.x < 0) position.x = 0;
+	//if (position.x > 211) position.x = 211;
+	//if (position.y < 0) position.y = 0;
 
 
 	if (destroyed)
@@ -149,5 +154,22 @@ update_status ModulePlayer::PostUpdate()
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	// TODO 5: Detect collision with a wall. If so, destroy the player.
+	if (destroyed == false)
+	{
+		if (c2->type == Collider::Type::GROUND)
+		{
+			if (position.y < c2->rect.y)
+				position.y = c2->rect.y - 16;
+			else
+				position.y = c2->rect.y + c2->rect.h;
+		}
 
+		if (c2->type == Collider::Type::WALL)
+		{
+			if (position.x < c2->rect.x)
+				position.x = c2->rect.x - 13;
+			else
+				position.x = c2->rect.x +c2->rect.w;
+		}
+	}
 }

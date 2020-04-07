@@ -7,7 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModuleScene.h"
-//#include "ModuleCollisions.h"
+#include "ModuleCollisions.h"
 #include "ModuleRender.h"
 
 Application::Application()
@@ -23,9 +23,9 @@ Application::Application()
 	modules[4] = scene = new ModuleScene();
 	modules[5] = player = new ModulePlayer();
 
-	//modules[6] = collisions = new ModuleCollisions();
+	modules[6] = collisions = new ModuleCollisions();
 
-	modules[6] = render = new ModuleRender();
+	modules[7] = render = new ModuleRender();
 }
 
 Application::~Application()

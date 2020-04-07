@@ -46,6 +46,9 @@ public:
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 
+	// Player's collider
+	Collider* playerCollider = nullptr;
+
 	// A set of animations
 	Animation leftIdleAnim;
 	Animation rightIdleAnim;
