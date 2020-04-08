@@ -34,7 +34,7 @@ bool ModuleScene::Start()
 	bgTexture = App->textures->Load("Assets/Background.png");
 	App->audio->PlayMusic("Assets/stage1.ogg", 1.0f);
 
-	/*LEVEL 2 COLLIDERS
+	//LEVEL 2 COLLIDERS
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 8, 208, 208, 8 }, Collider::Type::GROUND);
 
@@ -50,7 +50,7 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 88, 56, 48, 8 }, Collider::Type::GROUND);
 
 	//Add collider for the wall
-	App->collisions->AddCollider({ 96, 144, 32, 24 }, Collider::Type::WALL);*/
+	App->collisions->AddCollider({ 96, 144, 32, 24 }, Collider::Type::WALL);
 
 
 
@@ -68,8 +68,8 @@ update_status ModuleScene::Update()
 update_status ModuleScene::PostUpdate()
 {
 	// Draw everything --------------------------------------
-	//App->render->Blit(bgTexture, 0, 0, &level_2);
-	App->render->Blit(bgTexture, 0, 0, &level_4);
+	App->render->Blit(bgTexture, 0, 0, &level_2);
+	//App->render->Blit(bgTexture, 0, 0, &level_4);
 
 	return update_status::UPDATE_CONTINUE;
 }

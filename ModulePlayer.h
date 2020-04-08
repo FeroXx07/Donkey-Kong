@@ -38,6 +38,7 @@ public:
 
 	// The speed in which we move the player (pixels per frame)
 	int speed = 1;
+	float speedY = 1.0f;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;

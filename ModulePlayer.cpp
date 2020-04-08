@@ -11,6 +11,9 @@
 #include "Game/SDL/include/SDL_scancode.h"
 
 
+const float gravity = 90.0f;         // pixels / second^2
+const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
+
 ModulePlayer::ModulePlayer()
 {
 	// left idle animation
@@ -97,7 +100,6 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
 		position.y += speed;
-		
 	}
 
 	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
@@ -110,6 +112,11 @@ update_status ModulePlayer::Update()
 		}
 	}
 
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
+	{
+		speedY -= 20.0f;
+	}
+
 	// If last movement was left, set the current animation back to left idle
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP)
 		currentAnimation = &leftIdleAnim;
@@ -119,6 +126,12 @@ update_status ModulePlayer::Update()
 
 	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP)
 		currentAnimation = &rightIdleAnim;
+
+	//Gravity
+	//	Update position 
+	position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
+	//	Upadte velocity
+	speedY = speedY + gravity * deltaTime;
 
 	playerCollider->SetPos(position.x, position.y);
 
@@ -159,17 +172,26 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		if (c2->type == Collider::Type::GROUND)
 		{
 			if (position.y < c2->rect.y)
+			{
+				speedY = 0;
 				position.y = c2->rect.y - 16;
+			}
 			else
+			{
 				position.y = c2->rect.y + c2->rect.h;
+			}
 		}
 
 		if (c2->type == Collider::Type::WALL)
 		{
 			if (position.x < c2->rect.x)
+			{
 				position.x = c2->rect.x - 13;
+			}
 			else
-				position.x = c2->rect.x +c2->rect.w;
+			{
+				position.x = c2->rect.x + c2->rect.w;
+			}
 		}
 	}
 }
