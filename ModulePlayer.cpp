@@ -7,11 +7,11 @@
 #include "ModuleCollisions.h"
 #include "ModuleAudio.h"
 
-
+#include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
 
 
-const float gravity = 90.0f;         // pixels / second^2
+const float gravity = 100.0f;         // pixels / second^2
 const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer()
@@ -102,19 +102,23 @@ update_status ModulePlayer::Update()
 		position.y += speed;
 	}
 
-	if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
+	if (isLadder == true)
 	{
-		position.y -= speed;
-		if (currentAnimation != &climbAnim)
+		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 		{
-			rightAnim.Reset();
-			currentAnimation = &climbAnim;
+			position.y -= speed;
+			if (currentAnimation != &climbAnim)
+			{
+				rightAnim.Reset();
+				currentAnimation = &climbAnim;
+			}
 		}
 	}
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
 	{
 		speedY -= 20.0f;
+
 	}
 
 	// If last movement was left, set the current animation back to left idle
@@ -128,10 +132,13 @@ update_status ModulePlayer::Update()
 		currentAnimation = &rightIdleAnim;
 
 	//Gravity
-	//	Update position 
-	position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
-	//	Upadte velocity
-	speedY = speedY + gravity * deltaTime;
+	if (isLadder == false)
+	{
+		//	Update position 
+		position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
+		//	Upadte velocity
+		speedY = speedY + gravity * deltaTime;
+	}
 
 	playerCollider->SetPos(position.x, position.y);
 
@@ -171,14 +178,22 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	{
 		if (c2->type == Collider::Type::GROUND)
 		{
-			if (position.y < c2->rect.y)
+			if (isLadder == false)
 			{
-				speedY = 0;
-				position.y = c2->rect.y - 16;
+				if (position.y < c2->rect.y)
+				{
+					speedY = 0;
+					position.y = c2->rect.y - 16;
+				}
 			}
 			else
 			{
-				position.y = c2->rect.y + c2->rect.h;
+				if (position.y + 15 < c2->rect.y) //Subir la escalera correctamente
+				{
+					speedY = 0;
+					position.y = c2->rect.y - 16;
+				}
+				
 			}
 		}
 
@@ -193,5 +208,12 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				position.x = c2->rect.x + c2->rect.w;
 			}
 		}
+
+		if (c2->type == Collider::Type::LADDER)
+		{
+			isLadder = true;
+		}
+		else
+			isLadder = false;
 	}
 }

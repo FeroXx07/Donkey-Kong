@@ -36,6 +36,8 @@ public:
 	// Position of the player in the map
 	iPoint position;
 
+
+
 	// The speed in which we move the player (pixels per frame)
 	int speed = 1;
 	float speedY = 1.0f;
@@ -61,6 +63,9 @@ public:
 
 	// A flag to detect when the player has been destroyed
 	bool destroyed = false;
+
+	// A flag to detect when the player is in the ladder
+	bool isLadder = false;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
 	uint destroyedCountdown = 120;

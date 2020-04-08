@@ -15,31 +15,31 @@ ModuleCollisions::ModuleCollisions()
 	matrix[Collider::Type::GROUND][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::GROUND][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::GROUND][Collider::Type::WALL] = true;
-	matrix[Collider::Type::GROUND][Collider::Type::ENEMY_SHOT] = true;
+	matrix[Collider::Type::GROUND][Collider::Type::LADDER] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_SHOT] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::LADDER] = true;
 
 	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY_SHOT] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::LADDER] = false;
 
 	matrix[Collider::Type::WALL][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true	;
 	matrix[Collider::Type::WALL][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::WALL][Collider::Type::WALL] = false;
-	matrix[Collider::Type::WALL][Collider::Type::ENEMY_SHOT] = false;
+	matrix[Collider::Type::WALL][Collider::Type::LADDER] = false;
 
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::GROUND] = true;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::WALL] = false;
-	matrix[Collider::Type::ENEMY_SHOT][Collider::Type::ENEMY_SHOT] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::LADDER][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::WALL] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::LADDER] = false;
 }
 
 // Destructor
@@ -135,7 +135,7 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::WALL: // yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
-			case Collider::Type::ENEMY_SHOT: // magenta
+			case Collider::Type::LADDER: // magenta
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
 		}
