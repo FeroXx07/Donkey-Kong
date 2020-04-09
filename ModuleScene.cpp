@@ -61,15 +61,15 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
 
 	App->collisions->AddCollider({ 8, 208, 48, 8 }, Collider::Type::GROUND); // Floor 1
-	App->collisions->AddCollider({ 64, 208, 96, 8 }, Collider::Type::GROUND); // Floor 1
+	App->collisions->AddCollider({ 64, 208, 96, 8}, Collider::Type::GROUND); // Floor 1
 	App->collisions->AddCollider({ 168, 208, 48, 8 }, Collider::Type::GROUND); // Floor 1
 
 	App->collisions->AddCollider({ 16, 168, 40, 8 }, Collider::Type::GROUND); // Floor 2
 	App->collisions->AddCollider({ 64, 168, 96, 8 }, Collider::Type::GROUND); // Floor 2
-	App->collisions->AddCollider({ 168, 168, 40, 8 }, Collider::Type::GROUND); // Floor 2
+	App->collisions->AddCollider({ 168, 168, 40, 8}, Collider::Type::GROUND); // Floor 2
 
-	App->collisions->AddCollider({ 24, 128, 32, 8 }, Collider::Type::GROUND); // Floor 3
-	App->collisions->AddCollider({ 64, 128, 96, 8 }, Collider::Type::GROUND); // Floor 3
+	App->collisions->AddCollider({ 24, 128, 32, 8}, Collider::Type::GROUND); // Floor 3
+	App->collisions->AddCollider({ 64, 128, 96, 8}, Collider::Type::GROUND); // Floor 3
 	App->collisions->AddCollider({ 168, 128, 32, 8 }, Collider::Type::GROUND); // Floor 3
 
 	App->collisions->AddCollider({ 32, 88, 24, 8 }, Collider::Type::GROUND); // Floor 4

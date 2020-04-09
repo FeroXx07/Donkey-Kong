@@ -67,6 +67,7 @@ public:
 	// A flag to detect when the player is in the ladder
 	bool isLadder = false;
 	bool isGround = true;
+	bool isJumping = false;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
 	uint destroyedCountdown = 120;

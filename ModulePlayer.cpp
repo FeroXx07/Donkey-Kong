@@ -79,7 +79,7 @@ bool ModulePlayer::Start()
 update_status ModulePlayer::Update()
 {
 
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && isGround == true)
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
 		position.x -= speed;
 		if (currentAnimation != &leftAnim)
@@ -89,7 +89,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && isGround == true)
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
 		position.x += speed;
 		if (currentAnimation != &rightAnim)
@@ -106,6 +106,7 @@ update_status ModulePlayer::Update()
 
 	if (isLadder == true)
 	{
+		isGround = false;
 		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 		{
 			position.y -= speed;
@@ -207,27 +208,46 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		else
 			isLadder = false;
 
-		if (c2->type == Collider::Type::GROUND)
+		//if (c2->type == Collider::Type::GROUND)
+		//{
+		//	isGround = true;
+		//	if (isLadder == false)
+		//	{
+		//		if (position.y < c2->rect.y)
+		//		{
+		//			speedY = 0;
+		//			position.y = c2->rect.y - 16;
+		//		}
+		//	}
+		//	else
+		//	{
+		//		if (position.y + 15 < c2->rect.y) //Subir la escalera correctamente
+		//		{
+		//			speedY = 0;
+		//			position.y = c2->rect.y - 16;
+		//		}
+		//		
+		//	}
+		//}
+
+		if(c2->type == Collider::Type::GROUND  )
 		{
 			isGround = true;
-			if (isLadder == false)
-			{
-				if (position.y < c2->rect.y)
+			if (isLadder == true) {
+				if (position.y < c2->rect.y - 16)
 				{
 					speedY = 0;
 					position.y = c2->rect.y - 16;
 				}
 			}
-			else
-			{
-				if (position.y + 15 < c2->rect.y) //Subir la escalera correctamente
-				{
+			else {
+				if (position.y + 16 > c2->rect.y&& position.y < c2->rect.y) {
+					position.y = c2->rect.y - 15;
 					speedY = 0;
-					position.y = c2->rect.y - 16;
 				}
-				
 			}
 		}
+
 		
 
 		if (c2->type == Collider::Type::WALL)
