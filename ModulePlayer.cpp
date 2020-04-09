@@ -11,8 +11,8 @@
 #include "Game/SDL/include/SDL_scancode.h"
 
 
-const float gravity = 100.0f;         // pixels / second^2
-const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
+const float gravity = 60.0f;         // pixels / second^2
+const float deltaTime = 1.0f / 20.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer()
 {
@@ -38,7 +38,7 @@ ModulePlayer::ModulePlayer()
 	rightAnim.loop = true;
 	rightAnim.speed = 0.1f;
 
-	jumpAnim.PushBack({ 66, 24, 12, 16 });
+	jumpAnim.PushBack({ 113, 24, 15, 15 });
 	jumpAnim.loop = true;
 	jumpAnim.speed = 0.1f;
 
@@ -49,6 +49,8 @@ ModulePlayer::ModulePlayer()
 	climbAnim.PushBack({ 208, 25, 16, 15 }); // idle up
 	climbAnim.loop = true;
 	climbAnim.speed = 0.1f;
+
+	
 }
 
 ModulePlayer::~ModulePlayer()
@@ -68,7 +70,7 @@ bool ModulePlayer::Start()
 	position.x = 0;
 	position.y = 232;
 
-	playerCollider = App->collisions->AddCollider({ position.x-1,position.y,13,16 }, Collider::Type::PLAYER, App->player);
+	playerCollider = App->collisions->AddCollider({position.x-1,position.y,13,16 }, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
 
 	return ret;
@@ -77,7 +79,7 @@ bool ModulePlayer::Start()
 update_status ModulePlayer::Update()
 {
 
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && isGround == true)
 	{
 		position.x -= speed;
 		if (currentAnimation != &leftAnim)
@@ -87,7 +89,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && isGround == true)
 	{
 		position.x += speed;
 		if (currentAnimation != &rightAnim)
@@ -115,10 +117,14 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
 	{
-		speedY -= 20.0f;
-
+		speedY -= 30.0f;
+		if (currentAnimation != &jumpAnim)
+		{
+			currentAnimation = &jumpAnim;
+		}
+		isGround = false;
 	}
 
 	// If last movement was left, set the current animation back to left idle
@@ -132,12 +138,17 @@ update_status ModulePlayer::Update()
 		currentAnimation = &rightIdleAnim;
 
 	//Gravity
-	if (isLadder == false)
-	{
-		//	Update position 
-		position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
-		//	Upadte velocity
-		speedY = speedY + gravity * deltaTime;
+	if (isLadder == false )
+	{ 
+		////	Update position 
+		//position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
+		////	Upadte velocity
+		//speedY = speedY + gravity * deltaTime;
+		position.y += speedY * deltaTime;      // Apply vertical velocity to X position
+		speedY += gravity * deltaTime;
+
+		//printf("Position is: %d\n", position.y);
+		//printf("Speed is: %d\n\n", speedY);
 	}
 
 	playerCollider->SetPos(position.x, position.y);
@@ -148,7 +159,19 @@ update_status ModulePlayer::Update()
 	//if (position.x < 0) position.x = 0;
 	//if (position.x > 211) position.x = 211;
 	//if (position.y < 0) position.y = 0;
+	if (isLadder == true)
+	{
+		printf("LADDER TRUE\n\n");
+	}
+	else
+		printf("LADDER FALSE\n\n");
 
+	if (isGround == true)
+	{
+		printf("Ground TRUE\n\n");
+	}
+	else
+		printf("Ground FALSE\n\n");
 
 	if (destroyed)
 	{
@@ -176,8 +199,17 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	// TODO 5: Detect collision with a wall. If so, destroy the player.
 	if (destroyed == false)
 	{
+
+		if (c2->type == Collider::Type::LADDER)
+		{
+			isLadder = true;
+		}
+		else
+			isLadder = false;
+
 		if (c2->type == Collider::Type::GROUND)
 		{
+			isGround = true;
 			if (isLadder == false)
 			{
 				if (position.y < c2->rect.y)
@@ -196,6 +228,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				
 			}
 		}
+		
 
 		if (c2->type == Collider::Type::WALL)
 		{
@@ -209,11 +242,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		if (c2->type == Collider::Type::LADDER)
-		{
-			isLadder = true;
-		}
-		else
-			isLadder = false;
+		
 	}
 }

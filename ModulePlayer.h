@@ -40,7 +40,7 @@ public:
 
 	// The speed in which we move the player (pixels per frame)
 	int speed = 1;
-	float speedY = 1.0f;
+	int speedY = 1;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
@@ -59,13 +59,14 @@ public:
 	Animation rightAnim;
 	Animation jumpAnim;
 	Animation climbAnim;
-
+	
 
 	// A flag to detect when the player has been destroyed
 	bool destroyed = false;
 
 	// A flag to detect when the player is in the ladder
 	bool isLadder = false;
+	bool isGround = true;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
 	uint destroyedCountdown = 120;
