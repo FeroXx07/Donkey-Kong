@@ -70,7 +70,7 @@ bool ModulePlayer::Start()
 	position.x = 0;
 	position.y = 232;
 
-	playerCollider = App->collisions->AddCollider({position.x-2,position.y,11,16 }, Collider::Type::PLAYER, App->player);
+	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16 }, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
 
 	return ret;
@@ -208,7 +208,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		if (c2->type == Collider::Type::LADDER)
 		{
-			isLadder = true;
+			if (position.x + 4 <= c2->rect.x && position.x + 9 >= c2->rect.x + 1) 
+				isLadder = true;
 		}
 		else
 			isLadder = false;
