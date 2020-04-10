@@ -70,7 +70,7 @@ bool ModulePlayer::Start()
 	position.x = 0;
 	position.y = 232;
 
-	playerCollider = App->collisions->AddCollider({position.x-1,position.y,13,16 }, Collider::Type::PLAYER, App->player);
+	playerCollider = App->collisions->AddCollider({position.x-2,position.y,11,16 }, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
 
 	return ret;
@@ -81,7 +81,7 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
-		position.x -= speed;
+		position.x -= speed.x;
 		if (currentAnimation != &leftAnim)
 		{
 			leftAnim.Reset();
@@ -91,7 +91,7 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
-		position.x += speed;
+		position.x += speed.x;
 		if (currentAnimation != &rightAnim)
 		{
 			rightAnim.Reset();
@@ -101,7 +101,7 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
-		position.y += speed;
+		position.y += speed.x;
 	}
 
 	if (isLadder == true)
@@ -109,7 +109,7 @@ update_status ModulePlayer::Update()
 		isGround = false;
 		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 		{
-			position.y -= speed;
+			position.y -= speed.x;
 			if (currentAnimation != &climbAnim)
 			{
 				rightAnim.Reset();
@@ -120,7 +120,7 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
 	{
-		speedY -= 30.0f;
+		speed.y -= 30.0f;
 		if (currentAnimation != &jumpAnim)
 		{
 			currentAnimation = &jumpAnim;
@@ -145,8 +145,8 @@ update_status ModulePlayer::Update()
 		//position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
 		////	Upadte velocity
 		//speedY = speedY + gravity * deltaTime;
-		position.y += speedY * deltaTime;      // Apply vertical velocity to X position
-		speedY += gravity * deltaTime;
+		position.y += speed.y * deltaTime;      // Apply vertical velocity to X position
+		speed.y += gravity * deltaTime;
 
 		//printf("Position is: %d\n", position.y);
 		//printf("Speed is: %d\n\n", speedY);
@@ -173,6 +173,11 @@ update_status ModulePlayer::Update()
 	}
 	else
 		printf("Ground FALSE\n\n");
+
+	printf("Position X: %d\n Position Y: %d\n\n", position.x, position.y);
+
+
+
 
 	if (destroyed)
 	{
@@ -230,20 +235,40 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		//	}
 		//}
 
-		if(c2->type == Collider::Type::GROUND  )
+		//if(c2->type == Collider::Type::GROUND  )
+		//{
+		//	isGround = true;
+		//	if (isLadder == true) {
+		//		if (position.y < c2->rect.y - 16)
+		//		{
+		//			speedY = 0;
+		//			position.y = c2->rect.y - 16;
+		//		}
+		//	}
+		//	else {
+		//		if (position.y + 16 > c2->rect.y && position.y < c2->rect.y) {
+		//			position.y = c2->rect.y - 15;
+		//			speedY = 0;
+		//		}
+		//	}
+		//}
+
+		if (c2->type == Collider::Type::GROUND)
 		{
 			isGround = true;
-			if (isLadder == true) {
-				if (position.y < c2->rect.y - 16)
+			if (isLadder == true) 
+			{
+				/*if (position.y < c2->rect.y - 16)
 				{
-					speedY = 0;
+					speed.y = 0;
 					position.y = c2->rect.y - 16;
-				}
+				}*/
+
 			}
 			else {
-				if (position.y + 16 > c2->rect.y&& position.y < c2->rect.y) {
+				if (position.y + 16 > c2->rect.y ) {
 					position.y = c2->rect.y - 15;
-					speedY = 0;
+					speed.y = 0;
 				}
 			}
 		}
