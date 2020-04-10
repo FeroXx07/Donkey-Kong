@@ -113,24 +113,19 @@ update_status ModulePlayer::Update()
 				currentAnimation = &climbAnim;
 			}
 		}
-
-		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT) 
+		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 		{
 			position.y += speed.x;
 		}
-
-		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN || App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN)
-		{
-			playerCollider->rect.w = 2;
-			temp = 5;
-		}
+		playerCollider->rect.w = 2;
+		temp = 5;
 	}
-
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE && App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
+	else
 	{
 		playerCollider->rect.w = 12;
 		temp = 0;
 	}
+
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
 	{
