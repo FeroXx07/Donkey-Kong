@@ -40,6 +40,7 @@ public:
 
 	// The speed in which we move the player (pixels per frame)
 	iPoint speed = { 1,1 };
+	int temp = 0;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;

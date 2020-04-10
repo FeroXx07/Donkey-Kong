@@ -99,10 +99,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
-	{
-		position.y += speed.x;
-	}
+	
 
 	if (isLadder == true)
 	{
@@ -116,6 +113,23 @@ update_status ModulePlayer::Update()
 				currentAnimation = &climbAnim;
 			}
 		}
+
+		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT) 
+		{
+			position.y += speed.x;
+		}
+
+		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_DOWN || App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_DOWN)
+		{
+			playerCollider->rect.w = 2;
+			temp = 5;
+		}
+	}
+
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_IDLE && App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_IDLE)
+	{
+		playerCollider->rect.w = 12;
+		temp = 0;
 	}
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
@@ -152,7 +166,7 @@ update_status ModulePlayer::Update()
 		//printf("Speed is: %d\n\n", speedY);
 	}
 
-	playerCollider->SetPos(position.x, position.y);
+	playerCollider->SetPos(position.x +temp, position.y);
 
 	currentAnimation->Update();
 
@@ -214,28 +228,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		else
 			isLadder = false;
 
-		//if (c2->type == Collider::Type::GROUND)
-		//{
-		//	isGround = true;
-		//	if (isLadder == false)
-		//	{
-		//		if (position.y < c2->rect.y)
-		//		{
-		//			speedY = 0;
-		//			position.y = c2->rect.y - 16;
-		//		}
-		//	}
-		//	else
-		//	{
-		//		if (position.y + 15 < c2->rect.y) //Subir la escalera correctamente
-		//		{
-		//			speedY = 0;
-		//			position.y = c2->rect.y - 16;
-		//		}
-		//		
-		//	}
-		//}
-
 		//if(c2->type == Collider::Type::GROUND  )
 		//{
 		//	isGround = true;
@@ -259,18 +251,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			isGround = true;
 			if (isLadder == true) 
 			{
-				/*if (position.y < c2->rect.y - 16)
-				{
-					speed.y = 0;
-					position.y = c2->rect.y - 16;
-				}*/
 
 			}
-			else {
-				if (position.y + 16 > c2->rect.y ) {
+			else if (isLadder == false)
+			{
+				if (position.y + 16 > c2->rect.y ) // Collision to maintain the player to the ground
+				{ 
 					position.y = c2->rect.y - 15;
 					speed.y = 0;
 				}
+				
 			}
 		}
 
