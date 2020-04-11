@@ -219,6 +219,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (position.x + 4 <= c2->rect.x && position.x + 9 >= c2->rect.x + 1) 
 				isLadder = true;
+			if (position.y < c2->rect.y-15)
+				isLadder = false;
 		}
 		else
 			isLadder = false;
