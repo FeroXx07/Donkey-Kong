@@ -55,10 +55,14 @@ public:
 	// A set of animations
 	Animation leftIdleAnim;
 	Animation rightIdleAnim;
+
+
 	Animation leftAnim;
 	Animation rightAnim;
 	Animation jumpAnim;
-	Animation climbAnim;
+
+	Animation climbingAnim;
+	Animation climbedAnim;
 	
 
 	// A flag to detect when the player has been destroyed

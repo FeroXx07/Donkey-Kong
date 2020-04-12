@@ -42,13 +42,18 @@ ModulePlayer::ModulePlayer()
 	jumpAnim.loop = true;
 	jumpAnim.speed = 0.1f;
 
-	climbAnim.PushBack({ 138, 24, 13, 16 }); // climb movement 1
-	climbAnim.PushBack({ 138, 40, 13, 16 }); // climb movement 2
-	climbAnim.PushBack({ 161, 25, 14, 15 }); // when already up 1
-	climbAnim.PushBack({184, 27, 16, 12 }); // when already up 2
-	climbAnim.PushBack({ 208, 25, 16, 15 }); // idle up
-	climbAnim.loop = true;
-	climbAnim.speed = 0.1f;
+	climbingAnim.PushBack({ 138, 24, 13, 16 }); // climb movement 1
+	climbingAnim.PushBack({ 138, 40, 13, 16 }); // climb movement 2
+	climbingAnim.loop = true;
+	climbingAnim.speed = 0.1f;
+
+
+	climbedAnim.PushBack({ 161, 25, 14, 15 }); // when already up 1
+	climbedAnim.PushBack({184, 27, 16, 12 }); // when already up 2
+	climbedAnim.PushBack({ 208, 25, 16, 15 }); // idle up
+	climbedAnim.loop = false;
+	climbingAnim.speed = 0.1f;
+
 
 	
 }
@@ -107,15 +112,20 @@ update_status ModulePlayer::Update()
 		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 		{
 			position.y -= speed.x;
-			if (currentAnimation != &climbAnim)
+			if (currentAnimation != &climbingAnim)
 			{
-				rightAnim.Reset();
-				currentAnimation = &climbAnim;
+				currentAnimation = &climbingAnim;
 			}
+			climbingAnim.loop = true;
 		}
 		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 		{
 			position.y += speed.x;
+			if (currentAnimation != &climbingAnim)
+			{
+				currentAnimation = &climbingAnim;
+			}
+			climbingAnim.loop = true;
 		}
 		playerCollider->rect.w = 2;
 		temp = 5;
@@ -151,8 +161,16 @@ update_status ModulePlayer::Update()
 	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP)
 		currentAnimation = &rightIdleAnim;
 
-	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP)
-		currentAnimation = &rightIdleAnim;
+	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP && isLadder ==true)
+	{
+		climbingAnim.loop = false;
+		currentAnimation = &climbingAnim;
+	}
+	else if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_UP && isLadder == true)
+	{
+		climbingAnim.loop = false;
+		currentAnimation = &climbingAnim;
+	}
 
 	//Gravity
 	if (isLadder == false )
@@ -222,13 +240,15 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	// TODO 5: Detect collision with a wall. If so, destroy the player.
 	if (destroyed == false)
 	{
-
 		if (c2->type == Collider::Type::LADDER)
 		{
-			if (position.x + 4 <= c2->rect.x && position.x + 9 >= c2->rect.x + 1) 
+			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
 				isLadder = true;
-			if (position.y < c2->rect.y-15)
+			if (position.y < c2->rect.y - 15)
+			{
 				isLadder = false;
+				currentAnimation = &climbedAnim;
+			}
 		}
 		else
 			isLadder = false;
