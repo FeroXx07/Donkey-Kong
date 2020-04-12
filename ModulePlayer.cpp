@@ -50,10 +50,22 @@ ModulePlayer::ModulePlayer()
 
 	climbedAnim.PushBack({ 161, 25, 14, 15 }); // when already up 1
 	climbedAnim.PushBack({184, 27, 16, 12 }); // when already up 2
-	climbedAnim.PushBack({ 208, 25, 16, 15 }); // idle up
 	climbedAnim.loop = false;
 	climbingAnim.speed = 0.1f;
 
+	sprite1Climbed.PushBack({ 184, 27-3, 16, 12+3 });
+	sprite1Climbed.loop = false;
+	sprite1Climbed.speed = 0.1f;
+
+	sprite2Climbed.PushBack({ 161, 25-3, 14, 15+3 });
+	sprite2Climbed.loop = false;
+	sprite2Climbed.speed = 0.1f;
+
+
+	idleClimbedAnim.PushBack({ 208, 25, 16, 15 }); // idle up
+	idleClimbedAnim.loop = false;
+	idleClimbedAnim.speed = 0.1f;
+	
 
 	
 }
@@ -112,20 +124,20 @@ update_status ModulePlayer::Update()
 		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
 		{
 			position.y -= speed.x;
-			if (currentAnimation != &climbingAnim)
+			/*if (currentAnimation != &climbingAnim)
 			{
 				currentAnimation = &climbingAnim;
 			}
-			climbingAnim.loop = true;
+			climbingAnim.loop = true;*/
 		}
 		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 		{
 			position.y += speed.x;
-			if (currentAnimation != &climbingAnim)
+			/*if (currentAnimation != &climbingAnim)
 			{
 				currentAnimation = &climbingAnim;
 			}
-			climbingAnim.loop = true;
+			climbingAnim.loop = true;*/
 		}
 		playerCollider->rect.w = 2;
 		temp = 5;
@@ -163,13 +175,13 @@ update_status ModulePlayer::Update()
 
 	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP && isLadder ==true)
 	{
-		climbingAnim.loop = false;
-		currentAnimation = &climbingAnim;
+	/*	climbingAnim.loop = false;
+		currentAnimation = &climbingAnim;*/
 	}
 	else if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_UP && isLadder == true)
-	{
+	{/*
 		climbingAnim.loop = false;
-		currentAnimation = &climbingAnim;
+		currentAnimation = &climbingAnim;*/
 	}
 
 	//Gravity
@@ -213,7 +225,6 @@ update_status ModulePlayer::Update()
 
 
 
-
 	if (destroyed)
 	{
 		destroyedCountdown--;
@@ -244,32 +255,31 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
 				isLadder = true;
+
+			if (position.y < c2->rect.y + c2->rect.h-16)
+				currentAnimation = &climbingAnim;
+
+
 			if (position.y < c2->rect.y - 15)
 			{
 				isLadder = false;
-				currentAnimation = &climbedAnim;
+				currentAnimation = &idleClimbedAnim;
 			}
+
+			if (position.y <= c2->rect.y && position.y+14 >= c2->rect.y)
+			{
+				currentAnimation = &sprite1Climbed;
+			}
+			if (position.y <= c2->rect.y && position.y +5 >= c2->rect.y)
+			{
+				currentAnimation = &sprite2Climbed;
+			}
+
+
+			
 		}
 		else
 			isLadder = false;
-
-		//if(c2->type == Collider::Type::GROUND  )
-		//{
-		//	isGround = true;
-		//	if (isLadder == true) {
-		//		if (position.y < c2->rect.y - 16)
-		//		{
-		//			speedY = 0;
-		//			position.y = c2->rect.y - 16;
-		//		}
-		//	}
-		//	else {
-		//		if (position.y + 16 > c2->rect.y && position.y < c2->rect.y) {
-		//			position.y = c2->rect.y - 15;
-		//			speedY = 0;
-		//		}
-		//	}
-		//}
 
 		if (c2->type == Collider::Type::GROUND)
 		{
@@ -289,7 +299,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
-		
 
 		if (c2->type == Collider::Type::WALL)
 		{
@@ -302,7 +311,5 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				position.x = c2->rect.x + c2->rect.w;
 			}
 		}
-
-		
 	}
 }

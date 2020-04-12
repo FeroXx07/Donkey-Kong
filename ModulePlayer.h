@@ -63,6 +63,10 @@ public:
 
 	Animation climbingAnim;
 	Animation climbedAnim;
+	Animation idleClimbedAnim;
+
+	Animation sprite1Climbed;
+	Animation sprite2Climbed;
 	
 
 	// A flag to detect when the player has been destroyed
