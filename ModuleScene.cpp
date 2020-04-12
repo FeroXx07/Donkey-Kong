@@ -60,32 +60,47 @@ bool ModuleScene::Start()
 	// Level 4 colliders:
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
 
-	App->collisions->AddCollider({ 8, 208, 48, 8 }, Collider::Type::GROUND); // Floor 1
+	App->collisions->AddCollider({ 7, 208, 1, 8 }, Collider::Type::GROUND); // Floor 1
+	// LEFT LADDER
+	App->collisions->AddCollider({ 17, 208, 39, 8 }, Collider::Type::GROUND); // Floor 1
 	App->collisions->AddCollider({ 64, 208, 48-2-7, 8}, Collider::Type::GROUND); // Floor 1 
 	// MID LADDER
 	App->collisions->AddCollider({ 64+49, 208, 48-1, 8 }, Collider::Type::GROUND); // Floor 1
-	App->collisions->AddCollider({ 168, 208, 48, 8 }, Collider::Type::GROUND); // Floor 1
+	App->collisions->AddCollider({ 168, 208, 39, 8 }, Collider::Type::GROUND); // Floor 1
+	// RIGHT LADDER
+	App->collisions->AddCollider({ 217, 208, 1, 8 }, Collider::Type::GROUND); // Floor 1
 
-
-	App->collisions->AddCollider({ 16, 168, 40, 8 }, Collider::Type::GROUND); // Floor 2
+	App->collisions->AddCollider({ 15, 168, 1, 8 }, Collider::Type::GROUND); // Floor 2
+	// LEFT LADDER
+	App->collisions->AddCollider({ 25, 168, 31, 8 }, Collider::Type::GROUND); // Floor 2
 	App->collisions->AddCollider({ 64, 168, 7, 8 }, Collider::Type::GROUND); // Floor 2
 	// MID LADDER
 	App->collisions->AddCollider({ 81, 168, 62, 8 }, Collider::Type::GROUND); // Floor 2
 	// MID LADDER
 	App->collisions->AddCollider({ 153, 168, 7, 8 }, Collider::Type::GROUND); // Floor 2
-	App->collisions->AddCollider({ 168, 168, 40, 8 }, Collider::Type::GROUND); // Floor 2
+	App->collisions->AddCollider({ 168, 168, 31, 8 }, Collider::Type::GROUND); // Floor 2
+	// RIGHT LADDER
+	App->collisions->AddCollider({ 209, 168, 1, 8 }, Collider::Type::GROUND); // Floor 2
 
-	App->collisions->AddCollider({ 24, 128, 32, 8  }, Collider::Type::GROUND); // Floor 3
+	App->collisions->AddCollider({ 23, 128, 1, 8 }, Collider::Type::GROUND); // Floor 3
+	// LEFT LADDER
+	App->collisions->AddCollider({ 33, 128, 23, 8  }, Collider::Type::GROUND); // Floor 3
 	App->collisions->AddCollider({ 64, 128, 39, 8 }, Collider::Type::GROUND); // Floor 3
 	// MID LADDER
 	App->collisions->AddCollider({ 113, 128, 47, 8  }, Collider::Type::GROUND); // Floor 3
 	App->collisions->AddCollider({ 168, 128, 23, 8 }, Collider::Type::GROUND); // Floor 3
+	// RIGHT LADDER
+	App->collisions->AddCollider({ 201, 128, 1, 8 }, Collider::Type::GROUND); // Floor 3
 
-	App->collisions->AddCollider({ 32, 88, 24, 8  }, Collider::Type::GROUND); // Floor 4
+	App->collisions->AddCollider({ 31, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
+	// LEFT LADDER
+	App->collisions->AddCollider({ 41, 88, 15, 8  }, Collider::Type::GROUND); // Floor 4
+	//MID LADDER
 	App->collisions->AddCollider({ 73, 88, 78, 8  }, Collider::Type::GROUND); // Floor 4
 	//MID LADDER
-	App->collisions->AddCollider({ 168, 88, 24, 8  }, Collider::Type::GROUND); // Floor 4
-	//MID LADDER
+	App->collisions->AddCollider({ 168, 88, 15, 8  }, Collider::Type::GROUND); // Floor 4
+	// RIGHT LADDER
+	App->collisions->AddCollider({ 193, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 
 	App->collisions->AddCollider({ 8+3, 216-7, 8-6, 32 + 7 }, Collider::Type::LADDER); // Base
 	App->collisions->AddCollider({ 104+3, 216-6, 8-6, 32 + 6 }, Collider::Type::LADDER); // Base
