@@ -123,9 +123,16 @@ update_status ModulePlayer::Update()
 	else
 	{
 		playerCollider->rect.w = 12;
+		playerCollider->rect.h = 16;
 		temp = 0;
 	}
 
+	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
+	{
+		playerCollider->rect.h = 18;
+		playerCollider->rect.w = 2;
+		temp = 5;
+	}
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
 	{
@@ -166,9 +173,10 @@ update_status ModulePlayer::Update()
 	currentAnimation->Update();
 
 	//The camera limits for the player
-	//if (position.x < 0) position.x = 0;
-	//if (position.x > 211) position.x = 211;
-	//if (position.y < 0) position.y = 0;
+	if (position.x < 0) position.x = 0;
+	if (position.x > 211) position.x = 211;
+	if (position.y < 0) position.y = 0;
+
 	if (isLadder == true)
 	{
 		printf("LADDER TRUE\n\n");
