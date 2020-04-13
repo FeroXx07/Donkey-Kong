@@ -95,9 +95,11 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 31, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 	// LEFT LADDER
 	App->collisions->AddCollider({ 41, 88, 15, 8  }, Collider::Type::GROUND); // Floor 4
+	App->collisions->AddCollider({ 63, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 	//MID LADDER
 	App->collisions->AddCollider({ 73, 88, 78, 8  }, Collider::Type::GROUND); // Floor 4
 	//MID LADDER
+	App->collisions->AddCollider({ 160, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 	App->collisions->AddCollider({ 168, 88, 15, 8  }, Collider::Type::GROUND); // Floor 4
 	// RIGHT LADDER
 	App->collisions->AddCollider({ 193, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
