@@ -12,7 +12,7 @@
 
 
 const float gravity = 60.0f;         // pixels / second^2
-const float deltaTime = 1.0f / 20.0f; // More or less 60 frames per second
+const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer()
 {
@@ -27,16 +27,18 @@ ModulePlayer::ModulePlayer()
 	rightIdleAnim.speed = 0.1f;
 
 	leftAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
+	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
 	leftAnim.PushBack({ 113, 24, 15, 15 }); // movement left 2
 	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
 	leftAnim.loop = true;
-	leftAnim.speed = 0.1f;
+	leftAnim.speed = 0.3f;
 
-	rightAnim.PushBack({ 89, 41, 15, 16 });
 	rightAnim.PushBack({ 113, 41, 15, 15 });
 	rightAnim.PushBack({ 66, 41, 12, 16 });
+	rightAnim.PushBack({ 89, 41, 15, 16 });
+	rightAnim.PushBack({ 66, 41, 12, 16 });
 	rightAnim.loop = true;
-	rightAnim.speed = 0.1f;
+	rightAnim.speed = 0.3f;
 
 	jumpAnim.PushBack({ 113, 24, 15, 15 });
 	jumpAnim.loop = true;
@@ -87,7 +89,7 @@ bool ModulePlayer::Start()
 	position.x = 0;
 	position.y = 232;
 
-	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16 }, Collider::Type::PLAYER, App->player);
+	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
 
 	return ret;
@@ -188,9 +190,9 @@ update_status ModulePlayer::Update()
 	if (isLadder == false )
 	{ 
 		////	Update position 
-		//position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
-		////	Upadte velocity
-		//speedY = speedY + gravity * deltaTime;
+		//	position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
+		////	Update velocity
+		//	speedY = speedY + gravity * deltaTime;
 		position.y += speed.y * deltaTime;      // Apply vertical velocity to X position
 		speed.y += gravity * deltaTime;
 
@@ -221,7 +223,7 @@ update_status ModulePlayer::Update()
 	else
 		printf("Ground FALSE\n\n");
 
-	printf("Position X: %d\n Position Y: %d\n\n", position.x, position.y);
+	printf("Position X: %f\n Position Y: %f\n\n", position.x, position.y);
 
 
 

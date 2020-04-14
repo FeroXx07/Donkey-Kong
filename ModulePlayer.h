@@ -34,12 +34,12 @@ public:
 
 public:
 	// Position of the player in the map
-	iPoint position;
+	fPoint position;
 
 
 
 	// The speed in which we move the player (pixels per frame)
-	iPoint speed = { 1,1 };
+	fPoint speed = { 0.6f,1.0f };
 	int temp = 0;
 
 	// The player spritesheet loaded into an SDL_Texture
