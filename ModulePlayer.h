@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "p2Point.h"
 
+
 struct SDL_Texture;
 struct Collider;
 
@@ -34,12 +35,12 @@ public:
 
 public:
 	// Position of the player in the map
-	fPoint position;
+	iPoint position;
 
 
 
 	// The speed in which we move the player (pixels per frame)
-	fPoint speed = { 0.6f,1.0f };
+	iPoint speed = { 1,1 };
 	int temp = 0;
 
 	// The player spritesheet loaded into an SDL_Texture
@@ -60,6 +61,9 @@ public:
 	Animation leftAnim;
 	Animation rightAnim;
 	Animation jumpAnim;
+
+	Animation hammerLeftAnim;
+	Animation hammerRightAnim;
 
 	Animation climbingAnim;
 	Animation climbedAnim;

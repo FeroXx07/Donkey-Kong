@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollisions.h"
 #include "ModuleAudio.h"
+#include "ModuleHammer.h"
 
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
@@ -39,6 +40,11 @@ ModulePlayer::ModulePlayer()
 	rightAnim.PushBack({ 66, 41, 12, 16 });
 	rightAnim.loop = true;
 	rightAnim.speed = 0.3f;
+
+	hammerLeftAnim.PushBack({648,25,32,15});
+	hammerLeftAnim.PushBack({625,14,15,26});
+	hammerLeftAnim.loop = true;
+	hammerLeftAnim.speed = 0.3f;
 
 	jumpAnim.PushBack({ 113, 24, 15, 15 });
 	jumpAnim.loop = true;
@@ -104,7 +110,14 @@ update_status ModulePlayer::Update()
 		if (currentAnimation != &leftAnim)
 		{
 			leftAnim.Reset();
-			currentAnimation = &leftAnim;
+			if (App->hammer->hammerExist == true)
+			{
+				currentAnimation = &hammerLeftAnim;
+			}
+			else
+			{
+				currentAnimation = &leftAnim;
+			}
 		}
 	}
 
@@ -223,7 +236,7 @@ update_status ModulePlayer::Update()
 	else
 		printf("Ground FALSE\n\n");
 
-	printf("Position X: %f\n Position Y: %f\n\n", position.x, position.y);
+	printf("Position X: %d\n Position Y: %d\n\n", position.x, position.y);
 
 
 
