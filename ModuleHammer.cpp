@@ -36,10 +36,10 @@ bool ModuleHammer::Start()
 	texture = App->textures->Load("Assets/Background.png"); // arcade version
 
 	//Starting position of the Mario
-	position.x = 0;
-	position.y = 232;
+	hammerPosition.x = App->player->position.x;
+	hammerPosition.y = App->player->position.y;
 
-	//hammerCollider = App->collisions->AddCollider({ position.x,position.y,12,16 }, Collider::Type::PLAYER, App->player);
+	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
 
 
 	return ret;
@@ -49,6 +49,34 @@ bool ModuleHammer::Start()
 // Processes new input and handles hammer movement
 update_status ModuleHammer::Update()
 {
+	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
+	{
+		hammerExist = !hammerExist;
+		hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
+	}
+
+	if (App->hammer->hammerExist == true)
+	{
+		if (App->player->currentAnimation->GetCurrentFps() % 2 == 0)
+		{
+			if (App->player->currentAnimation == &App->player->hammerLeftAnim)
+				hammerPosition.x = App->player->position.x - 6;
+			else if (App->player->currentAnimation == &App->player->hammerRightAnim)
+				hammerPosition.x = App->player->position.x + 6;
+
+
+		}
+		else
+		{
+
+
+		}
+	}
+	else
+		hammerCollider->pendingToDelete = true;
+	
+	if (hammerCollider->pendingToDelete == false)
+		hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 
 	return update_status::UPDATE_CONTINUE;
 }

@@ -44,7 +44,13 @@ ModulePlayer::ModulePlayer()
 	hammerLeftAnim.PushBack({648,25,32,15});
 	hammerLeftAnim.PushBack({625,14,15,26});
 	hammerLeftAnim.loop = true;
-	hammerLeftAnim.speed = 0.3f;
+	hammerLeftAnim.speed = 0.1f;
+
+	hammerRightAnim.PushBack({ 648 - 4,56,32 + 4,15 });
+	hammerRightAnim.PushBack({ 625,45,15,26 });
+	hammerRightAnim.loop = true;
+	hammerRightAnim.speed = 0.1f;
+
 
 	jumpAnim.PushBack({ 113, 24, 15, 15 });
 	jumpAnim.loop = true;
@@ -89,7 +95,7 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/Background.png"); // arcade version
+	texture = App->textures->Load("Assets/Background3.png"); // arcade version
 
 	//Starting position of the Mario
 	position.x = 0;
@@ -124,10 +130,18 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
 		position.x += speed.x;
+
 		if (currentAnimation != &rightAnim)
 		{
 			rightAnim.Reset();
-			currentAnimation = &rightAnim;
+			if (App->hammer->hammerExist == true)
+			{
+				currentAnimation = &hammerRightAnim;
+			}
+			else
+			{
+				currentAnimation = &rightAnim;
+			}
 		}
 	}
 
@@ -136,7 +150,7 @@ update_status ModulePlayer::Update()
 	if (isLadder == true)
 	{
 		isGround = false;
-		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT)
+		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
 			position.y -= speed.x;
 			/*if (currentAnimation != &climbingAnim)
@@ -145,7 +159,7 @@ update_status ModulePlayer::Update()
 			}
 			climbingAnim.loop = true;*/
 		}
-		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
+		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
 			position.y += speed.x;
 			/*if (currentAnimation != &climbingAnim)
@@ -182,10 +196,13 @@ update_status ModulePlayer::Update()
 	}
 
 	// If last movement was left, set the current animation back to left idle
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP)
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
+	{
 		currentAnimation = &leftIdleAnim;
+	}
+	
 	// If last movement was right, set the current animation back to left idle
-	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP)
+	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
 		currentAnimation = &rightIdleAnim;
 
 	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP && isLadder ==true)
@@ -199,13 +216,16 @@ update_status ModulePlayer::Update()
 		currentAnimation = &climbingAnim;*/
 	}
 
+	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN && App->hammer->hammerExist == true)
+	{
+
+		currentAnimation = &rightIdleAnim;
+	}
+
 	//Gravity
 	if (isLadder == false )
 	{ 
-		////	Update position 
-		//	position.y = position.y + speedY * deltaTime + (1 / 2) * gravity * deltaTime * deltaTime;
-		////	Update velocity
-		//	speedY = speedY + gravity * deltaTime;
+		
 		position.y += speed.y * deltaTime;      // Apply vertical velocity to X position
 		speed.y += gravity * deltaTime;
 
@@ -255,7 +275,28 @@ update_status ModulePlayer::PostUpdate()
 	if (!destroyed)
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		App->render->Blit(texture, position.x, position.y, &rect);
+		//App->render->Blit(texture, position.x, position.y, &rect);
+		if (App->hammer->hammerExist == true)
+		{
+			if (currentAnimation->GetCurrentFps() % 2 == 0)
+			{
+				if (currentAnimation == &hammerLeftAnim)
+					hammerTemp.x = -18;
+				else if (currentAnimation == &hammerRightAnim)
+					hammerTemp.x -= 4;
+
+				App->render->Blit(texture, position.x + hammerTemp.x, position.y, &rect);
+			}
+			else
+			{
+				hammerTemp.y = -11;
+				App->render->Blit(texture, position.x, position.y + hammerTemp.y, &rect);
+			}
+		}
+		else
+			App->render->Blit(texture, position.x, position.y, &rect);
+
+		hammerTemp = { 0,0 };
 	}
 
 	return update_status::UPDATE_CONTINUE;

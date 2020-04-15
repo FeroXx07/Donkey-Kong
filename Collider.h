@@ -16,8 +16,9 @@ struct Collider
 		ENEMY,
 		WALL,
 		LADDER,
+		HAMMER,
 
-		MAX
+		MAX=6
 	};
 
 	//Methods

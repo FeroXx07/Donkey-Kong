@@ -43,6 +43,11 @@ public:
 		}
 	}
 
+	int GetCurrentFps() const
+	{
+		return currentFrame;
+	}
+
 	SDL_Rect& GetCurrentFrame()
 	{
 		return frames[(int)currentFrame];

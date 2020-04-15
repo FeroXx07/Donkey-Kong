@@ -31,7 +31,7 @@ public:
 
 public:
 	// Position of the hammer in the map
-	iPoint position;
+	iPoint hammerPosition;
 
 	int temp = 0;
 
