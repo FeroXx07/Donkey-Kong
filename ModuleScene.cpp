@@ -5,6 +5,8 @@
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
+#include "Game/SDL/include/SDL_scancode.h"
+
 
 ModuleScene::ModuleScene()
 {
@@ -129,7 +131,6 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update()
 {
-	
 
 	return update_status::UPDATE_CONTINUE;
 }

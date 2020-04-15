@@ -4,7 +4,12 @@
 
 #include "ModuleRender.h"
 #include "ModuleInput.h"
+
+#include "Game/SDL/include/SDL.h"
+#pragma comment( lib, "Game/SDL/libx86/SDL2.lib")
+#pragma comment( lib, "Game/SDL/libx86/SDL2main.lib")
 #include "Game/SDL/include/SDL_Scancode.h"
+
 
 ModuleCollisions::ModuleCollisions()
 {
@@ -124,6 +129,7 @@ update_status ModuleCollisions::PostUpdate()
 
 void ModuleCollisions::DebugDraw()
 {
+
 	Uint8 alpha = 80;
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 	{

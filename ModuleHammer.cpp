@@ -8,6 +8,7 @@
 #include "ModuleAudio.h"
 #include "ModuleHammer.h"
 #include "ModulePlayer.h"
+#include "ModuleScene.h"
 
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
@@ -54,6 +55,7 @@ update_status ModuleHammer::Update()
 		hammerExist = !hammerExist;
 		hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
 	}
+
 
 	if (App->hammer->hammerExist == true)
 	{
