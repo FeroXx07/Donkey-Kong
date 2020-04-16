@@ -43,6 +43,8 @@ bool ModuleHammer::Start()
 	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
 
 
+
+
 	return ret;
 }
 
@@ -50,21 +52,19 @@ bool ModuleHammer::Start()
 // Processes new input and handles hammer movement
 update_status ModuleHammer::Update()
 {
-	if (hammerExist == false) {
-		if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN) {
-			hammerExist = true;
-			hammerPosition = { App->player->position.x, App->player->position.y };
-		}
-	}
-	else {
-		if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
-		{
-			hammerExist = false;
-			hammerPosition = { 0, 0 };
-			hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
-		}
+	if (hammerExist == true && App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN )
+	{
+		hammerExist = false;
+		hammerPosition = { 0, 0 };
+		hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 	}
 
+	if (hammerExist == false && App->input->keys[SDL_SCANCODE_F3] == KEY_DOWN) {
+		
+		hammerExist = true;
+		hammerPosition = { App->player->position.x, App->player->position.y };
+	}
+	
 
 
 	if (hammerExist == true)
@@ -94,8 +94,9 @@ update_status ModuleHammer::Update()
 			}
 			if (hammerExist) hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 		}
-		return update_status::UPDATE_CONTINUE;
+		
 	}
+	return update_status::UPDATE_CONTINUE;
 }
 
 // Called at the end of the application loop

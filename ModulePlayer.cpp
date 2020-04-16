@@ -128,6 +128,8 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
 		position.x -= speed.x;
+		App->hammer->hammerPosition -= speed;
+
 		if (currentAnimation != &leftAnim)
 		{
 			leftAnim.Reset();
@@ -145,6 +147,7 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
 	{
 		position.x += speed.x;
+		App->hammer->hammerPosition += speed;
 
 		if (currentAnimation != &rightAnim)
 		{
@@ -168,20 +171,12 @@ update_status ModulePlayer::Update()
 		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
 			position.y -= speed.x;
-			/*if (currentAnimation != &climbingAnim)
-			{
-				currentAnimation = &climbingAnim;
-			}
-			climbingAnim.loop = true;*/
+
 		}
 		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
 			position.y += speed.x;
-			/*if (currentAnimation != &climbingAnim)
-			{
-				currentAnimation = &climbingAnim;
-			}
-			climbingAnim.loop = true;*/
+			
 		}
 		playerCollider->rect.w = 2;
 		temp = 5;
@@ -223,16 +218,7 @@ update_status ModulePlayer::Update()
 	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
 		currentAnimation = &rightIdleAnim;
 
-	else if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP && isLadder ==true)
-	{
-	/*	climbingAnim.loop = false;
-		currentAnimation = &climbingAnim;*/
-	}
-	else if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_UP && isLadder == true)
-	{/*
-		climbingAnim.loop = false;
-		currentAnimation = &climbingAnim;*/
-	}
+	
 
 	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN && App->hammer->hammerExist == true)
 	{
@@ -251,6 +237,7 @@ update_status ModulePlayer::Update()
 		//printf("Speed is: %d\n\n", speedY);
 	}
 
+	App->hammer->hammerCollider->SetPos(App->hammer->hammerPosition.x, App->hammer->hammerPosition.y);
 	playerCollider->SetPos(position.x +temp, position.y);
 
 	currentAnimation->Update();
