@@ -50,37 +50,52 @@ bool ModuleHammer::Start()
 // Processes new input and handles hammer movement
 update_status ModuleHammer::Update()
 {
-	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
-	{
-		hammerExist = !hammerExist;
-		hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
+	if (hammerExist == false) {
+		if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN) {
+			hammerExist = true;
+			hammerPosition = { App->player->position.x, App->player->position.y };
+		}
+	}
+	else {
+		if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
+		{
+			hammerExist = false;
+			hammerPosition = { 0, 0 };
+			hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
+		}
 	}
 
 
-	if (App->hammer->hammerExist == true)
+
+	if (hammerExist == true)
 	{
+
 		if (App->player->currentAnimation->GetCurrentFps() % 2 == 0)
 		{
-			if (App->player->currentAnimation == &App->player->hammerLeftAnim)
-				hammerPosition.x = App->player->position.x - 6;
-			else if (App->player->currentAnimation == &App->player->hammerRightAnim)
-				hammerPosition.x = App->player->position.x + 6;
-
-
+			if (App->player->currentAnimation == &App->player->hammerLeftAnim) {
+				hammerPosition.x = App->player->position.x - 16;
+				hammerPosition.y = App->player->position.y + 4;
+			}
+			else if (App->player->currentAnimation == &App->player->hammerRightAnim) {
+				hammerPosition.x = App->player->position.x + 8 + App->player->playerCollider->rect.w;
+				hammerPosition.y = App->player->position.y + 4;
+			}
 		}
+
 		else
 		{
-
-
+			if (App->player->currentAnimation == &App->player->hammerLeftAnim) {
+				hammerPosition.x = App->player->position.x - 16;
+				hammerPosition.y = App->player->position.y + 4;
+			}
+			else if (App->player->currentAnimation == &App->player->hammerRightAnim) {
+				hammerPosition.x = App->player->position.x + 8 + App->player->playerCollider->rect.w;
+				hammerPosition.y = App->player->position.y + 4;
+			}
+			if (hammerExist) hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 		}
+		return update_status::UPDATE_CONTINUE;
 	}
-	else
-		hammerCollider->pendingToDelete = true;
-	
-	if (hammerCollider->pendingToDelete == false)
-		hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
-
-	return update_status::UPDATE_CONTINUE;
 }
 
 // Called at the end of the application loop

@@ -57,7 +57,8 @@ public:
 	// A set of animations
 	Animation leftIdleAnim;
 	Animation rightIdleAnim;
-
+	Animation hammerLeftIdleAnim;
+	Animation hammerRightIdleAnim;
 
 	Animation leftAnim;
 	Animation rightAnim;

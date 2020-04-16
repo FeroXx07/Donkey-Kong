@@ -27,6 +27,17 @@ ModulePlayer::ModulePlayer()
 	rightIdleAnim.loop = true;
 	rightIdleAnim.speed = 0.1f;
 
+	hammerLeftIdleAnim.PushBack({ 519,24,31,16 });
+	hammerLeftIdleAnim.PushBack({ 498,14,12,26 });
+	hammerLeftIdleAnim.loop = true;
+	hammerLeftIdleAnim.speed = 0.1f;
+
+	/*hammerRightIdleAnim.PushBack({ 519,24,31,16 });
+	hammerRightIdleAnim.PushBack({ 498,14,12,26 });
+	hammerRightIdleAnim.loop = true;
+	hammerRightIdleAnim.speed = 0.1f;
+	*/
+
 	leftAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
 	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
 	leftAnim.PushBack({ 113, 24, 15, 15 }); // movement left 2
@@ -41,8 +52,12 @@ ModulePlayer::ModulePlayer()
 	rightAnim.loop = true;
 	rightAnim.speed = 0.3f;
 
-	hammerLeftAnim.PushBack({648,25,32,15});
-	hammerLeftAnim.PushBack({625,14,15,26});
+	hammerLeftAnim.PushBack({ 648, 25, 32, 15});
+	hammerLeftAnim.PushBack({ 625, 14,15,26});
+	hammerLeftAnim.PushBack({ 584,24,31,16 });
+	hammerLeftAnim.PushBack({ 562,14,13,26 });
+	hammerLeftAnim.PushBack({ 519,24,31,16 });
+	hammerLeftAnim.PushBack({ 498,14,12,26 });
 	hammerLeftAnim.loop = true;
 	hammerLeftAnim.speed = 0.1f;
 
@@ -199,6 +214,9 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
 	{
 		currentAnimation = &leftIdleAnim;
+	}
+	else if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP && App->hammer->hammerExist == true) {
+		currentAnimation = &hammerLeftAnim;
 	}
 	
 	// If last movement was right, set the current animation back to left idle
