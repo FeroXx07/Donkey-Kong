@@ -41,10 +41,6 @@ bool ModuleHammer::Start()
 	hammerPosition.y = App->player->position.y;
 
 	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
-
-
-
-
 	return ret;
 }
 
@@ -64,12 +60,9 @@ update_status ModuleHammer::Update()
 		hammerExist = true;
 		hammerPosition = { App->player->position.x, App->player->position.y };
 	}
-	
-
 
 	if (hammerExist == true)
 	{
-
 		if (App->player->currentAnimation->GetCurrentFps() % 2 == 0)
 		{
 			if (App->player->currentAnimation == &App->player->hammerLeftAnim) {
