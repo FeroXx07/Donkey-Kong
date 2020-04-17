@@ -9,12 +9,13 @@
 #include "ModuleHammer.h"
 #include "ModulePlayer.h"
 #include "ModuleScene.h"
+#include "ModuleEnemies.h"
 
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
 
 // Constructor
-ModuleHammer::ModuleHammer()
+ModuleHammer::ModuleHammer(bool startEnabled) : Module(startEnabled)
 {
 
 }
@@ -40,7 +41,7 @@ bool ModuleHammer::Start()
 	hammerPosition.x = App->player->position.x;
 	hammerPosition.y = App->player->position.y;
 
-	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER, App->player);
+	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER);
 	return ret;
 }
 
@@ -48,7 +49,7 @@ bool ModuleHammer::Start()
 // Processes new input and handles hammer movement
 update_status ModuleHammer::Update()
 {
-	if (hammerExist == true && App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN )
+	if (hammerExist == true && App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
 	{
 		hammerExist = false;
 		hammerPosition = { 0, 0 };
@@ -56,38 +57,41 @@ update_status ModuleHammer::Update()
 	}
 
 	if (hammerExist == false && App->input->keys[SDL_SCANCODE_F3] == KEY_DOWN) {
-		
+
 		hammerExist = true;
 		hammerPosition = { App->player->position.x, App->player->position.y };
 	}
 
 	if (hammerExist == true)
 	{
-		if (App->player->currentAnimation->GetCurrentFps() % 2 == 0)
+		if (App->player->currentAnimation->GetCurrentFps() % 2 == 0) // Hammer down
 		{
-			if (App->player->currentAnimation == &App->player->hammerLeftAnim) {
-				hammerPosition.x = App->player->position.x - 16;
-				hammerPosition.y = App->player->position.y + 4;
+			if ((App->player->currentAnimation == &App->player->hammerLeftAnim) || (App->player->currentAnimation == &App->player->hammerLeftIdleAnim)) {
+				//hammerPosition.x = App->player->position.x - 16;
+				//hammerPosition.y = App->player->position.y + 4;
+				hammerCollider->SetPos(App->player->position.x - 16, App->player->position.y + 4);
 			}
-			else if (App->player->currentAnimation == &App->player->hammerRightAnim) {
-				hammerPosition.x = App->player->position.x + 8 + App->player->playerCollider->rect.w;
-				hammerPosition.y = App->player->position.y + 4;
+			else if ((App->player->currentAnimation == &App->player->hammerRightAnim) || (App->player->currentAnimation == &App->player->hammerRightIdleAnim)) {
+				//hammerPosition.x = App->player->position.x + 18;
+				//hammerPosition.y = App->player->position.y + 4;
+				hammerCollider->SetPos(App->player->position.x + 18, App->player->position.y + 4);
 			}
 		}
 
-		else
+		else // Hammer up
 		{
-			if (App->player->currentAnimation == &App->player->hammerLeftAnim) {
-				hammerPosition.x = App->player->position.x - 16;
-				hammerPosition.y = App->player->position.y + 4;
+			if ((App->player->currentAnimation == &App->player->hammerLeftAnim) || (App->player->currentAnimation == &App->player->hammerLeftIdleAnim)) {
+				//hammerPosition.x = App->player->position.x + 1;
+				//hammerPosition.y = App->player->position.y - 11;
+				hammerCollider->SetPos(App->player->position.x + 1, App->player->position.y - 11);
 			}
-			else if (App->player->currentAnimation == &App->player->hammerRightAnim) {
-				hammerPosition.x = App->player->position.x + 8 + App->player->playerCollider->rect.w;
-				hammerPosition.y = App->player->position.y + 4;
+			else if ((App->player->currentAnimation == &App->player->hammerRightAnim) || (App->player->currentAnimation == &App->player->hammerRightIdleAnim)) {
+				//hammerPosition.x = App->player->position.x + 1;
+				//hammerPosition.y = App->player->position.y - 11;
+				hammerCollider->SetPos(App->player->position.x + 1, App->player->position.y - 11);
 			}
-			if (hammerExist) hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 		}
-		
+		//hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 	}
 	return update_status::UPDATE_CONTINUE;
 }

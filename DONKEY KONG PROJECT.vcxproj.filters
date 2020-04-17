@@ -16,102 +16,141 @@
     <Filter Include="Archivos de origen\Modulos">
       <UniqueIdentifier>{e15d73df-3f86-454f-8108-911797aaf6c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Modulos\Gameplay">
+      <UniqueIdentifier>{32776d38-01e0-4c6e-a8f3-321d77141d1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Modulos\Core">
+      <UniqueIdentifier>{42ac7220-a0ec-402d-bd3c-30d0751e6ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Utils">
+      <UniqueIdentifier>{f841ba87-7284-49c6-9dc5-bf762fc7e62d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Entity">
+      <UniqueIdentifier>{8800b586-4e1f-4b33-94c9-ea3ba8242aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Applications">
+      <UniqueIdentifier>{53a4c763-fc3e-44cb-8b93-8104b44c1b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="Globals.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Module.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Archivos de origen\Applications</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleInput.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
+    <ClCompile Include="Application.cpp">
+      <Filter>Archivos de origen\Applications</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleRender.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleAudio.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen\Applications</Filter>
     </ClCompile>
     <ClCompile Include="ModuleScene.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCollisions.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="ModuleHammer.cpp">
-      <Filter>Archivos de origen\Modulos</Filter>
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindow.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleRender.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCollisions.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemies.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_FireMinion.cpp">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Archivos de origen\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MemLeaks.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Module.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleWindow.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleInput.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleRender.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleAudio.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleScene.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="Globals.h">
+      <Filter>Archivos de origen\Applications</Filter>
     </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="MemLeaks.h">
+      <Filter>Archivos de origen\Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="ModulePlayer.h">
-      <Filter>Archivos de origen\Modulos</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCollisions.h">
-      <Filter>Archivos de origen\Modulos</Filter>
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="ModuleHammer.h">
-      <Filter>Archivos de origen\Modulos</Filter>
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRender.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleCollisions.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Archivos de origen\Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemies.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_FireMinion.h">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Archivos de origen\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

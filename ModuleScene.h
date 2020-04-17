@@ -10,7 +10,7 @@ class ModuleScene : public Module
 {
 public:
 	//Constructor
-	ModuleScene();
+	ModuleScene(bool startEnabled);
 
 	//Destructor
 	~ModuleScene();

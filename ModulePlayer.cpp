@@ -15,7 +15,7 @@
 const float gravity = 60.0f;         // pixels / second^2
 const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
-ModulePlayer::ModulePlayer()
+ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// left idle animation
 	leftIdleAnim.PushBack({ 66, 24, 12, 16 });
@@ -32,11 +32,11 @@ ModulePlayer::ModulePlayer()
 	hammerLeftIdleAnim.loop = true;
 	hammerLeftIdleAnim.speed = 0.1f;
 
-	/*hammerRightIdleAnim.PushBack({ 519,24,31,16 });
-	hammerRightIdleAnim.PushBack({ 498,14,12,26 });
+	hammerRightIdleAnim.PushBack({ 520 ,55,30,16 });
+	hammerRightIdleAnim.PushBack({ 498 ,45 - 1,12 + 1,26 });
 	hammerRightIdleAnim.loop = true;
 	hammerRightIdleAnim.speed = 0.1f;
-	*/
+
 
 	leftAnim.PushBack({ 89, 24, 15, 16 }); // movement left 1
 	leftAnim.PushBack({ 66, 24, 12, 16 }); // idle left
@@ -52,17 +52,21 @@ ModulePlayer::ModulePlayer()
 	rightAnim.loop = true;
 	rightAnim.speed = 0.3f;
 
-	hammerLeftAnim.PushBack({ 648, 25, 32, 15});
-	hammerLeftAnim.PushBack({ 625, 14,15,26});
-	hammerLeftAnim.PushBack({ 584,24,31,16 });
-	hammerLeftAnim.PushBack({ 562,14,13,26 });
-	hammerLeftAnim.PushBack({ 519,24,31,16 });
-	hammerLeftAnim.PushBack({ 498,14,12,26 });
+	hammerLeftAnim.PushBack({ 648, 25, 32, 15 }); // % 2 == 0, 0 is hammer down
+	hammerLeftAnim.PushBack({ 625, 14,15,26 }); // % 2 == 1, 1 is hammer up
+	hammerLeftAnim.PushBack({ 584,24,31,16 }); // % 2 == 0
+	hammerLeftAnim.PushBack({ 562,14,13,26 }); // % 2 == 1
+	hammerLeftAnim.PushBack({ 520,24,31,16 }); // % 2 == 0
+	hammerLeftAnim.PushBack({ 498,14,12,26 }); // % 2 == 1
 	hammerLeftAnim.loop = true;
 	hammerLeftAnim.speed = 0.1f;
 
-	hammerRightAnim.PushBack({ 648 - 4,56,32 + 4,15 });
-	hammerRightAnim.PushBack({ 625,45,15,26 });
+	hammerRightAnim.PushBack({ 648 - 3 + 2,56,32 + 3 + 2,15 });
+	hammerRightAnim.PushBack({ 625 + 2,45,15 + 2,26 });
+	hammerRightAnim.PushBack({ 584 - 5 + 2,55,31 + 5 + 2,16 });
+	hammerRightAnim.PushBack({ 562 - 3 + 2,45,13 + 3 + 2,26 });
+	hammerRightAnim.PushBack({ 520 - 6 + 2,55,30 + 6 + 2,16 });
+	hammerRightAnim.PushBack({ 498 - 3 + 2,45,12 + 3 + 2,26 });
 	hammerRightAnim.loop = true;
 	hammerRightAnim.speed = 0.1f;
 
@@ -78,15 +82,15 @@ ModulePlayer::ModulePlayer()
 
 
 	climbedAnim.PushBack({ 161, 25, 14, 15 }); // when already up 1
-	climbedAnim.PushBack({184, 27, 16, 12 }); // when already up 2
+	climbedAnim.PushBack({ 184, 27, 16, 12 }); // when already up 2
 	climbedAnim.loop = false;
 	climbingAnim.speed = 0.1f;
 
-	sprite1Climbed.PushBack({ 184, 27-3, 16, 12+3 });
+	sprite1Climbed.PushBack({ 184, 27 - 3, 16, 12 + 3 });
 	sprite1Climbed.loop = false;
 	sprite1Climbed.speed = 0.1f;
 
-	sprite2Climbed.PushBack({ 161, 25-3, 14, 15+3 });
+	sprite2Climbed.PushBack({ 161, 25 - 3, 14, 15 + 3 });
 	sprite2Climbed.loop = false;
 	sprite2Climbed.speed = 0.1f;
 
@@ -125,15 +129,15 @@ bool ModulePlayer::Start()
 update_status ModulePlayer::Update()
 {
 
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
+	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
 		position.x -= speed.x;
-		App->hammer->hammerPosition -= speed;
+		if (App->hammer->hammerExist) App->hammer->hammerPosition -= speed;
 
 		if (currentAnimation != &leftAnim)
 		{
 			leftAnim.Reset();
-			if (App->hammer->hammerExist == true)
+			if (App->hammer->hammerExist)
 			{
 				currentAnimation = &hammerLeftAnim;
 			}
@@ -144,10 +148,10 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping ==true))
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
 		position.x += speed.x;
-		App->hammer->hammerPosition += speed;
+		if (App->hammer->hammerExist) App->hammer->hammerPosition += speed;
 
 		if (currentAnimation != &rightAnim)
 		{
@@ -163,7 +167,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	
+
 
 	if (isLadder == true)
 	{
@@ -176,7 +180,7 @@ update_status ModulePlayer::Update()
 		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
 			position.y += speed.x;
-			
+
 		}
 		playerCollider->rect.w = 2;
 		temp = 5;
@@ -211,14 +215,14 @@ update_status ModulePlayer::Update()
 		currentAnimation = &leftIdleAnim;
 	}
 	else if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_UP && App->hammer->hammerExist == true) {
-		currentAnimation = &hammerLeftAnim;
+		currentAnimation = &hammerLeftIdleAnim;
 	}
-	
-	// If last movement was right, set the current animation back to left idle
-	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
-		currentAnimation = &rightIdleAnim;
 
-	
+	// If last movement was right, set the current animation back to left idle
+	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
+		currentAnimation = &rightIdleAnim;
+	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == true)
+		currentAnimation = &hammerRightIdleAnim;
 
 	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN && App->hammer->hammerExist == true)
 	{
@@ -283,18 +287,21 @@ update_status ModulePlayer::PostUpdate()
 		//App->render->Blit(texture, position.x, position.y, &rect);
 		if (App->hammer->hammerExist == true)
 		{
-			if (currentAnimation->GetCurrentFps() % 2 == 0)
+			if (currentAnimation->GetCurrentFps() % 2 == 0) // Hammer down
 			{
-				if (currentAnimation == &hammerLeftAnim)
+				if ((currentAnimation == &hammerLeftAnim) || (currentAnimation == &hammerLeftIdleAnim))
 					hammerTemp.x = -18;
-				else if (currentAnimation == &hammerRightAnim)
+				if (currentAnimation == &hammerRightAnim)
 					hammerTemp.x -= 4;
 
 				App->render->Blit(texture, position.x + hammerTemp.x, position.y, &rect);
 			}
-			else
+			else // Hammer Up
 			{
 				hammerTemp.y = -11;
+				if ((currentAnimation == &hammerLeftAnim) || (currentAnimation == &hammerLeftIdleAnim))
+					hammerTemp.y += 1;
+
 				App->render->Blit(texture, position.x, position.y + hammerTemp.y, &rect);
 			}
 		}
@@ -371,6 +378,11 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			{
 				position.x = c2->rect.x + c2->rect.w;
 			}
+		}
+
+		if (c2->type == Collider::Type::ENEMY)
+		{
+			this->destroyed = true;
 		}
 	}
 }

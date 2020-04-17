@@ -5,16 +5,17 @@
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
+#include "ModuleEnemies.h"
 #include "Game/SDL/include/SDL_scancode.h"
 
 
-ModuleScene::ModuleScene()
+ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 {
-	//Level 2 scene sprite
-	level_2.x = 472;
-	level_2.y = 176;
-	level_2.w = SCREEN_WIDTH;
-	level_2.h = SCREEN_HEIGHT;
+	////Level 2 scene sprite
+	//level_2.x = 472;
+	//level_2.y = 176;
+	//level_2.w = SCREEN_WIDTH;
+	//level_2.h = SCREEN_HEIGHT;
 
 
 	//Level 4 scene sprite
@@ -38,26 +39,6 @@ bool ModuleScene::Start()
 	//Scene sprites
 	bgTexture = App->textures->Load("Assets/Background2.png");
 	App->audio->PlayMusic("Assets/stage1.ogg", 1.0f);
-
-
-	// Level 2 colliders:
-	/*
-	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 8, 208, 208, 8 }, Collider::Type::GROUND);
-
-	App->collisions->AddCollider({ 8, 168, 40, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 64, 168, 88, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 168, 168, 48, 8 }, Collider::Type::GROUND);
-
-	App->collisions->AddCollider({ 0, 128, 96, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 128, 128, 96, 8 }, Collider::Type::GROUND);
-
-	App->collisions->AddCollider({ 8, 88, 208, 8 }, Collider::Type::GROUND);
-
-	App->collisions->AddCollider({ 88, 56, 48, 8 }, Collider::Type::GROUND);
-
-	//Add collider for the wall
-	App->collisions->AddCollider({ 96, 144, 32, 24 }, Collider::Type::WALL);*/
 
 	// Level 4 colliders:
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
@@ -124,7 +105,8 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 152 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	App->collisions->AddCollider({ 184 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 
-
+	// Adding enemy
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 162, 248 - 12);
 
 	return ret;
 }

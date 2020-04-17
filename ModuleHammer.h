@@ -10,7 +10,7 @@ class ModuleHammer : public Module
 {
 public:
 	// Constructor
-	ModuleHammer();
+	ModuleHammer(bool startEnabled);
 
 	// Destructor
 	~ModuleHammer();

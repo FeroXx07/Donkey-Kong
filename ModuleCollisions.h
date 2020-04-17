@@ -11,7 +11,7 @@ class ModuleCollisions : public Module
 public:
 	// Constructor
 	// Fills all collision matrix data
-	ModuleCollisions();
+	ModuleCollisions(bool startEnabled);
 
 	// Destructor
 	~ModuleCollisions();
@@ -34,6 +34,8 @@ public:
 
 	// Adds a new collider to the list
 	Collider* AddCollider(SDL_Rect rect, Collider::Type type, Module* listener = nullptr);
+
+	void RemoveCollider(Collider* collider);
 
 	// Draws all existing colliders with some transparency
 	void DebugDraw();
