@@ -34,6 +34,10 @@ public:
 	SDL_Texture* bgTexture = nullptr;
 	SDL_Texture* bgTextureTransparent = nullptr;
 
+	// The scene background music
+	int level_4BGM = 0;
+
+	
 	// Counter to know how many nuts are left
 	int Nuts = 0;
 

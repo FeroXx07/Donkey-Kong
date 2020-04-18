@@ -32,7 +32,8 @@ bool ModuleScene::Start()
 	//Scene sprites
 	bgTexture = App->textures->Load("Assets/Background2.png");
 	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
-	App->audio->PlayMusic("Assets/stage1.ogg", 1.0f);
+	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
+	
 
 	Nuts = 8;
 
@@ -104,8 +105,13 @@ bool ModuleScene::Start()
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 162, 248 - 12);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 207);
-
-
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 207);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 167);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 167);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 127);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 127);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 87);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 87);
 	return ret;
 }
 
