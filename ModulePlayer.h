@@ -37,7 +37,16 @@ public:
 	// Position of the player in the map
 	iPoint position;
 
+	int lives;
+	int getLives() {
+		return lives;
+	}
+	void setLives(int _lives) {
+		lives = _lives;
+	}
 
+	int score;
+	int highscore;
 
 	// The speed in which we move the player (pixels per frame)
 	iPoint speed = { 1,1 };
