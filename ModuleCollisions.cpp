@@ -22,6 +22,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::GROUND][Collider::Type::WALL] = true;
 	matrix[Collider::Type::GROUND][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::Item_Type] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
@@ -29,6 +30,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::LADDER] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::Item_Type] = true;
 
 	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
@@ -36,6 +38,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::HAMMER] = true;
+	matrix[Collider::Type::ENEMY][Collider::Type::Item_Type] = false;
 
 	matrix[Collider::Type::WALL][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true	;
@@ -43,6 +46,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL][Collider::Type::WALL] = false;
 	matrix[Collider::Type::WALL][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::WALL][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::WALL][Collider::Type::Item_Type] = false;
 
 	matrix[Collider::Type::LADDER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::PLAYER] = true;
@@ -50,6 +54,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::LADDER][Collider::Type::WALL] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::Item_Type] = false;
 
 	matrix[Collider::Type::HAMMER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::PLAYER] = false;
@@ -57,6 +62,14 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::HAMMER][Collider::Type::WALL] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::Item_Type] = false;
+
+	matrix[Collider::Type::Item_Type][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::Item_Type][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::WALL] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::LADDER] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::HAMMER] = false;
 }
 
 // Destructor
@@ -159,6 +172,9 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::HAMMER: // dark orange
 			App->render->DrawQuad(colliders[i]->rect, 255, 140, 0, alpha);
 			break;
+			case Collider::Type::Item_Type: // pink
+			App->render->DrawQuad(colliders[i]->rect, 255, 20, 147, alpha);
+			break;
 		}
 	}
 }
@@ -180,7 +196,7 @@ bool ModuleCollisions::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener)
+Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener, Collider::Items Item )
 {
 	Collider* ret = nullptr;
 
@@ -188,7 +204,7 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Modu
 	{
 		if(colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, listener);
+			ret = colliders[i] = new Collider(rect, type, listener, Item);
 			break;
 		}
 	}

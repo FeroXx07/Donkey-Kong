@@ -8,6 +8,7 @@
 
 #include "Enemy.h"
 #include "Enemy_FireMinion.h"
+#include "Item_Nut.h"
 
 
 #define SPAWN_MARGIN 50
@@ -152,6 +153,9 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			{
 				case Enemy_Type::ENEMY_FIREMINION:
 					enemies[i] = new Enemy_FireMinion(info.x, info.y);
+					break;
+				case Enemy_Type::ITEM_NUT:
+					enemies[i] = new Item_Nut(info.x, info.y);
 					break;
 			}
 			enemies[i]->texture = texture;

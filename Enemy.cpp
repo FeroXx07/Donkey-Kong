@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "ModuleCollisions.h"
-
+#include "ModuleScene.h"
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
 
@@ -40,9 +40,14 @@ void Enemy::Draw()
 void Enemy::OnCollision(Collider* collider)
 {
 	//App->audio->PlayFx(destroyedFx);
-	
 	if (collider->type == Collider::Type::HAMMER)
 	{
+		SetToDelete();
+	}
+
+	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)
+	{
+		App->scene->Nuts--;
 		SetToDelete();
 	}
 }

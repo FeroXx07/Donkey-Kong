@@ -33,7 +33,7 @@ public:
 	bool CleanUp();
 
 	// Adds a new collider to the list
-	Collider* AddCollider(SDL_Rect rect, Collider::Type type, Module* listener = nullptr);
+	Collider* AddCollider(SDL_Rect rect, Collider::Type type, Module* listener = nullptr, Collider::Items Item = Collider::Items::None);
 
 	void RemoveCollider(Collider* collider);
 

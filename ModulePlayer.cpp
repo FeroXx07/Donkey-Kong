@@ -7,6 +7,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleAudio.h"
 #include "ModuleHammer.h"
+#include "ModuleScene.h"
 
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
@@ -122,6 +123,8 @@ bool ModulePlayer::Start()
 
 	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
+
+	
 
 	return ret;
 }

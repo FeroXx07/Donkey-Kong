@@ -1,6 +1,6 @@
 #include "Collider.h"
 
-Collider::Collider(SDL_Rect rectangle, Type type, Module* listener): rect(rectangle), type(type), listener(listener)
+Collider::Collider(SDL_Rect rectangle, Type type, Module* listener, Items item): rect(rectangle), type(type), listener(listener), item(item)
 {
 
 }

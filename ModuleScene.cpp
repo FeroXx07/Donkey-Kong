@@ -6,19 +6,12 @@
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
+#include "ModulePlayer.h"
 #include "Game/SDL/include/SDL_scancode.h"
-
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 {
-	////Level 2 scene sprite
-	//level_2.x = 472;
-	//level_2.y = 176;
-	//level_2.w = SCREEN_WIDTH;
-	//level_2.h = SCREEN_HEIGHT;
-
-
-	//Level 4 scene sprite
+	// Level 4 scene sprite
 	level_4.x = 472;
 	level_4.y = 160;
 	level_4.w = SCREEN_WIDTH;
@@ -38,7 +31,10 @@ bool ModuleScene::Start()
 	bool ret = true;
 	//Scene sprites
 	bgTexture = App->textures->Load("Assets/Background2.png");
+	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
 	App->audio->PlayMusic("Assets/stage1.ogg", 1.0f);
+
+	Nuts = 8;
 
 	// Level 4 colliders:
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
@@ -107,6 +103,8 @@ bool ModuleScene::Start()
 
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 162, 248 - 12);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 207);
+
 
 	return ret;
 }
@@ -121,7 +119,6 @@ update_status ModuleScene::Update()
 update_status ModuleScene::PostUpdate()
 {
 	// Draw everything --------------------------------------
-	//App->render->Blit(bgTexture, 0, 0, &level_2);
 	App->render->Blit(bgTexture, 0, 0, &level_4);
 
 	return update_status::UPDATE_CONTINUE;

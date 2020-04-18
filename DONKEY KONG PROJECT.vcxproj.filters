@@ -87,6 +87,9 @@
     <ClCompile Include="Path.cpp">
       <Filter>Archivos de origen\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Item_Nut.cpp">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Nut.h">
+      <Filter>Archivos de origen\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

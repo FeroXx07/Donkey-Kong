@@ -6,8 +6,17 @@
 
 class Module;
 
+
+
 struct Collider
 {
+	enum Items
+	{
+		None = -1,
+		SCOREITEMS,
+		IMPORTANTITEMS,
+	};
+
 	enum Type
 	{
 		NONE = -1,
@@ -17,12 +26,13 @@ struct Collider
 		WALL,
 		LADDER,
 		HAMMER,
+		Item_Type,
 
-		MAX=6
+		MAX=7
 	};
 
 	//Methods
-	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr);
+	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr, Items item = Items::None);
 
 	void SetPos(int x, int y);
 
@@ -33,6 +43,7 @@ struct Collider
 	bool pendingToDelete = false;
 	Type type;
 	Module* listener = nullptr;
+	Items item;
 };
 
 

@@ -8,6 +8,7 @@
 enum class Enemy_Type
 {
 	NO_TYPE,
+	ITEM_NUT,
 	ENEMY_FIREMINION,
 	
 };
