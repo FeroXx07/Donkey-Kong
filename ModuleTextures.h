@@ -30,6 +30,9 @@ public:
 	// Returns nullptr if the texture could not be created
 	SDL_Texture* const Load(const char* path);
 
+	// Removes the memory from SDL_Texture and removes it from the array
+	bool Unload(SDL_Texture* texture);
+
 public:
 	// An array of all the loaded textures
 	// Allows us to keep track of all textures and free them on application exit

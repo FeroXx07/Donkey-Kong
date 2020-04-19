@@ -7,7 +7,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleAudio.h"
 #include "ModuleHammer.h"
-#include "ModuleScene.h"
+#include "Level4.h"
 
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
@@ -136,7 +136,6 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
-		App->audio->PlayFx(FX_Walking);
 		position.x -= speed.x;
 		if (App->hammer->hammerExist) App->hammer->hammerPosition -= speed;
 
@@ -156,7 +155,6 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
-		App->audio->PlayFx(FX_Walking);
 		position.x += speed.x;
 		if (App->hammer->hammerExist) App->hammer->hammerPosition += speed;
 

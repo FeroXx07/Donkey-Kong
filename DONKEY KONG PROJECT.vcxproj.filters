@@ -45,9 +45,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen\Applications</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleScene.cpp">
-      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
@@ -90,6 +87,15 @@
     <ClCompile Include="Item_Nut.cpp">
       <Filter>Archivos de origen\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Level4.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFadeToBlack.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneIntro.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -100,9 +106,6 @@
     </ClInclude>
     <ClInclude Include="MemLeaks.h">
       <Filter>Archivos de origen\Applications</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleScene.h">
-      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="ModulePlayer.h">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
@@ -157,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="Item_Nut.h">
       <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Level4.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFadeToBlack.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneIntro.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

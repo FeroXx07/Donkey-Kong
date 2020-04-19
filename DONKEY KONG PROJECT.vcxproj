@@ -153,14 +153,16 @@
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCollisions.cpp" />
     <ClCompile Include="ModuleEnemies.cpp" />
+    <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleHammer.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ModuleScene.cpp" />
+    <ClCompile Include="Level4.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Path.cpp" />
+    <ClCompile Include="SceneIntro.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -175,16 +177,18 @@
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleCollisions.h" />
     <ClInclude Include="ModuleEnemies.h" />
+    <ClInclude Include="ModuleFadeToBlack.h" />
     <ClInclude Include="ModuleHammer.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModulePlayer.h" />
     <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ModuleScene.h" />
+    <ClInclude Include="Level4.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneIntro.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DONKEY KONG PROJECT.rc" />
