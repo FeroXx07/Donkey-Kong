@@ -13,6 +13,7 @@
 #include "ModuleEnemies.h"
 #include "ModuleFadeToBlack.h"
 #include "SceneIntro.h"
+#include "ModuleSceneWin.h"
 
 Application::Application()
 {
@@ -26,28 +27,16 @@ Application::Application()
 	modules[3] = audio = new ModuleAudio(true);
 
 	modules[4] = intro = new SceneIntro(true);
-	modules[5] = scene = new ModuleScene(true);		//Gameplay scene starts disabled
-	modules[6] = player = new ModulePlayer(true);	//Player starts disabled
-	modules[7] = hammer = new ModuleHammer(true);
-	modules[8] = enemies = new ModuleEnemies(true);	//Enemies start disabled
+	modules[5] = sceneWin = new ModuleSceneWin(false);
+	modules[6] = scene = new ModuleScene(false);		//Gameplay scene starts disabled
+	modules[7] = player = new ModulePlayer(false);	//Player starts disabled
+	modules[8] = hammer = new ModuleHammer(false);
+	modules[9] = enemies = new ModuleEnemies(false);	//Enemies start disabled
 
-	modules[9] = collisions = new ModuleCollisions(true);
-	modules[10] = fade = new ModuleFadeToBlack(true);
+	modules[10] = collisions = new ModuleCollisions(true);
+	modules[11] = fade = new ModuleFadeToBlack(true);
 	//modules[10] = fonts = new ModuleFonts(true);
-	modules[11] = render = new ModuleRender(true);
-
-	//modules[0] = window = new ModuleWindow();
-	//modules[1] = input = new ModuleInput();
-	//modules[2] = textures = new ModuleTextures();
-	//modules[3] = audio = new ModuleAudio();
-
-	//modules[4] = scene = new ModuleScene();
-	//modules[5] = player = new ModulePlayer();
-	//modules[6] = hammer = new ModuleHammer();
-
-	//modules[7] = collisions = new ModuleCollisions();
-
-	//modules[8] = render = new ModuleRender();
+	modules[12] = render = new ModuleRender(true);
 }
 
 Application::~Application()

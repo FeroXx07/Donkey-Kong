@@ -1,19 +1,17 @@
-#ifndef __MODULE_SCENE_H__
-#define __MODULE_SCENE_H__
-
 #include "Module.h"
 #include "Animation.h"
+#include "Path.h"
 
 struct SDL_Texture;
 
-class ModuleScene : public Module
+class ModuleSceneWin : public Module
 {
 public:
 	//Constructor
-	ModuleScene(bool startEnabled);
+	ModuleSceneWin(bool startEnabled);
 
 	//Destructor
-	~ModuleScene();
+	~ModuleSceneWin();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -28,23 +26,21 @@ public:
 	update_status PostUpdate() override;
 
 	bool CleanUp();
-public:
 
+public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
-	SDL_Texture* bgTextureTransparent = nullptr;
-
-	// The scene background music
-	int level_4BGM = 0;
-
 	
-	// Counter to know how many nuts are left
-	int Nuts = 0;
+	// The path that will define the position in the world
+	Animation* currentAnim = nullptr;
+	Path path;
+	// The three stages of this scene
+	SDL_Rect normalScene, fallingScene, celebrationScene;
+	// Enemy animations
+	iPoint spawnPosition,donkeyPosition;
+	// The three animations of donkey
+	Animation angry, fall, hurt;
 
-	SDL_Rect level_4;
-
-	// The sprite rectangle for the ground
-	SDL_Texture* starsTexture = nullptr;
+	int spaceCounter = 0;
 };
 
-#endif

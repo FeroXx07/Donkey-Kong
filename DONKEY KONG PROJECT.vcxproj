@@ -163,6 +163,7 @@
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="SceneIntro.cpp" />
+    <ClCompile Include="ModuleSceneWin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Path.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneIntro.h" />
+    <ClInclude Include="ModuleSceneWin.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DONKEY KONG PROJECT.rc" />

@@ -7,6 +7,9 @@
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
+#include "ModuleHammer.h"
+#include "ModuleFadeToBlack.h"
+#include "ModuleInput.h"
 #include "Game/SDL/include/SDL_scancode.h"
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
@@ -34,6 +37,9 @@ bool ModuleScene::Start()
 	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
 	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
 	
+	App->player->Enable();
+	App->hammer->Enable();
+	App->enemies->Enable();
 
 	Nuts = 8;
 
@@ -117,7 +123,15 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update()
 {
+	if (App->input->keys[SDL_SCANCODE_F4] == KEY_DOWN )
+	{
+		Nuts = 0;
+	}
 
+	if (Nuts == 0)
+	{
+		App->fade->FadeToBlack(this, (Module*)App->sceneWin,10);
+	}
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -128,4 +142,15 @@ update_status ModuleScene::PostUpdate()
 	App->render->Blit(bgTexture, 0, 0, &level_4);
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+bool ModuleScene::CleanUp()
+{
+	// TODO 2: Enable (and properly disable) the player module
+	//App->player->Disable();
+	App->hammer->Disable();
+	App->enemies->Disable();
+	App->collisions->CleanUp();
+	// TODO 5: Remove All Memory Leaks - no solution here guys ;)
+	return true;
 }

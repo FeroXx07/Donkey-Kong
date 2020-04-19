@@ -96,6 +96,9 @@
     <ClCompile Include="SceneIntro.cpp">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleSceneWin.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -168,6 +171,9 @@
       <Filter>Archivos de origen\Modulos\Core</Filter>
     </ClInclude>
     <ClInclude Include="SceneIntro.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneWin.h">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>

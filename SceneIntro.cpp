@@ -10,7 +10,7 @@
 
 SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled)
 {
-
+	
 }
 
 SceneIntro::~SceneIntro()
@@ -23,14 +23,17 @@ bool SceneIntro::Start()
 {
 	LOG("Loading background assets");
 
+	monkeyScreen = { 8,352,224,256 };
+	introScreen = { 8,88,224,256 };
+
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/Sprites/startScreen.png");
-	App->audio->PlayMusic("Assets/Music/introTitle.ogg", 1.0f);
+	bgTexture = App->textures->Load("Assets/Hud2.png");
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	spaceCounter = 0;
 	return ret;
 }
 
@@ -38,7 +41,12 @@ update_status SceneIntro::Update()
 {
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
 	{
-		//App->fade->FadeToBlack(this, (Module*)App->sceneLevel_1, 90);
+		++spaceCounter;
+	}
+
+	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && spaceCounter == 2)
+	{
+		App->fade->FadeToBlack(this, (Module*)App->scene, 90);
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -48,7 +56,17 @@ update_status SceneIntro::Update()
 update_status SceneIntro::PostUpdate()
 {
 	// Draw everything --------------------------------------
-	App->render->Blit(bgTexture, 0, 0, NULL);
+	if (spaceCounter == 0) App->render->Blit(bgTexture, 0, 0, &introScreen);
+
+	if (spaceCounter == 1) App->render->Blit(bgTexture, 0, 0, &monkeyScreen);
+
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+bool SceneIntro::CleanUp()
+{
+	App->textures->Unload(bgTexture);
+
+	return true;
 }

@@ -124,7 +124,7 @@ bool ModulePlayer::Start()
 	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
 
-	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking2.wav");
+	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking.wav");
 
 	lives = 3;
 
@@ -137,6 +137,7 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
 		position.x -= speed.x;
+		App->audio->PlayFx(FX_Walking);
 		if (App->hammer->hammerExist) App->hammer->hammerPosition -= speed;
 
 		if (currentAnimation != &leftAnim)
@@ -156,6 +157,7 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
 		position.x += speed.x;
+		App->audio->PlayFx(FX_Walking);
 		if (App->hammer->hammerExist) App->hammer->hammerPosition += speed;
 
 		if (currentAnimation != &rightAnim)
@@ -231,7 +233,6 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN && App->hammer->hammerExist == true)
 	{
-
 		currentAnimation = &rightIdleAnim;
 	}
 
