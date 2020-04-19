@@ -359,7 +359,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	if (destroyed == false)
 	{
 
-
 		if (c2->type == Collider::Type::LADDER)
 		{
 			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
@@ -416,8 +415,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		if (c2->type == Collider::Type::WALL)
 		{
-			if (position.x < c2->rect.x)
-			{
 				if ((position.x < c2->rect.x + c2->rect.w) && (position.x > c2->rect.x)) // si viene el mario de la derecha
 				{
 					position.x = c2->rect.x + c2->rect.w;
@@ -426,7 +423,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				{
 					position.x = c2->rect.x - c1->rect.w;
 				}
-			}
 		}
 
 		if (c2->type == Collider::Type::ENEMY)
