@@ -2,6 +2,7 @@
 #include "Animation.h"
 #include "Path.h"
 
+
 struct SDL_Texture;
 
 class ModuleSceneWin : public Module
@@ -34,13 +35,20 @@ public:
 	// The path that will define the position in the world
 	Animation* currentAnim = nullptr;
 	Path path;
+
 	// The three stages of this scene
 	SDL_Rect normalScene, fallingScene, celebrationScene;
+	SDL_Rect princessSprite, marioSprite, heartSprite;
 	// Enemy animations
 	iPoint spawnPosition,donkeyPosition;
-	// The three animations of donkey
-	Animation angry, fall, hurt;
 
+	// The three animations of donkey
+	Animation angryAnim, fallAnim, hurtAnim;
+
+	int frameCount = 0;
+
+	int FX_DK_Defeated = 0;
+	
 	int spaceCounter = 0;
 };
 

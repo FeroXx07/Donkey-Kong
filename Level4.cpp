@@ -150,7 +150,7 @@ bool ModuleScene::CleanUp()
 	//App->player->Disable();
 	App->hammer->Disable();
 	App->enemies->Disable();
-	App->collisions->CleanUp();
+	//App->collisions->CleanUp();
 	// TODO 5: Remove All Memory Leaks - no solution here guys ;)
 	return true;
 }
