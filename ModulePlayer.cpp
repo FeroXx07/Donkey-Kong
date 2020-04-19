@@ -18,6 +18,10 @@ const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
+	climbingIdle.PushBack({ 138, 24, 13, 16 });
+	climbingIdle.loop = true;
+	climbingIdle.speed = 0.1f;
+
 	// left idle animation
 	leftIdleAnim.PushBack({ 66, 24, 12, 16 });
 	leftIdleAnim.loop = true;
@@ -225,6 +229,9 @@ update_status ModulePlayer::Update()
 		currentAnimation = &hammerLeftIdleAnim;
 	}
 
+	if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_UP || App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_UP) && isLadder)
+		currentAnimation = &climbingIdle;
+
 	// If last movement was right, set the current animation back to left idle
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == false)
 		currentAnimation = &rightIdleAnim;
@@ -351,20 +358,24 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 	// TODO 5: Detect collision with a wall. If so, destroy the player.
 	if (destroyed == false)
 	{
+
+
 		if (c2->type == Collider::Type::LADDER)
 		{
 			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
 				isLadder = true;
 
-			if (position.y < c2->rect.y + c2->rect.h-16)
+			if (position.y < c2->rect.y + c2->rect.h - 16 && (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT))
 				currentAnimation = &climbingAnim;
 
 
-			if (position.y < c2->rect.y - 15)
+			if (position.y <= c2->rect.y - 15)
 			{
 				isLadder = false;
 				currentAnimation = &idleClimbedAnim;
 			}
+
+
 
 			if (position.y <= c2->rect.y && position.y+14 >= c2->rect.y)
 			{
@@ -375,7 +386,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				currentAnimation = &sprite2Climbed;
 			}
 
-
+			if (position.y + c1->rect.h >= c2->rect.y + c2->rect.h && !App->hammer->hammerExist)
+			{
+				currentAnimation = &idleClimbedAnim;
+			}
 			
 		}
 		else
@@ -404,11 +418,14 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		{
 			if (position.x < c2->rect.x)
 			{
-				position.x = c2->rect.x - 13;
-			}
-			else
-			{
-				position.x = c2->rect.x + c2->rect.w;
+				if ((position.x < c2->rect.x + c2->rect.w) && (position.x > c2->rect.x)) // si viene el mario de la derecha
+				{
+					position.x = c2->rect.x + c2->rect.w;
+				}
+				if ((position.x + c1->rect.w > c2->rect.x) && (position.x < c2->rect.x)) // si viene el mario de la izquierda
+				{
+					position.x = c2->rect.x - c1->rect.w;
+				}
 			}
 		}
 
@@ -436,4 +453,11 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 	}
+}
+
+bool ModulePlayer::CleanUp()
+{
+	App->textures->Unload(texture);
+	App->hammer->CleanUp();
+	return true;
 }

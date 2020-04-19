@@ -37,6 +37,7 @@ bool ModuleScene::Start()
 	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
 	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
 	
+	App->collisions->Enable();
 	App->player->Enable();
 	App->hammer->Enable();
 	App->enemies->Enable();
@@ -107,6 +108,16 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 64 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	App->collisions->AddCollider({ 152 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	App->collisions->AddCollider({ 184 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
+	
+	// Wall collisions
+	App->collisions->AddCollider({ 0, 177, 4, 31 }, Collider::Type::WALL); // Floor 1 Left
+	App->collisions->AddCollider({ 220, 177, 4, 31 }, Collider::Type::WALL); // Floor 1 Right
+	App->collisions->AddCollider({ 0, 137, 12, 31 }, Collider::Type::WALL); // Floor 2 Left
+	App->collisions->AddCollider({ 212, 137, 12, 31 }, Collider::Type::WALL); // Floor 2 Right
+	App->collisions->AddCollider({ 0, 97, 20, 32 }, Collider::Type::WALL); // Floor 3 Left
+	App->collisions->AddCollider({ 204, 97, 20, 32 }, Collider::Type::WALL); // Floor 3 Right
+	App->collisions->AddCollider({ 0, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Left
+	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
 
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 162, 248 - 12);
@@ -147,10 +158,9 @@ update_status ModuleScene::PostUpdate()
 bool ModuleScene::CleanUp()
 {
 	// TODO 2: Enable (and properly disable) the player module
-	//App->player->Disable();
-	App->hammer->Disable();
 	App->enemies->Disable();
-	//App->collisions->CleanUp();
+	App->textures->Unload(bgTexture);
+	App->textures->Unload(bgTextureTransparent);
 	// TODO 5: Remove All Memory Leaks - no solution here guys ;)
 	return true;
 }

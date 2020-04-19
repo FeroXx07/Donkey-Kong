@@ -99,7 +99,6 @@ update_status ModuleHammer::Update()
 // Called at the end of the application loop
 update_status ModuleHammer::PostUpdate()
 {
-
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -107,4 +106,10 @@ update_status ModuleHammer::PostUpdate()
 void ModuleHammer::OnCollision(Collider* c1, Collider* c2)
 {
 
+}
+
+bool ModuleHammer::CleanUp()
+{
+	App->textures->Unload(texture);
+	return true;
 }

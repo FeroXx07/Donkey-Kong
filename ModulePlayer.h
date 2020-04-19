@@ -33,6 +33,8 @@ public:
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
 
+	bool CleanUp();
+
 public:
 	// Position of the player in the map
 	iPoint position;
@@ -79,6 +81,7 @@ public:
 	Animation climbingAnim;
 	Animation climbedAnim;
 	Animation idleClimbedAnim;
+	Animation climbingIdle;
 
 	Animation sprite1Climbed;
 	Animation sprite2Climbed;

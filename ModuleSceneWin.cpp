@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollisions.h"
+#include "ModulePlayer.h"
 #include "Game/SDL/include/SDL_scancode.h"
 #include <stdio.h>
 ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
@@ -121,6 +122,7 @@ update_status ModuleSceneWin::PostUpdate()
 	}
 	if (frameCount >= 307) {
 		App->collisions->Disable();
+		App->player->Disable();
 		App->render->Blit(bgTexture, 0, 0, &celebrationScene);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - princessSprite.w / 2, 88 - princessSprite.h, &princessSprite);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - marioSprite.w / 2 + 40, 88 - marioSprite.h, &marioSprite);
@@ -139,6 +141,7 @@ update_status ModuleSceneWin::PostUpdate()
 bool ModuleSceneWin::CleanUp()
 {
 	App->textures->Unload(bgTexture);
-
+	App->textures->CleanUp();
+	App->collisions->CleanUp();
 	return true;
 }
