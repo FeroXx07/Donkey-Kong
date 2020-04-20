@@ -29,11 +29,14 @@ bool SceneIntro::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/Hud2.png");
-
+	FX_Monkey = App->audio->LoadFx("Assets/Music/SFX_MonkeyHeight.wav");
+	FX_InsertCoin = App->audio->LoadFx("Assets/Music/SFX_InsertCoin.wav");
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
 	spaceCounter = 0;
+
+	App->audio->PlayFx(FX_InsertCoin);
 	return ret;
 }
 
@@ -42,11 +45,12 @@ update_status SceneIntro::Update()
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
 	{
 		++spaceCounter;
+		if (spaceCounter == 1) App->audio->PlayFx(FX_Monkey);
 	}
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && spaceCounter == 2)
 	{
-		App->fade->FadeToBlack(this, (Module*)App->scene, 90);
+		App->fade->FadeToBlack(this, (Module*)App->scene);
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -58,8 +62,10 @@ update_status SceneIntro::PostUpdate()
 	// Draw everything --------------------------------------
 	if (spaceCounter == 0) App->render->Blit(bgTexture, 0, 0, &introScreen);
 
-	if (spaceCounter == 1) App->render->Blit(bgTexture, 0, 0, &monkeyScreen);
-
+	if (spaceCounter == 1)
+	{
+		App->render->Blit(bgTexture, 0, 0, &monkeyScreen);
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -67,6 +73,5 @@ update_status SceneIntro::PostUpdate()
 bool SceneIntro::CleanUp()
 {
 	App->textures->Unload(bgTexture);
-
 	return true;
 }

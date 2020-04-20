@@ -56,6 +56,12 @@ ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
 	princessSprite = {504, 598, 16, 22};
 	marioSprite = { 530, 604, 12, 16 };
 	heartSprite = { 553, 598,15,13 };
+
+	bgTexture = App->textures->Load("Assets/WinTexture.png");
+	FX_DK_Defeated = App->audio->LoadFx("Assets/Music/SFX_DK Defeated.wav");
+	FX_DK_Falling = App->audio->LoadFx("Assets/Music/SFX_Fall.wav");
+	FX_DK_Stomp = App->audio->LoadFx("Assets/Music/SFX_Stomp.wav");
+	FX_WinMusic = App->audio->LoadFx("Assets/Music/SFX_Ending.wav");
 }
 
 ModuleSceneWin::~ModuleSceneWin()
@@ -70,8 +76,8 @@ bool ModuleSceneWin::Start()
 
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/WinTexture.png");
-	FX_DK_Defeated = App->audio->LoadFx("Assets/Music/SFX_DK Defeated.wav");
+	
+
 	spawnPosition.x = 90;
 	spawnPosition.y = 88 - 32;
 
@@ -113,20 +119,26 @@ update_status ModuleSceneWin::PostUpdate()
 	{
 		App->render->Blit(bgTexture, 0, 0, &normalScene);
 		App->render->Blit(bgTexture, spawnPosition.x + 40/2 - princessSprite.w/2, 48 - princessSprite.h, &princessSprite);
+
+		if (frameCount == 14) App->audio->PlayFx(FX_DK_Defeated);
+		
 	}
 	if (frameCount >= 15 && frameCount < 307) {
+		if (frameCount == 200) App->audio->PlayFx(FX_DK_Falling);
+
 		App->render->Blit(bgTexture, 0, 0, &fallingScene);
-		if (frameCount == 15 ) App->audio->PlayFx(FX_DK_Defeated);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - princessSprite.w / 2, 48 - princessSprite.h, &princessSprite);
 		
 	}
 	if (frameCount >= 307) {
+		if (frameCount == 307) App->audio->PlayFx(FX_DK_Stomp);
 		App->collisions->Disable();
 		App->player->Disable();
 		App->render->Blit(bgTexture, 0, 0, &celebrationScene);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - princessSprite.w / 2, 88 - princessSprite.h, &princessSprite);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - marioSprite.w / 2 + 40, 88 - marioSprite.h, &marioSprite);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2  - heartSprite.w / 2 + 20, 88 - heartSprite.h - 14, &heartSprite);
+		if (frameCount == 367) App->audio->PlayFx(FX_WinMusic);
 	}
 
 	if (currentAnim != nullptr)
@@ -143,5 +155,6 @@ bool ModuleSceneWin::CleanUp()
 	App->textures->Unload(bgTexture);
 	App->textures->CleanUp();
 	App->collisions->CleanUp();
+	App->player->CleanUp();
 	return true;
 }

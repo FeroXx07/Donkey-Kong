@@ -47,7 +47,11 @@ public:
 
 	int frameCount = 0;
 
+	// Sound efects pointers
 	int FX_DK_Defeated = 0;
+	int FX_DK_Falling = 0;
+	int FX_DK_Stomp = 0;
+	int FX_WinMusic = 0;
 	
 	int spaceCounter = 0;
 };

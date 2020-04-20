@@ -36,6 +36,8 @@ public:
 	SDL_Rect monkeyScreen;
 	SDL_Rect introScreen;
 
+	int FX_Monkey = 0;
+	int FX_InsertCoin = 0;
 	int spaceCounter = 0;
 };
 

@@ -10,6 +10,8 @@
 #include "ModuleHammer.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleInput.h"
+
+#include "Game/SDL_mixer/include/SDL_mixer.h"
 #include "Game/SDL/include/SDL_scancode.h"
 
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
@@ -19,6 +21,11 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 	level_4.y = 160;
 	level_4.w = SCREEN_WIDTH;
 	level_4.h = SCREEN_HEIGHT;
+
+	bgTexture = App->textures->Load("Assets/Background2.png");
+	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
+	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
+	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 }
 
 ModuleScene::~ModuleScene()
@@ -32,17 +39,15 @@ bool ModuleScene::Start()
 	LOG("Loading background assets");
 
 	bool ret = true;
-	//Scene sprites
-	bgTexture = App->textures->Load("Assets/Background2.png");
-	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
-	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
-	
+	// Scene sprites
+
 	App->collisions->Enable();
 	App->player->Enable();
 	App->hammer->Enable();
 	App->enemies->Enable();
 
 	Nuts = 8;
+	frameCount = 0;
 
 	// Level 4 colliders:
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
@@ -141,7 +146,9 @@ update_status ModuleScene::Update()
 
 	if (Nuts == 0)
 	{
-		App->fade->FadeToBlack(this, (Module*)App->sceneWin,10);
+		
+		App->audio->PlayFx(FX_Win);
+		App->fade->FadeToBlack(this, (Module*)App->sceneWin, 10);
 	}
 	return update_status::UPDATE_CONTINUE;
 }

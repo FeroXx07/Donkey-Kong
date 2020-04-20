@@ -50,7 +50,7 @@ public:
 	// Player's collider
 	Collider* hammerCollider = nullptr;
 
-	
-	
+	int FX_Hammer = 0;
+	int frameCountHammer = 0;
 
 };

@@ -14,6 +14,7 @@
 #include "ModuleFadeToBlack.h"
 #include "SceneIntro.h"
 #include "ModuleSceneWin.h"
+#include "ModuleParticles.h"
 
 Application::Application()
 {
@@ -28,15 +29,16 @@ Application::Application()
 
 	modules[4] = intro = new SceneIntro(true);
 	modules[5] = sceneWin = new ModuleSceneWin(false);
-	modules[6] = scene = new ModuleScene(false);		//Gameplay scene starts disabled
+	modules[6] = scene = new ModuleScene(false);
 	modules[7] = player = new ModulePlayer(false);	//Player starts disabled
-	modules[8] = hammer = new ModuleHammer(false);
-	modules[9] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+	modules[8] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
+	modules[9] = hammer = new ModuleHammer(false);
+	modules[10] = enemies = new ModuleEnemies(false);	//Enemies start disabled
 
-	modules[10] = collisions = new ModuleCollisions(true);
-	modules[11] = fade = new ModuleFadeToBlack(true);
+	modules[11] = collisions = new ModuleCollisions(true);
+	modules[12] = fade = new ModuleFadeToBlack(true);
 	//modules[10] = fonts = new ModuleFonts(true);
-	modules[12] = render = new ModuleRender(true);
+	modules[13] = render = new ModuleRender(true);
 }
 
 Application::~Application()

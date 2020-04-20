@@ -5,6 +5,7 @@
 #include "Level4.h"
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
+#include "ModuleParticles.h"
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {
@@ -43,6 +44,7 @@ void Enemy::OnCollision(Collider* collider)
 	if (collider->type == Collider::Type::HAMMER)
 	{
 		SetToDelete();
+		App->particles->AddParticle(App->particles->plasma, this->position.x, this->position.y, Collider::Type::NONE, 10);
 	}
 
 	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)

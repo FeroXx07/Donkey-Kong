@@ -36,6 +36,7 @@ bool ModuleHammer::Start()
 	bool ret = true;
 
 	texture = App->textures->Load("Assets/Background.png"); // arcade version
+	FX_Hammer = App->audio->LoadFx("Assets/Music/SFX_Hammer.wav");
 
 	//Starting position of the Mario
 	hammerPosition.x = App->player->position.x;
@@ -49,6 +50,16 @@ bool ModuleHammer::Start()
 // Processes new input and handles hammer movement
 update_status ModuleHammer::Update()
 {
+	if (hammerExist)
+	{
+		if (frameCountHammer == 0)
+			App->audio->PlayFx(FX_Hammer);
+		frameCountHammer++;
+	}
+
+	if (frameCountHammer == 960)
+		frameCountHammer = 0;
+
 	if (hammerExist == true && App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
 	{
 		hammerExist = false;
@@ -60,6 +71,9 @@ update_status ModuleHammer::Update()
 
 		hammerExist = true;
 		hammerPosition = { App->player->position.x, App->player->position.y };
+
+		if (frameCountHammer == 0)
+			App->audio->PlayFx(FX_Hammer);
 	}
 
 	if (hammerExist == true)

@@ -129,9 +129,8 @@ bool ModulePlayer::Start()
 	currentAnimation = &rightIdleAnim; 
 
 	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking.wav");
-
 	lives = 3;
-
+	frameCountWalking = 0;
 	return ret;
 }
 
@@ -141,9 +140,20 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
 		position.x -= speed.x;
-		App->audio->PlayFx(FX_Walking);
-		if (App->hammer->hammerExist) App->hammer->hammerPosition -= speed;
 
+		if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
+		if (frameCountWalking == 11) 
+		{
+			walkingFX = false;
+			frameCountWalking = 0;
+		}
+		++frameCountWalking;
+
+		if (App->hammer->hammerExist)
+		{
+			App->hammer->hammerPosition -= speed;
+		}
+		
 		if (currentAnimation != &leftAnim)
 		{
 			leftAnim.Reset();
@@ -161,7 +171,15 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
 	{
 		position.x += speed.x;
-		App->audio->PlayFx(FX_Walking);
+
+		if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
+		if (frameCountWalking == 11) 
+		{
+			walkingFX = false;
+			frameCountWalking = 0;
+		}
+		++frameCountWalking;
+
 		if (App->hammer->hammerExist) App->hammer->hammerPosition += speed;
 
 		if (currentAnimation != &rightAnim)

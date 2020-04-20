@@ -37,12 +37,14 @@ public:
 	// The scene background music
 	int level_4BGM = 0;
 
-	
 	// Counter to know how many nuts are left
 	int Nuts = 0;
-
+	// Level Sprite
 	SDL_Rect level_4;
 
+	// Sound Effect of Winning
+	int FX_Win = 0;
+	int frameCount = 0;
 	// The sprite rectangle for the ground
 	SDL_Texture* starsTexture = nullptr;
 };

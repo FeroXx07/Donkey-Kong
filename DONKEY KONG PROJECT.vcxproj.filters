@@ -99,6 +99,12 @@
     <ClCompile Include="ModuleSceneWin.cpp">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Archivos de origen\Modulos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -175,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="ModuleSceneWin.h">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Archivos de origen\Modulos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -100,6 +100,12 @@ public:
 
 	// The scene fx sounds
 	int FX_Walking = 0;
+	
+
+	int frameCountWalking = 0;
+	bool walkingFX = false;
+
+
 
 
 };
