@@ -56,12 +56,6 @@ ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
 	princessSprite = {504, 598, 16, 22};
 	marioSprite = { 530, 604, 12, 16 };
 	heartSprite = { 553, 598,15,13 };
-
-	bgTexture = App->textures->Load("Assets/WinTexture.png");
-	FX_DK_Defeated = App->audio->LoadFx("Assets/Music/SFX_DK Defeated.wav");
-	FX_DK_Falling = App->audio->LoadFx("Assets/Music/SFX_Fall.wav");
-	FX_DK_Stomp = App->audio->LoadFx("Assets/Music/SFX_Stomp.wav");
-	FX_WinMusic = App->audio->LoadFx("Assets/Music/SFX_Ending.wav");
 }
 
 ModuleSceneWin::~ModuleSceneWin()
@@ -76,7 +70,11 @@ bool ModuleSceneWin::Start()
 
 	bool ret = true;
 
-	
+	bgTexture = App->textures->Load("Assets/WinTexture.png");
+	FX_DK_Defeated = App->audio->LoadFx("Assets/Music/SFX_DK Defeated.wav");
+	FX_DK_Falling= App->audio->LoadFx("Assets/Music/SFX_Fall.wav");
+	FX_DK_Stomp = App->audio->LoadFx("Assets/Music/SFX_Stomp.wav");
+	FX_WinMusic = App->audio->LoadFx("Assets/Music/SFX_Ending.wav");
 
 	spawnPosition.x = 90;
 	spawnPosition.y = 88 - 32;

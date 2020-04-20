@@ -21,11 +21,6 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 	level_4.y = 160;
 	level_4.w = SCREEN_WIDTH;
 	level_4.h = SCREEN_HEIGHT;
-
-	bgTexture = App->textures->Load("Assets/Background2.png");
-	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
-	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
-	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 }
 
 ModuleScene::~ModuleScene()
@@ -40,7 +35,10 @@ bool ModuleScene::Start()
 
 	bool ret = true;
 	// Scene sprites
-
+	bgTexture = App->textures->Load("Assets/Background2.png");
+	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
+	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
+	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 	App->collisions->Enable();
 	App->player->Enable();
 	App->hammer->Enable();
