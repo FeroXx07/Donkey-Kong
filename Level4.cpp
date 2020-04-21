@@ -50,6 +50,7 @@ bool ModuleScene::Start()
 	// Level 4 colliders:
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
 
+
 	App->collisions->AddCollider({ 7, 208, 1, 8 }, Collider::Type::GROUND); // Floor 1
 	// LEFT LADDER
 	App->collisions->AddCollider({ 17, 208, 39, 8 }, Collider::Type::GROUND); // Floor 1
@@ -123,7 +124,7 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
 
 	// Adding enemy
-	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 162, 248 - 12);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 8z0);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 207);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 207);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 167);

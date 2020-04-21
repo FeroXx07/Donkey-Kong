@@ -55,6 +55,10 @@ protected:
 
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
+
+	iPoint enemySpeed = { 0,0 };
+
+	bool goingLeft = true;
 };
 
 #endif // __ENEMY_H__
