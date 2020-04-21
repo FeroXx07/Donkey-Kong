@@ -107,8 +107,6 @@ public:
 	bool walkingFX = false;
 
 
-
-
 };
 
 #endif //!__MODULE_PLAYER_H__

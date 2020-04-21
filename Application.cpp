@@ -16,6 +16,7 @@
 #include "ModuleSceneWin.h"
 #include "ModuleParticles.h"
 #include "ModuleFonts.h"
+#include "ModuleHud.h"
 
 Application::Application()
 {
@@ -39,7 +40,8 @@ Application::Application()
 	modules[11] = collisions = new ModuleCollisions(true);
 	modules[12] = fade = new ModuleFadeToBlack(true);
 	modules[13] = fonts = new ModuleFonts(true);
-	modules[14] = render = new ModuleRender(true);
+	modules[14] = hud = new ModuleHud(true);
+	modules[15] = render = new ModuleRender(true);
 }
 
 Application::~Application()

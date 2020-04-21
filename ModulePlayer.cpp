@@ -9,7 +9,7 @@
 #include "ModuleHammer.h"
 #include "Level4.h"
 #include "ModuleFadeToBlack.h"
-
+#include "ModuleFonts.h"
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
 
@@ -132,6 +132,8 @@ bool ModulePlayer::Start()
 	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking.wav");
 	lives = 3;
 	frameCountWalking = 0;
+
+
 	return ret;
 }
 

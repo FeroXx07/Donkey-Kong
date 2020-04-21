@@ -108,6 +108,9 @@
     <ClCompile Include="ModuleFonts.cpp">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleHud.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -192,6 +195,9 @@
       <Filter>Archivos de origen\Modulos</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFonts.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHud.h">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
