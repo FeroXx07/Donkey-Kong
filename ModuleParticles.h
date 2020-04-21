@@ -58,7 +58,7 @@ private:
 public:
 	//Template particle for an explosion
 	Particle plasma;
-
+	Particle 
 };
 
 #endif // !__MODULEPARTICLES_H__

@@ -22,6 +22,15 @@ public:
 
 public:
 	uint score = 0;
+	uint highscore = 0;
+	uint loop = 0;
+	
 	int whiteFont = -1;
+	int lightBlueFont = -1;
+	int darkBlueFont = -1;
+
 	char scoreText[10] = { "\0" };
+	char highScoreText[10] = { "\0" };
+	char loopScore[10] = { "\0" };
+	char livesText[4] = { ",,,"};
 };

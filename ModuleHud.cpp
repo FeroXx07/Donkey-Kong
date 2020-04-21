@@ -24,8 +24,11 @@ bool ModuleHud::Start()
 
 	bool ret = true;
 
-	char lookupTable[] = { "0123456789" };
-	whiteFont = App->fonts->Load("Assets/Fonts/Fonts_WHITE.png", lookupTable, 1);
+	char lookupTableNumbers[] = { "0123456789" };
+	char lookupTableTextAndLives[] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-," }; // "," is LIVES SPRITE!!!!!!!!!
+	whiteFont = App->fonts->Load("Assets/Fonts/Fonts_WHITE.png", lookupTableNumbers, 1);
+	lightBlueFont = App->fonts->Load("Assets/Fonts/Fonts_LIGHTBLUE.png", lookupTableTextAndLives, 1);
+	darkBlueFont = App->fonts->Load("Assets/Fonts/Fonts_DARKBLUE.png", lookupTableNumbers, 1);
 	return ret;
 }
 
@@ -40,13 +43,18 @@ update_status ModuleHud::Update()
 update_status ModuleHud::PostUpdate()
 {
 	// Draw UI (score) --------------------------------------
-	sprintf_s(scoreText, 10, "%d", score);
-
+	sprintf_s(scoreText, 10, "%6d", score);
+	sprintf_s(highScoreText, 10, "%6d", highscore);
+	sprintf_s(loopScore, 10, "%6d", loop);
 	// TODO 3: Blit the text of the score in at the bottom of the screen
-	App->fonts->BlitText(0, 0, whiteFont, scoreText);
+	App->fonts->BlitText(8	, 8, whiteFont, scoreText);
 
-	App->fonts->BlitText(100, 100, whiteFont, "1");
-	++score;
+	App->fonts->BlitText(88, 8, whiteFont, highScoreText);
+
+	App->fonts->BlitText(8, 24, lightBlueFont, livesText);
+
+	App->fonts->BlitText(184, 24, darkBlueFont, livesText);
+
 	return update_status::UPDATE_CONTINUE;
 }
 

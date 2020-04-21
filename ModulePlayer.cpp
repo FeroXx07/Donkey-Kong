@@ -10,6 +10,8 @@
 #include "Level4.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
+#include "ModuleHud.h"
+
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
 
@@ -327,8 +329,9 @@ update_status ModulePlayer::Update()
 	if (/*	isScoring  */1) { // isScoring is  a variable in which we put it true when we have to score, i.e. jumping over barrels, fires and enemies, grabbing items, killing enemies, etc.
 		// TODO implement each type of scoring
 
-		if (score > highscore) {
-			highscore = score;
+	
+		if (App->hud->score > App->hud->highscore) {
+			App->hud->highscore = App->hud->score;
 		}
 		//isScoring = false;
 	}
