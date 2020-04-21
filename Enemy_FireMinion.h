@@ -16,11 +16,17 @@ public:
 
 private:
 
+	int spawnDelay = 0;
+
+
 	// The original spawning position. The wave will be calculated from that
 	int spawn_y = 0;
 
 	// The enemy animation
-	Animation enemy_FireMinionAnim;
+	Animation enemy_FireMinionLeftAnim;
+	Animation enemy_FireMinionRightAnim;
+	
+	int enemyFireMinionSpeed = 1;
 };
 
 #endif // __ENEMY_REDBIRD_H__

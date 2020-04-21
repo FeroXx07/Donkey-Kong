@@ -8,6 +8,7 @@
 #include "ModuleAudio.h"
 #include "ModuleHammer.h"
 #include "Level4.h"
+#include "ModuleFadeToBlack.h"
 
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
@@ -308,17 +309,17 @@ update_status ModulePlayer::Update()
 	else if (getLives() == 1); // Poner el sprite menos el ancho de dos vidas
 
 	if (lives == 0) {
-		this->destroyed = true;
+		
 		printf("GAMEOVER\n\n");
 	}
 
-	if (destroyed) { // When mario lives == 0
+	/*if (destroyed) { // When mario lives == 0
 		// TODO set GAME OVER screen ()
 		destroyedCountdown--;
 		if (destroyedCountdown <= 0)
 
 		return update_status::UPDATE_STOP;
-	}
+	}*/
 	printf("%d\n\n", lives);
 
 	if (/*	isScoring  */1) { // isScoring is  a variable in which we put it true when we have to score, i.e. jumping over barrels, fires and enemies, grabbing items, killing enemies, etc.
@@ -373,7 +374,6 @@ update_status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	// TODO 5: Detect collision with a wall. If so, destroy the player.
 	if (destroyed == false)
 	{
 
@@ -445,26 +445,22 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		if (c2->type == Collider::Type::ENEMY)
 		{
-
 			if (/* Enemy Type == Enemy Fire Type */        1) {
 				if (lives > 0) {
 					// TODO para todo el codigo y actualizar animaciones
-
 					lives--;
-					position.x = 0; // Smthing experimental
-					position.y = 232; // Smthing experimental
-
+					destroyed = true;
 
 					// TODO add fx
 
 					// TODO add level 4 screen during x seconds
-
 				}
 
 			}
 			if (/* Enemy Type == Enemy Item Type */    1) {
 				//Items implementation
 			}
+
 		}
 	}
 }
