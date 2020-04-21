@@ -58,7 +58,6 @@ void Enemy::OnCollision(Collider* collider)
 	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::WALL) {
 		if (this->collider->rect.x < collider->rect.x + collider->rect.w) // Left wall collider
 		{
-			//currentAnim = &enemy_FireMinionRightAnim;
 			this->position.x = collider->rect.x - this->collider->rect.w;
 			this->enemySpeed.x = -this->enemySpeed.x;
 			goingLeft = true;

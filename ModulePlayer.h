@@ -46,6 +46,7 @@ public:
 	void setLives(int _lives) {
 		lives = _lives;
 	}
+	bool isHurting;
 
 	int score;
 	int highscore;

@@ -5,6 +5,8 @@
 
 Enemy_FireMinion::Enemy_FireMinion(int x, int y) : Enemy(x, y)
 {
+	spawnDelay = 0;
+	
 	enemySpeed.x = -1;
 
 	enemy_FireMinionLeftAnim.PushBack({ 561,140,15,12 });
@@ -22,17 +24,13 @@ Enemy_FireMinion::Enemy_FireMinion(int x, int y) : Enemy(x, y)
 
 void Enemy_FireMinion::Update()
 {
-	// It will update the collider depending on the position
-	position.x += enemySpeed.x;
-	/*if (position.x <= 0) {
-		currentAnim = &enemy_FireMinionRightAnim;
-		enemyFireMinionSpeed = -enemyFireMinionSpeed;
+	// Fire Minion position update
+	if (spawnDelay >  60) {
+		position.x += enemySpeed.x;
 	}
-	else if (position.x >= (224 - 16)) {
-		currentAnim = &enemy_FireMinionLeftAnim;
-		enemyFireMinionSpeed = -enemyFireMinionSpeed;
-	}*/
+	spawnDelay++;
 
+	// Fire Minion animations
 	if (goingLeft) currentAnim = &enemy_FireMinionLeftAnim;
 	else currentAnim = &enemy_FireMinionRightAnim;
 

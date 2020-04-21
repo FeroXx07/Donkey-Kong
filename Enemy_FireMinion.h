@@ -16,6 +16,9 @@ public:
 
 private:
 
+	int spawnDelay = 0;
+
+
 	// The original spawning position. The wave will be calculated from that
 	int spawn_y = 0;
 

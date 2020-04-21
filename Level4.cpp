@@ -44,12 +44,16 @@ bool ModuleScene::Start()
 	App->hammer->Enable();
 	App->enemies->Enable();
 
+	//Starting position of the Mario
+	App->player->position.x = 0;
+	App->player->position.y = 232;
+
 	Nuts = 8;
 	frameCount = 0;
+	App->player->destroyed = false;
 
 	// Level 4 colliders:
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND); // Base
-
 
 	App->collisions->AddCollider({ 7, 208, 1, 8 }, Collider::Type::GROUND); // Floor 1
 	// LEFT LADDER
@@ -114,6 +118,8 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 184 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	
 	// Wall collisions
+	App->collisions->AddCollider({ -1, 216, 1, 32 }, Collider::Type::WALL); // Base Left
+	App->collisions->AddCollider({ 224, 216, 1, 32 }, Collider::Type::WALL); // Base Right
 	App->collisions->AddCollider({ 0, 177, 4, 31 }, Collider::Type::WALL); // Floor 1 Left
 	App->collisions->AddCollider({ 220, 177, 4, 31 }, Collider::Type::WALL); // Floor 1 Right
 	App->collisions->AddCollider({ 0, 137, 12, 31 }, Collider::Type::WALL); // Floor 2 Left
@@ -122,9 +128,12 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 204, 97, 20, 32 }, Collider::Type::WALL); // Floor 3 Right
 	App->collisions->AddCollider({ 0, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Left
 	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
+	App->collisions->AddCollider({ 71, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
+	App->collisions->AddCollider({ 151, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
 
 	// Adding enemy
-	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 8z0);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 80); //  Enemy floor 2
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12); // Enemy at the base
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 207);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 207);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 167);
@@ -149,6 +158,14 @@ update_status ModuleScene::Update()
 		App->audio->PlayFx(FX_Win);
 		App->fade->FadeToBlack(this, (Module*)App->sceneWin, 10);
 	}
+
+	if (App->player->destroyed && App->player->lives > 0) {
+		App->fade->FadeToBlack(this, this, 60);
+	}
+	else if (App->player->destroyed && App->player->lives == 0) {
+
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
