@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleFonts.h"
+#include "ModulePlayer.h"
 #include <stdio.h>
 ModuleHud::ModuleHud(bool startEnabled) : Module(startEnabled)
 {
@@ -34,18 +35,55 @@ bool ModuleHud::Start()
 
 update_status ModuleHud::Update()
 {
-
+	// Draw UI (score) --------------------------------------
+	sprintf_s(scoreText, 10, "%6d", score);
+	sprintf_s(highScoreText, 10, "%6d", highscore);
+	sprintf_s(loopScore, 10, "%2d", loop);
 	
+	if (lives == 3)
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			livesText[i] = ',';
+		}
+		livesText[3] = ' ';
+	}
+	else if (lives == 2)
+	{
+		for (int i = 0; i < 2; ++i)
+		{
+			livesText[i] = ',';
+		}
+		for (int i = 2; i <= 3; ++i)
+		{
+			livesText[i] = '\0';
+		}
+	}
+	else if (lives == 1)
+	{
+		for (int i = 0; i < 1; ++i)
+		{
+			livesText[i] = ',';
+		}
+		for (int i = 1; i <= 3; ++i)
+		{
+			livesText[i] = '\0';
+		}
+	}
+	else
+	{
+		for (int i = 1; i <= 3; ++i)
+		{
+			livesText[i] = '\0';
+		}
+	}
 	
 	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModuleHud::PostUpdate()
 {
-	// Draw UI (score) --------------------------------------
-	sprintf_s(scoreText, 10, "%6d", score);
-	sprintf_s(highScoreText, 10, "%6d", highscore);
-	sprintf_s(loopScore, 10, "%6d", loop);
+	
 	// TODO 3: Blit the text of the score in at the bottom of the screen
 	App->fonts->BlitText(8	, 8, whiteFont, scoreText);
 
@@ -53,7 +91,7 @@ update_status ModuleHud::PostUpdate()
 
 	App->fonts->BlitText(8, 24, lightBlueFont, livesText);
 
-	App->fonts->BlitText(184, 24, darkBlueFont, livesText);
+	App->fonts->BlitText(184, 24, darkBlueFont, loopScore);
 
 	return update_status::UPDATE_CONTINUE;
 }

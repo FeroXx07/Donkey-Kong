@@ -44,16 +44,26 @@ void Enemy::OnCollision(Collider* collider)
 	//App->audio->PlayFx(destroyedFx);
 	if (collider->type == Collider::Type::HAMMER)
 	{
+		// For enemies
 		SetToDelete();
 		App->particles->AddParticle(App->particles->plasma, this->position.x, this->position.y, Collider::Type::NONE, 10);
+		//Particle 300
 		App->hud->score += 300;
 	}
 
 	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)
 	{
-		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w))) {
+		// For score items
+		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && Collider::Items::SCOREITEMS) {
+			App->hud->score += 500;
+			//Particle 500
+			SetToDelete();
+		}
+		// For nuts
+		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && Collider::Items::IMPORTANTITEMS) {
 			App->scene->Nuts--;
 			App->hud->score += 100;
+			//Particle 100
 			SetToDelete();
 		}
 	}

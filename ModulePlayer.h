@@ -38,14 +38,7 @@ public:
 public:
 	// Position of the player in the map
 	iPoint position;
-
-	int lives;
-	int getLives() {
-		return lives;
-	}
-	void setLives(int _lives) {
-		lives = _lives;
-	}
+	
 	bool isHurting;
 
 	int score;

@@ -130,9 +130,8 @@ bool ModulePlayer::Start()
 
 	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
-
+	App->hammer->Enable();
 	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking.wav");
-	lives = 3;
 	frameCountWalking = 0;
 
 
@@ -306,13 +305,13 @@ update_status ModulePlayer::Update()
 
 
 	// TODO actualizar sprite de las vidas
-	if (getLives() == 3); // Poner el sprite completo
+	//if (getLives() == 3); // Poner el sprite completo
 
-	else if (getLives() == 2); // Poner el sprite menos el ancho de una vida
+	//else if (getLives() == 2); // Poner el sprite menos el ancho de una vida
 
-	else if (getLives() == 1); // Poner el sprite menos el ancho de dos vidas
+	//else if (getLives() == 1); // Poner el sprite menos el ancho de dos vidas
 
-	if (lives == 0) {
+	if (App->hud->lives == 0) {
 		
 		printf("GAMEOVER\n\n");
 	}
@@ -324,7 +323,7 @@ update_status ModulePlayer::Update()
 
 		return update_status::UPDATE_STOP;
 	}*/
-	printf("%d\n\n", lives);
+	printf("%d\n\n", App->hud->lives);
 
 	if (/*	isScoring  */1) { // isScoring is  a variable in which we put it true when we have to score, i.e. jumping over barrels, fires and enemies, grabbing items, killing enemies, etc.
 		// TODO implement each type of scoring
@@ -451,9 +450,9 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		if (c2->type == Collider::Type::ENEMY)
 		{
 			if (/* Enemy Type == Enemy Fire Type */        1) {
-				if (lives > 0) {
+				if (App->hud->lives > 0) {
 					// TODO para todo el codigo y actualizar animaciones
-					lives--;
+					App->hud->lives--;
 					destroyed = true;
 
 					// TODO add fx

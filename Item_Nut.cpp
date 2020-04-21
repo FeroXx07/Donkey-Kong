@@ -10,7 +10,7 @@ Item_Nut::Item_Nut(int x, int y) : Enemy(x, y)
 	item_NutAnimation.loop = false;
 
 	currentAnim = &item_NutAnimation;
-	collider = App->collisions->AddCollider({ 0, 0, 8, 9 }, Collider::Type::Item_Type, (Module*)App->enemies);
+	collider = App->collisions->AddCollider({ 0, 0, 8, 9 }, Collider::Type::Item_Type, (Module*)App->enemies, Collider::Items::IMPORTANTITEMS);
 
 }
 

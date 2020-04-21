@@ -10,6 +10,7 @@
 #include "ModuleHammer.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleInput.h"
+#include "ModuleHud.h"
 
 #include "Game/SDL_mixer/include/SDL_mixer.h"
 #include "Game/SDL/include/SDL_scancode.h"
@@ -41,7 +42,6 @@ bool ModuleScene::Start()
 	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 	App->collisions->Enable();
 	App->player->Enable();
-	App->hammer->Enable();
 	App->enemies->Enable();
 
 	//Starting position of the Mario
@@ -159,10 +159,12 @@ update_status ModuleScene::Update()
 		App->fade->FadeToBlack(this, (Module*)App->sceneWin, 10);
 	}
 
-	if (App->player->destroyed && App->player->lives > 0) {
+	if (App->player->destroyed && /*App->player->lives*/App->hud->lives > 0) {
+		App->collisions->Disable();
+		App->player->Disable();
 		App->fade->FadeToBlack(this, this, 60);
 	}
-	else if (App->player->destroyed && App->player->lives == 0) {
+	else if (App->player->destroyed && App->hud->lives == 0) {
 
 	}
 

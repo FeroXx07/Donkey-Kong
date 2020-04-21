@@ -24,7 +24,7 @@ public:
 	uint score = 0;
 	uint highscore = 0;
 	uint loop = 0;
-	
+	uint lives = 3;
 	int whiteFont = -1;
 	int lightBlueFont = -1;
 	int darkBlueFont = -1;
