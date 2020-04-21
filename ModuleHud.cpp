@@ -46,7 +46,7 @@ update_status ModuleHud::Update()
 		{
 			livesText[i] = ',';
 		}
-		livesText[3] = ' ';
+		livesText[3] = '\0';
 	}
 	else if (lives == 2)
 	{

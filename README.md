@@ -25,6 +25,10 @@ look the same way as the original.
  - W Key: Climb stairs up
  - S Key: Climb stairs down
  - F1 Key: Show colliders
+ - F2 Key: Toggle Hammer off
+ - F3 Key: Toggle Hammer on
+ - F4 Key: Insta win
+ - F5 Key: Toggle God mode;
 
 ## Team Members
 

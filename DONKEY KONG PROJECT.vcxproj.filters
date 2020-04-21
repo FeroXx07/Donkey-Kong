@@ -111,6 +111,15 @@
     <ClCompile Include="ModuleHud.cpp">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Item_Iron.cpp">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Umbrella.cpp">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Bag.cpp">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -199,6 +208,15 @@
     </ClInclude>
     <ClInclude Include="ModuleHud.h">
       <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Iron.h">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Umbrella.h">
+      <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Bag.h">
+      <Filter>Archivos de origen\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

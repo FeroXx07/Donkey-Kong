@@ -71,6 +71,41 @@ bool ModuleAudio::CleanUp()
 
 	return true;
 }
+bool ModuleAudio::UnloadFX(uint index)
+{
+	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
+
+	if (soundFx[index] != nullptr)
+	{
+		Mix_FreeChunk(soundFx[index]);
+		soundFx[index] = nullptr;
+	}
+	return true;
+}
+
+
+bool ModuleAudio::FreeAll()
+{
+	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
+
+
+	if (music != NULL)
+	{
+		Mix_FreeMusic(music);
+		music = NULL;
+	}
+
+	for (uint i = 0; i < MAX_FX; ++i)
+	{
+		if (soundFx[i] != nullptr)
+		{
+			Mix_FreeChunk(soundFx[i]);
+			soundFx[i] = nullptr;
+		}
+	}
+
+	return true;
+}
 
 bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 {

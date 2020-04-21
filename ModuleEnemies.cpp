@@ -9,6 +9,9 @@
 #include "Enemy.h"
 #include "Enemy_FireMinion.h"
 #include "Item_Nut.h"
+#include "Item_Iron.h"
+#include "Item_Umbrella.h"
+#include "Item_Bag.h"
 
 
 #define SPAWN_MARGIN 50
@@ -156,6 +159,15 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 					break;
 				case Enemy_Type::ITEM_NUT:
 					enemies[i] = new Item_Nut(info.x, info.y);
+					break;
+				case Enemy_Type::ITEM_IRON:
+					enemies[i] = new Item_Iron(info.x, info.y);
+					break;
+				case Enemy_Type::ITEM_UMBRELLA:
+					enemies[i] = new Item_Umbrella(info.x, info.y);
+					break;
+				case Enemy_Type::ITEM_BAG:
+					enemies[i] = new Item_Bag(info.x, info.y);
 					break;
 			}
 			enemies[i]->texture = texture;

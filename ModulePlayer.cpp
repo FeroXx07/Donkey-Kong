@@ -130,7 +130,6 @@ bool ModulePlayer::Start()
 
 	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
 	currentAnimation = &rightIdleAnim; 
-	App->hammer->Enable();
 	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking.wav");
 	frameCountWalking = 0;
 
@@ -263,6 +262,11 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN && App->hammer->hammerExist == true)
 	{
 		currentAnimation = &rightIdleAnim;
+	}
+
+	if (App->input->keys[SDL_SCANCODE_F5] == KEY_DOWN )
+	{
+		isGod = !isGod;
 	}
 
 	//Gravity
@@ -447,7 +451,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 				}
 		}
 
-		if (c2->type == Collider::Type::ENEMY)
+		if (c2->type == Collider::Type::ENEMY && isGod == false)
 		{
 			if (/* Enemy Type == Enemy Fire Type */        1) {
 				if (App->hud->lives > 0) {
@@ -473,5 +477,6 @@ bool ModulePlayer::CleanUp()
 {
 	App->textures->Unload(texture);
 	App->hammer->CleanUp();
+	//App->audio->UnloadFX(FX_Walking);
 	return true;
 }

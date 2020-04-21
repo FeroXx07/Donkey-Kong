@@ -7,6 +7,7 @@
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
 #include "ModuleHud.h"
+#include "ModuleEnemies.h"
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {
@@ -48,22 +49,25 @@ void Enemy::OnCollision(Collider* collider)
 		SetToDelete();
 		App->particles->AddParticle(App->particles->plasma, this->position.x, this->position.y, Collider::Type::NONE, 10);
 		//Particle 300
+		App->particles->AddParticle(App->particles->score300, this->position.x - 5, this->position.y - 7, Collider::Type::NONE, 60);
 		App->hud->score += 300;
 	}
 
 	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)
 	{
 		// For score items
-		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && Collider::Items::SCOREITEMS) {
+		if (this->collider->item == Collider::Items::SCOREITEMS) {
 			App->hud->score += 500;
 			//Particle 500
+			App->particles->AddParticle(App->particles->score500, this->position.x - 5, this->position.y - 7, Collider::Type::NONE,5);
 			SetToDelete();
 		}
 		// For nuts
-		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && Collider::Items::IMPORTANTITEMS) {
+		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && this->collider->IMPORTANTITEMS) {
 			App->scene->Nuts--;
 			App->hud->score += 100;
 			//Particle 100
+			App->particles->AddParticle(App->particles->score100, this->position.x - 5, this->position.y - 7, Collider::Type::NONE,5);
 			SetToDelete();
 		}
 	}

@@ -35,6 +35,8 @@ public:
 
 	SDL_Rect monkeyScreen;
 	SDL_Rect introScreen;
+	SDL_Texture* precoin = nullptr;
+	SDL_Texture* names = nullptr;
 
 	int FX_Monkey = 0;
 	int FX_InsertCoin = 0;

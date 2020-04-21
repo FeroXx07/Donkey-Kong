@@ -88,6 +88,7 @@ public:
 	bool isLadder = false;
 	bool isGround = true;
 	bool isJumping = false;
+	bool isGod = false;
 
 	// A countdown to when the player gets destroyed. After a while, the game exits
 	uint destroyedCountdown = 120;

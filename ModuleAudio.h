@@ -1,6 +1,3 @@
-#ifndef __MODULE_AUDIO_H__
-#define __MODULE_AUDIO_H__
-
 #include "Module.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
@@ -42,6 +39,8 @@ public:
 	// Plays a previously loaded WAV
 	// Receives an index from the sound fx array
 	bool PlayFx(uint index, int repeat = 0);
+	bool UnloadFX(uint index);
+	bool FreeAll();
 
 public:
 	// The current playing music
@@ -51,5 +50,3 @@ public:
 	// Allows us to keep track of all sound fx and handle them through indices
 	Mix_Chunk* soundFx[MAX_FX] = { nullptr };
 };
-
-#endif // __MODULE_AUDIO_H__

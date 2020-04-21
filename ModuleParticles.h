@@ -58,7 +58,11 @@ private:
 public:
 	//Template particle for an explosion
 	Particle plasma;
-	 
+
+	Particle score100;
+	Particle score300;
+	Particle score500;
+	
 };
 
 #endif // !__MODULEPARTICLES_H__

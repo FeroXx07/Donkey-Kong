@@ -125,5 +125,6 @@ void ModuleHammer::OnCollision(Collider* c1, Collider* c2)
 bool ModuleHammer::CleanUp()
 {
 	App->textures->Unload(texture);
+	//App->audio->UnloadFX(FX_Hammer);
 	return true;
 }

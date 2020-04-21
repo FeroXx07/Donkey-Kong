@@ -41,6 +41,21 @@ bool ModuleParticles::Start()
 	plasma.anim.speed = 0.1f;
 	plasma.lifetime = 60;
 
+	score100.anim.PushBack({ 457, 108, 15, 7 });
+	score100.anim.loop = false;
+	score100.anim.speed = 0.1f;
+	score100.lifetime = 60;
+
+	score300.anim.PushBack({ 505, 108, 15, 7 });
+	score300.anim.loop = false;
+	score300.anim.speed = 0.1f;
+	score300.lifetime = 60;
+
+	score500.anim.PushBack({ 529, 108, 16, 7 });
+	score500.anim.loop = false;
+	score500.anim.speed = 0.1f;
+	score500.lifetime = 60;
+
 	return true;
 }
 

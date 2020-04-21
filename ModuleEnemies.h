@@ -9,6 +9,9 @@ enum class Enemy_Type
 {
 	NO_TYPE,
 	ITEM_NUT,
+	ITEM_IRON,
+	ITEM_UMBRELLA,
+	ITEM_BAG,
 	ENEMY_FIREMINION,
 	
 };

@@ -46,13 +46,13 @@ ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
 	hurtAnim.loop = true;
 	hurtAnim.speed = 0.1f;
 
-	path.Reset();
+	
 	path.loop = false;
 	path.PushBack({ 0,0 }, 180, &angryAnim);
 	path.PushBack({ 0,+1.0f }, 127, &fallAnim);
-	path.PushBack({ 0,0 }, 500, &hurtAnim);
+	path.PushBack({ 0,0 }, 240, &hurtAnim);
 	currentAnim = path.GetCurrentAnimation();
-
+	
 	princessSprite = {504, 598, 16, 22};
 	marioSprite = { 530, 604, 12, 16 };
 	heartSprite = { 553, 598,15,13 };
@@ -78,10 +78,11 @@ bool ModuleSceneWin::Start()
 
 	spawnPosition.x = 90;
 	spawnPosition.y = 88 - 32;
-
+	donkeyPosition = { 0,0 };
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	currentAnim = path.GetCurrentAnimation();
 	frameCount = 0;
 	return ret;
 }
@@ -100,6 +101,7 @@ update_status ModuleSceneWin::Update()
 	if (frameCount >= 307) {
 		if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN)
 		{
+			App->textures->Unload(bgTexture);
 			App->fade->FadeToBlack(this, (Module*)App->intro);
 		}
 	}
@@ -132,6 +134,7 @@ update_status ModuleSceneWin::PostUpdate()
 		if (frameCount == 307) App->audio->PlayFx(FX_DK_Stomp);
 		App->collisions->Disable();
 		App->player->Disable();
+
 		App->render->Blit(bgTexture, 0, 0, &celebrationScene);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - princessSprite.w / 2, 88 - princessSprite.h, &princessSprite);
 		App->render->Blit(bgTexture, spawnPosition.x + 40 / 2 - marioSprite.w / 2 + 40, 88 - marioSprite.h, &marioSprite);
@@ -150,9 +153,10 @@ update_status ModuleSceneWin::PostUpdate()
 
 bool ModuleSceneWin::CleanUp()
 {
+	App->audio->FreeAll();
 	App->textures->Unload(bgTexture);
-	App->textures->CleanUp();
-	App->collisions->CleanUp();
-	App->player->CleanUp();
+	App->textures->Disable();
+	App->collisions->Disable();
+	App->player->Disable();
 	return true;
 }

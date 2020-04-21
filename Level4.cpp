@@ -42,6 +42,8 @@ bool ModuleScene::Start()
 	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 	App->collisions->Enable();
 	App->player->Enable();
+	App->hammer->Enable();
+	if (App->hud->lives != 3) App->hammer->Start();
 	App->enemies->Enable();
 
 	//Starting position of the Mario
@@ -128,8 +130,8 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 204, 97, 20, 32 }, Collider::Type::WALL); // Floor 3 Right
 	App->collisions->AddCollider({ 0, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Left
 	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
-	App->collisions->AddCollider({ 71, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
-	App->collisions->AddCollider({ 151, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
+	App->collisions->AddCollider({ 71+2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
+	App->collisions->AddCollider({ 151-2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
 
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 80); //  Enemy floor 2
@@ -142,6 +144,10 @@ bool ModuleScene::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 127);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 56, 87);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_NUT, 160, 87);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 197-20, 199);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 28, 72);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 127, 238);
+	
 	return ret;
 }
 
@@ -186,6 +192,7 @@ bool ModuleScene::CleanUp()
 	App->enemies->Disable();
 	App->textures->Unload(bgTexture);
 	App->textures->Unload(bgTextureTransparent);
+	App->audio->UnloadFX(FX_Win);
 	// TODO 5: Remove All Memory Leaks - no solution here guys ;)
 	return true;
 }
