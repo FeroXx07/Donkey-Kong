@@ -35,10 +35,16 @@ public:
 
 	// Retrieve size of a texture by modifying parameters with and height
 	void GetTextureSize(const SDL_Texture* texture, uint& width, uint& height) const;
+
+	inline uint GetTexturesCount() const { return texturesCount; };
+
 public:
 	// An array of all the loaded textures
 	// Allows us to keep track of all textures and free them on application exit
 	SDL_Texture* textures[MAX_TEXTURES] = { nullptr };
+
+	// The amount of colliders loaded into the array
+	uint texturesCount = 0;
 };
 
 #endif // __ModuleTextures_H__

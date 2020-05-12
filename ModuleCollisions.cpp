@@ -86,6 +86,7 @@ update_status ModuleCollisions::PreUpdate()
 		if(colliders[i] != nullptr && colliders[i]->pendingToDelete == true)
 		{
 			delete colliders[i];
+			--colliderCount;
 			colliders[i] = nullptr;
 		}
 	}
@@ -190,6 +191,7 @@ bool ModuleCollisions::CleanUp()
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
+			--colliderCount;
 		}
 	}
 
@@ -205,6 +207,7 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Modu
 		if(colliders[i] == nullptr)
 		{
 			ret = colliders[i] = new Collider(rect, type, listener, Item);
+			++colliderCount;
 			break;
 		}
 	}
@@ -220,6 +223,7 @@ void ModuleCollisions::RemoveCollider(Collider* collider)
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
+			--colliderCount;
 		}
 	}
 }

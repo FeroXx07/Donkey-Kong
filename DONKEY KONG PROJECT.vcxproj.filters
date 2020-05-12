@@ -120,6 +120,9 @@
     <ClCompile Include="Item_Bag.cpp">
       <Filter>Archivos de origen\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleDebugInfo.cpp">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="Item_Bag.h">
       <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleDebugInfo.h">
+      <Filter>Archivos de origen\Modulos\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

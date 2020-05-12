@@ -78,6 +78,7 @@ SDL_Texture* const ModuleTextures::Load(const char* path)
 				if (textures[i] == nullptr)
 				{
 					textures[i] = texture;
+					++texturesCount;
 					break;
 				}
 			}
@@ -101,6 +102,7 @@ bool ModuleTextures::Unload(SDL_Texture* texture)
 			{
 				textures[i] = nullptr;
 				ret = true;
+				--texturesCount;
 				break;
 			}
 		}

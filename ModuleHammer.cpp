@@ -36,13 +36,17 @@ bool ModuleHammer::Start()
 	bool ret = true;
 
 	texture = App->textures->Load("Assets/Background.png"); // arcade version
+	++activeTextures; ++totalTextures;
+
 	FX_Hammer = App->audio->LoadFx("Assets/Music/SFX_Hammer.wav");
+	++activeFx; ++totalFx;
 
 	//Starting position of the Mario
 	hammerPosition.x = App->player->position.x;
 	hammerPosition.y = App->player->position.y;
 
 	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER);
+	++activeColliders; ++totalColliders;
 	return ret;
 }
 
@@ -81,13 +85,9 @@ update_status ModuleHammer::Update()
 		if (App->player->currentAnimation->GetCurrentFps() % 2 == 0) // Hammer down
 		{
 			if ((App->player->currentAnimation == &App->player->hammerLeftAnim) || (App->player->currentAnimation == &App->player->hammerLeftIdleAnim)) {
-				//hammerPosition.x = App->player->position.x - 16;
-				//hammerPosition.y = App->player->position.y + 4;
 				hammerCollider->SetPos(App->player->position.x - 16, App->player->position.y + 4);
 			}
 			else if ((App->player->currentAnimation == &App->player->hammerRightAnim) || (App->player->currentAnimation == &App->player->hammerRightIdleAnim)) {
-				//hammerPosition.x = App->player->position.x + 18;
-				//hammerPosition.y = App->player->position.y + 4;
 				hammerCollider->SetPos(App->player->position.x + 18, App->player->position.y + 4);
 			}
 		}
@@ -95,17 +95,12 @@ update_status ModuleHammer::Update()
 		else // Hammer up
 		{
 			if ((App->player->currentAnimation == &App->player->hammerLeftAnim) || (App->player->currentAnimation == &App->player->hammerLeftIdleAnim)) {
-				//hammerPosition.x = App->player->position.x + 1;
-				//hammerPosition.y = App->player->position.y - 11;
 				hammerCollider->SetPos(App->player->position.x + 1, App->player->position.y - 11);
 			}
 			else if ((App->player->currentAnimation == &App->player->hammerRightAnim) || (App->player->currentAnimation == &App->player->hammerRightIdleAnim)) {
-				//hammerPosition.x = App->player->position.x + 1;
-				//hammerPosition.y = App->player->position.y - 11;
 				hammerCollider->SetPos(App->player->position.x + 1, App->player->position.y - 11);
 			}
 		}
-		//hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
 	}
 	return update_status::UPDATE_CONTINUE;
 }
@@ -124,7 +119,16 @@ void ModuleHammer::OnCollision(Collider* c1, Collider* c2)
 
 bool ModuleHammer::CleanUp()
 {
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
 	App->textures->Unload(texture);
-	//App->audio->UnloadFX(FX_Hammer);
+	--totalTextures;
+
+	App->audio->UnloadFx(FX_Hammer);
+	--totalFx;
+
+	App->collisions->RemoveCollider(hammerCollider);
+	--totalColliders;
+
 	return true;
 }

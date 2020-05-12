@@ -71,10 +71,16 @@ bool ModuleSceneWin::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/WinTexture.png");
+	++activeTextures; ++totalTextures;
+
 	FX_DK_Defeated = App->audio->LoadFx("Assets/Music/SFX_DK Defeated.wav");
+	++activeFx; ++totalFx;
 	FX_DK_Falling= App->audio->LoadFx("Assets/Music/SFX_Fall.wav");
+	++activeFx; ++totalFx;
 	FX_DK_Stomp = App->audio->LoadFx("Assets/Music/SFX_Stomp.wav");
+	++activeFx; ++totalFx;
 	FX_WinMusic = App->audio->LoadFx("Assets/Music/SFX_Ending.wav");
+	++activeFx; ++totalFx;
 
 	spawnPosition.x = 90;
 	spawnPosition.y = 88 - 32;
@@ -153,10 +159,25 @@ update_status ModuleSceneWin::PostUpdate()
 
 bool ModuleSceneWin::CleanUp()
 {
-	App->audio->FreeAll();
-	App->textures->Unload(bgTexture);
-	App->textures->Disable();
+	//App->audio->FreeAll();
 	App->collisions->Disable();
 	App->player->Disable();
+
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
+	// TODO 1: Remove ALL remaining resources. Update resource count properly
+
+	App->textures->Unload(bgTexture);
+	--totalTextures;
+
+	App->audio->UnloadFx(FX_DK_Defeated);
+	--totalFx;
+	App->audio->UnloadFx(FX_DK_Falling);
+	--totalFx;
+	App->audio->UnloadFx(FX_DK_Stomp);
+	--totalFx;
+	App->audio->UnloadFx(FX_WinMusic);
+	--totalFx;
+	return true;
 	return true;
 }

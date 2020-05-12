@@ -71,18 +71,6 @@ bool ModuleAudio::CleanUp()
 
 	return true;
 }
-bool ModuleAudio::UnloadFX(uint index)
-{
-	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
-
-	if (soundFx[index] != nullptr)
-	{
-		Mix_FreeChunk(soundFx[index]);
-		soundFx[index] = nullptr;
-	}
-	return true;
-}
-
 
 bool ModuleAudio::FreeAll()
 {
@@ -173,9 +161,25 @@ uint ModuleAudio::LoadFx(const char* path)
 			if (soundFx[ret] == nullptr)
 			{
 				soundFx[ret] = chunk;
+				++fxCount;
 				break;
 			}
 		}
+	}
+
+	return ret;
+}
+
+bool ModuleAudio::UnloadFx(uint index)
+{
+	bool ret = false;
+
+	if (soundFx[index] != nullptr)
+	{
+		Mix_FreeChunk(soundFx[index]);
+		soundFx[index] = nullptr;
+		--fxCount;
+		ret = true;
 	}
 
 	return ret;

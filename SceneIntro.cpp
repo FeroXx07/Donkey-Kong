@@ -30,11 +30,21 @@ bool SceneIntro::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/Hud2.png");
+	++activeTextures; ++totalTextures;
+
 	precoin = App->textures->Load("Assets/Precoin.png");
+	++activeTextures; ++totalTextures;
+
 	names = App->textures->Load("Assets/Names.png");
+	++activeTextures; ++totalTextures;
+
 
 	FX_Monkey = App->audio->LoadFx("Assets/Music/SFX_MonkeyHeight.wav");
+	++activeFx; ++totalFx;
+
 	FX_InsertCoin = App->audio->LoadFx("Assets/Music/SFX_InsertCoin.wav");
+	++activeFx; ++totalFx;
+
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
@@ -78,6 +88,19 @@ update_status SceneIntro::PostUpdate()
 
 bool SceneIntro::CleanUp()
 {
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
 	App->textures->Unload(bgTexture);
+	--totalTextures;
+	App->textures->Unload(precoin);
+	--totalTextures;
+	App->textures->Unload(names);
+	--totalTextures;
+
+	App->audio->UnloadFx(FX_Monkey);
+	--totalFx;
+	App->audio->UnloadFx(FX_InsertCoin);
+	--totalFx;
+
 	return true;
 }

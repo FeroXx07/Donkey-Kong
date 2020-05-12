@@ -37,9 +37,16 @@ bool ModuleScene::Start()
 	bool ret = true;
 	// Scene sprites
 	bgTexture = App->textures->Load("Assets/Background2.png");
+	++activeTextures; ++totalTextures;
+
 	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
+	++activeTextures; ++totalTextures;
+
 	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
+	
 	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
+	++activeFx; ++totalFx;
+
 	App->collisions->Enable();
 	App->player->Enable();
 	App->hammer->Enable();
@@ -101,6 +108,8 @@ bool ModuleScene::Start()
 	// RIGHT LADDER
 	App->collisions->AddCollider({ 193, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 
+	activeColliders += 27; totalColliders += 27;
+
 	App->collisions->AddCollider({ 8+3, 216-7, 8-6, 32 + 7 }, Collider::Type::LADDER); // Base
 	App->collisions->AddCollider({ 104+3, 216-6, 8-6, 32 + 6 }, Collider::Type::LADDER); // Base
 	App->collisions->AddCollider({ 208+3, 216-7, 8-6, 32 + 7 }, Collider::Type::LADDER); // Base
@@ -119,6 +128,8 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 152 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	App->collisions->AddCollider({ 184 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	
+	activeColliders += 14; totalColliders += 14
+		;
 	// Wall collisions
 	App->collisions->AddCollider({ -1, 216, 1, 32 }, Collider::Type::WALL); // Base Left
 	App->collisions->AddCollider({ 224, 216, 1, 32 }, Collider::Type::WALL); // Base Right
@@ -132,6 +143,8 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
 	App->collisions->AddCollider({ 71+2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
 	App->collisions->AddCollider({ 151-2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
+
+	activeColliders += 12; totalColliders += 12;
 
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 80); //  Enemy floor 2
@@ -147,6 +160,8 @@ bool ModuleScene::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 197-20, 199);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 28, 72);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 127, 238);
+
+	activeColliders += 13; totalColliders += 13;
 	
 	return ret;
 }
@@ -160,14 +175,11 @@ update_status ModuleScene::Update()
 
 	if (Nuts == 0)
 	{
-		
 		App->audio->PlayFx(FX_Win);
 		App->fade->FadeToBlack(this, (Module*)App->sceneWin, 10);
 	}
 
-	if (App->player->destroyed && /*App->player->lives*/App->hud->lives > 0) {
-		App->collisions->Disable();
-		App->player->Disable();
+	if (App->player->destroyed && App->hud->lives > 0) {
 		App->fade->FadeToBlack(this, this, 60);
 	}
 	else if (App->player->destroyed && App->hud->lives == 0) {
@@ -189,10 +201,20 @@ update_status ModuleScene::PostUpdate()
 bool ModuleScene::CleanUp()
 {
 	// TODO 2: Enable (and properly disable) the player module
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
+	App->collisions->Disable();
+
+	App->player->Disable();
 	App->enemies->Disable();
+
 	App->textures->Unload(bgTexture);
+	--totalTextures;
 	App->textures->Unload(bgTextureTransparent);
-	App->audio->UnloadFX(FX_Win);
+	--totalTextures;
+
+	App->audio->UnloadFx(FX_Win);
+	--totalFx;
 	// TODO 5: Remove All Memory Leaks - no solution here guys ;)
 	return true;
 }

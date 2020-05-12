@@ -39,8 +39,11 @@ public:
 	// Plays a previously loaded WAV
 	// Receives an index from the sound fx array
 	bool PlayFx(uint index, int repeat = 0);
-	bool UnloadFX(uint index);
+	// Removes the memory from the audio stored at index position
+	bool UnloadFx(uint index);
 	bool FreeAll();
+
+	inline uint GetFxCount() const { return fxCount; };
 
 public:
 	// The current playing music
@@ -49,4 +52,7 @@ public:
 	// An array of all the loaded sound effects
 	// Allows us to keep track of all sound fx and handle them through indices
 	Mix_Chunk* soundFx[MAX_FX] = { nullptr };
+
+	// The amount of audio Fx loaded into the array
+	uint fxCount = 0;
 };

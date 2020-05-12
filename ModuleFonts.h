@@ -47,9 +47,14 @@ public:
 	// Create a surface from text
 	void BlitText(int x, int y, int fontIndex, const char* text) const;
 
+	inline uint GetFontsCount() const { return fontsCount; };
+
 private:
 	// An array to keep track and store all loaded fonts
 	Font fonts[MAX_FONTS];
+
+	// The amount of fonts loaded into the array
+	uint fontsCount = 0;
 };
 
 

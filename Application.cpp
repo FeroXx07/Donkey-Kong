@@ -17,6 +17,7 @@
 #include "ModuleParticles.h"
 #include "ModuleFonts.h"
 #include "ModuleHud.h"
+#include "ModuleDebugInfo.h"
 
 Application::Application()
 {
@@ -41,7 +42,8 @@ Application::Application()
 	modules[12] = fade = new ModuleFadeToBlack(true);
 	modules[13] = fonts = new ModuleFonts(true);
 	modules[14] = hud = new ModuleHud(true);
-	modules[15] = render = new ModuleRender(true);
+	modules[15] = debugInfo = new ModuleDebugInfo(true);
+	modules[16] = render = new ModuleRender(true);
 }
 
 Application::~Application()

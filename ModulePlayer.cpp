@@ -21,6 +21,8 @@ const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
+	//name = "player";
+
 	climbingIdle.PushBack({ 138, 24, 13, 16 });
 	climbingIdle.loop = true;
 	climbingIdle.speed = 0.1f;
@@ -123,14 +125,20 @@ bool ModulePlayer::Start()
 	bool ret = true;
 
 	texture = App->textures->Load("Assets/Background3.png"); // arcade version
+	++activeTextures; ++totalTextures;
 
 	//Starting position of the Mario
 	position.x = 0;
 	position.y = 232;
 
 	playerCollider = App->collisions->AddCollider({position.x,position.y,12,16}, Collider::Type::PLAYER, App->player);
+	++activeColliders; ++totalColliders;
+
 	currentAnimation = &rightIdleAnim; 
+
 	FX_Walking = App->audio->LoadFx("Assets/Music/SFX_Walking.wav");
+	++activeFx; ++totalFx;
+
 	frameCountWalking = 0;
 
 
@@ -227,8 +235,8 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
 		playerCollider->rect.h = 18;
-		playerCollider->rect.w = 2;
-		temp = 5;
+		playerCollider->rect.w = 2+2;
+		temp = 5-1;
 	}
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
@@ -475,8 +483,19 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 bool ModulePlayer::CleanUp()
 {
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
+	// TODO 1: Remove ALL remaining resources. Update resource count properly
+
 	App->textures->Unload(texture);
+	--totalTextures;
+
+	App->audio->UnloadFx(FX_Walking);
+	--totalFx;
+
+	App->collisions->RemoveCollider(playerCollider);
+	--totalColliders;
+
 	App->hammer->CleanUp();
-	//App->audio->UnloadFX(FX_Walking);
 	return true;
 }
