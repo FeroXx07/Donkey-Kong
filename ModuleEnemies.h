@@ -12,6 +12,7 @@ enum class Enemy_Type
 	ITEM_IRON,
 	ITEM_UMBRELLA,
 	ITEM_BAG,
+	ITEM_HAMMER,
 	ENEMY_FIREMINION,
 	
 };
@@ -81,8 +82,11 @@ private:
 	// The enemies sprite sheet
 	SDL_Texture* texture = nullptr;
 
-	// The audio fx for destroying an enemy
+	// The audio fx for destroying an enemy/item
 	int enemyDestroyedFx = 0;
+
+	// The audio fx for picking an item
+	int itemPickedFx = 0;
 };
 
 #endif // __MODULE_ENEMIES_H__

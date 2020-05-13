@@ -34,6 +34,7 @@ bool ModuleHammer::Start()
 	LOG("Loading player textures");
 
 	bool ret = true;
+	
 
 	texture = App->textures->Load("Assets/Background.png"); // arcade version
 	++activeTextures; ++totalTextures;
@@ -47,6 +48,13 @@ bool ModuleHammer::Start()
 
 	hammerCollider = App->collisions->AddCollider({ hammerPosition.x,hammerPosition.y, 10,10 }, Collider::Type::HAMMER);
 	++activeColliders; ++totalColliders;
+
+	// Disabled hammer from the beginning
+	frameCountHammer = 0;
+	hammerExist = false;
+	hammerPosition = { 0, 0 };
+	hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);
+
 	return ret;
 }
 
@@ -61,11 +69,9 @@ update_status ModuleHammer::Update()
 		frameCountHammer++;
 	}
 
-	if (frameCountHammer == 960)
-		frameCountHammer = 0;
-
-	if (hammerExist == true && App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN)
+	if (hammerExist == true && App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN || frameCountHammer == 660)  // 11 seconds of lifespan of the hammer
 	{
+		frameCountHammer = 0;
 		hammerExist = false;
 		hammerPosition = { 0, 0 };
 		hammerCollider->SetPos(hammerPosition.x, hammerPosition.y);

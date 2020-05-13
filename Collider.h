@@ -15,6 +15,7 @@ struct Collider
 		None = -1,
 		SCOREITEMS,
 		IMPORTANTITEMS,
+		POWERITEMS,
 	};
 
 	enum Type

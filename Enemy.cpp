@@ -8,6 +8,7 @@
 #include "ModuleParticles.h"
 #include "ModuleHud.h"
 #include "ModuleEnemies.h"
+#include "ModuleHammer.h"
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {
@@ -42,7 +43,7 @@ void Enemy::Draw()
 
 void Enemy::OnCollision(Collider* collider)
 {
-	//App->audio->PlayFx(destroyedFx);
+	
 	if (collider->type == Collider::Type::HAMMER)
 	{
 		// For enemies
@@ -61,6 +62,7 @@ void Enemy::OnCollision(Collider* collider)
 			//Particle 500
 			App->particles->AddParticle(App->particles->score500, this->position.x - 5, this->position.y - 7, Collider::Type::NONE,5);
 			SetToDelete();
+			App->audio->PlayFx(destroyedFx);
 		}
 		// For nuts
 		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && this->collider->IMPORTANTITEMS) {
@@ -69,6 +71,16 @@ void Enemy::OnCollision(Collider* collider)
 			//Particle 100
 			App->particles->AddParticle(App->particles->score100, this->position.x - 5, this->position.y - 7, Collider::Type::NONE,5);
 			SetToDelete();
+			App->audio->PlayFx(destroyedFx);
+
+			App->particles->AddParticle(App->particles->wall, this->collider->rect.x, this->collider->rect.y, Collider::Type::WALL, 120);
+			App->particles->AddParticle(App->particles->wall, this->collider->rect.x+6, this->collider->rect.y, Collider::Type::WALL, 120);
+		}
+		// For items like hammer
+		if (this->collider->item == Collider::POWERITEMS ){
+			App->hammer->hammerExist = true;
+			SetToDelete();
+			App->audio->PlayFx(destroyedFx);
 		}
 	}
 	

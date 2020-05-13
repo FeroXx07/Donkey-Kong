@@ -160,8 +160,10 @@ bool ModuleScene::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 197-20, 199);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 28, 72);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 127, 238);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_HAMMER, 105, 98);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_HAMMER, 8, 138);
 
-	activeColliders += 13; totalColliders += 13;
+	activeColliders += 15; totalColliders += 15;
 	
 	return ret;
 }

@@ -68,8 +68,7 @@ public:
 	Particle score300;
 	Particle score500;
 	
-
-
+	Particle wall;
 };
 
 #endif // !__MODULEPARTICLES_H__

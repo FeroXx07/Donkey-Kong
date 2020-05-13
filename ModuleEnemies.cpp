@@ -12,6 +12,7 @@
 #include "Item_Iron.h"
 #include "Item_Umbrella.h"
 #include "Item_Bag.h"
+#include "Item_Hammer.h"
 
 
 #define SPAWN_MARGIN 50
@@ -31,8 +32,8 @@ ModuleEnemies::~ModuleEnemies()
 bool ModuleEnemies::Start()
 {
 	texture = App->textures->Load("Assets/Background2Transparent.png");
-	//enemyDestroyedFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
-
+	//enemyDestroyedFx = App->audio->LoadFx("Assets/Music/SFX_Walking.wav.wav");
+	itemPickedFx = App->audio->LoadFx("Assets/Music/SFX_Bonus.wav");
 	return true;
 }
 
@@ -155,23 +156,49 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 				case Enemy_Type::ENEMY_FIREMINION:
+				{
 					enemies[i] = new Enemy_FireMinion(info.x, info.y);
+					enemies[i]->destroyedFx = enemyDestroyedFx;
 					break;
+				}
 				case Enemy_Type::ITEM_NUT:
+				{
 					enemies[i] = new Item_Nut(info.x, info.y);
+					enemies[i]->texture = texture;
+					enemies[i]->destroyedFx = itemPickedFx;;
 					break;
+				}
 				case Enemy_Type::ITEM_IRON:
+				{
 					enemies[i] = new Item_Iron(info.x, info.y);
+					enemies[i]->texture = texture;
+					enemies[i]->destroyedFx = itemPickedFx;
 					break;
+				}
 				case Enemy_Type::ITEM_UMBRELLA:
+				{
 					enemies[i] = new Item_Umbrella(info.x, info.y);
+					enemies[i]->texture = texture;
+					enemies[i]->destroyedFx = itemPickedFx;
 					break;
+				}
+
 				case Enemy_Type::ITEM_BAG:
+				{
 					enemies[i] = new Item_Bag(info.x, info.y);
+					enemies[i]->texture = texture;
+					enemies[i]->destroyedFx = itemPickedFx;
 					break;
+				}
+				case Enemy_Type::ITEM_HAMMER:
+				{
+					enemies[i] = new Item_Hammer(info.x, info.y);
+					enemies[i]->texture = texture;
+					enemies[i]->destroyedFx = itemPickedFx;
+					break;
+				}
 			}
 			enemies[i]->texture = texture;
-			enemies[i]->destroyedFx = enemyDestroyedFx;
 			break;
 		}
 	}

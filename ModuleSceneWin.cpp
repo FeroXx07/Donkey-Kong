@@ -10,6 +10,12 @@
 #include "ModulePlayer.h"
 #include "Game/SDL/include/SDL_scancode.h"
 #include <stdio.h>
+
+#include "Game/SDL/include/SDL.h"
+#include "Game/SDL_mixer/include/SDL_mixer.h"
+#pragma comment( lib, "Game/SDL_mixer/libx86/SDL2_mixer.lib" )
+
+
 ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
 {
 	normalScene.x = 8;
@@ -66,6 +72,8 @@ ModuleSceneWin::~ModuleSceneWin()
 // Load assets
 bool ModuleSceneWin::Start()
 {
+	Mix_HaltMusic();
+
 	LOG("Loading background assets of the WinScene");
 
 	bool ret = true;
@@ -95,6 +103,7 @@ bool ModuleSceneWin::Start()
 
 update_status ModuleSceneWin::Update()
 {
+
 	LOG("Updating background assets of the WinScene");
 	path.Update();
 	

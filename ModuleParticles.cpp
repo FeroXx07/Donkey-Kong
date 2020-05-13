@@ -56,6 +56,10 @@ bool ModuleParticles::Start()
 	score500.anim.speed = 0.1f;
 	score500.lifetime = 60;
 
+	wall.anim.PushBack({ 0,0,2,3 });
+	wall.anim.loop = true;
+	wall.anim.speed = 0.1f;
+	wall.lifetime = 10000;
 	return true;
 }
 
@@ -81,7 +85,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		// Always destroy particles that collide
-		if (particles[i] != nullptr && particles[i]->collider == c1)
+		if (particles[i] != nullptr && particles[i]->collider == c1 && particles[i]->collider->type != Collider::Type::WALL) // Will not destroy walls
 		{
 			delete particles[i];
 			particles[i] = nullptr;
