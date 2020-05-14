@@ -61,6 +61,31 @@ bool ModuleParticles::Start()
 	wall.anim.loop = true;
 	wall.anim.speed = 0.1f;
 	wall.lifetime = 10000;
+
+	marioDeath.anim.PushBack({ 424, 24, 16, 15}); // Facing up
+	marioDeath.anim.PushBack({ 449, 5, 16, 16 }); // Facing left
+	marioDeath.anim.PushBack({ 424, 6, 16, 15 }); // Facing down
+	marioDeath.anim.PushBack({ 448, 24, 16, 16 }); // Facing right
+
+	marioDeath.anim.PushBack({ 424, 24, 16, 15 }); // Facing up
+	marioDeath.anim.PushBack({ 449, 5, 16, 16 }); // Facing left
+	marioDeath.anim.PushBack({ 424, 6, 16, 15 }); // Facing down
+	marioDeath.anim.PushBack({ 448, 24, 16, 16 }); // Facing right
+
+	marioDeath.anim.PushBack({ 424, 24, 16, 15 }); // Facing up
+	marioDeath.anim.PushBack({ 449, 5, 16, 16 }); // Facing left
+	marioDeath.anim.PushBack({ 424, 6, 16, 15 }); // Facing down
+	marioDeath.anim.PushBack({ 448, 24, 16, 16 }); // Facing right
+
+	marioDeath.anim.PushBack({ 424, 24, 16, 15 }); // Facing up
+	marioDeath.anim.PushBack({ 449, 5, 16, 16 }); // Facing left
+	marioDeath.anim.PushBack({ 424, 6, 16, 15 }); // Facing down
+	marioDeath.anim.PushBack({ 448, 24, 16, 16 }); // Facing right
+
+	marioDeath.anim.PushBack({ 472, 24, 16, 16 }); // Facing up
+	marioDeath.anim.loop = false;
+	marioDeath.anim.speed = 0.1f;
+	marioDeath.lifetime = 300;
 	return true;
 }
 

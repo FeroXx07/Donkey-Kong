@@ -16,6 +16,11 @@
 #include "Game/SDL_mixer/include/SDL_mixer.h"
 #include "Game/SDL/include/SDL_scancode.h"
 
+
+#include "Game/SDL/include/SDL.h"
+#include "Game/SDL_mixer/include/SDL_mixer.h"
+#pragma comment( lib, "Game/SDL_mixer/libx86/SDL2_mixer.lib" )
+
 ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 {
 	// Level 4 scene sprite
@@ -49,6 +54,9 @@ bool ModuleScene::Start()
 	
 	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 	++activeFx; ++totalFx;
+
+	FX_Lose = App->audio->LoadFx("Assets/Music/SFX_Death.wav");
+	++activeFx; ++totalFx;
 	
 	App->particles->Enable();
 	App->collisions->Enable();
@@ -63,6 +71,7 @@ bool ModuleScene::Start()
 
 	Nuts = 8;
 	frameCount = 0;
+	resetCounter = 0;
 	App->player->destroyed = false;
 
 	// Level 4 colliders:
@@ -185,7 +194,21 @@ update_status ModuleScene::Update()
 	}
 
 	if (App->player->destroyed && App->hud->lives > 0) {
-		App->fade->FadeToBlack(this, this, 60);
+
+		if (resetCounter >= 180)
+		{
+			resetCounter = -60;
+			App->fade->FadeToBlack(this, this);
+		}
+
+		if (resetCounter == 1)
+		{
+			Mix_HaltMusic();
+			App->audio->PlayFx(FX_Lose);
+			App->particles->AddParticle(App->particles->marioDeath, App->player->playerCollider->rect.x, App->player->playerCollider->rect.y);
+		}
+
+		++resetCounter;
 	}
 	else if (App->player->destroyed && App->hud->lives == 0) {
 
@@ -220,6 +243,9 @@ bool ModuleScene::CleanUp()
 
 	App->audio->UnloadFx(FX_Win);
 	--totalFx;
-	// TODO 5: Remove All Memory Leaks - no solution here guys ;)
+
+	App->audio->UnloadFx(FX_Lose);
+	--totalFx;
+
 	return true;
 }

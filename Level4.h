@@ -39,14 +39,21 @@ public:
 
 	// Counter to know how many nuts are left
 	int Nuts = 0;
+
 	// Level Sprite
 	SDL_Rect level_4;
 
 	// Sound Effect of Winning
 	int FX_Win = 0;
+	int FX_Lose = 0;
+
 	int frameCount = 0;
+
 	// The sprite rectangle for the ground
 	SDL_Texture* starsTexture = nullptr;
+
+	// Counter to reset lever after dying
+	int resetCounter = 0;
 };
 
 #endif

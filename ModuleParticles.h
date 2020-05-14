@@ -69,6 +69,8 @@ public:
 	Particle score500;
 	
 	Particle wall;
+
+	Particle marioDeath;
 };
 
 #endif // !__MODULEPARTICLES_H__
