@@ -23,6 +23,7 @@ bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
 	texture = App->textures->Load("Assets/Background2.png");
+	++activeTextures;  ++totalTextures;
 
 	// Explosion particle
 	plasma.anim.PushBack({753, 106, 14, 12});
@@ -65,6 +66,11 @@ bool ModuleParticles::Start()
 
 bool ModuleParticles::CleanUp()
 {
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
+	App->textures->Unload(texture);
+	--totalTextures;
+
 	LOG("Unloading particles");
 
 	// Delete all remaining active particles on application exit 

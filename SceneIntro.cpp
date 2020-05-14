@@ -51,6 +51,8 @@ bool SceneIntro::Start()
 	spaceCounter = 0;
 
 	App->audio->PlayFx(FX_InsertCoin);
+
+	App->hud->drawScore = false;
 	return ret;
 }
 

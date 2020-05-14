@@ -8,6 +8,8 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollisions.h"
 #include "ModulePlayer.h"
+#include "ModuleHud.h"
+
 #include "Game/SDL/include/SDL_scancode.h"
 #include <stdio.h>
 
@@ -72,6 +74,11 @@ ModuleSceneWin::~ModuleSceneWin()
 // Load assets
 bool ModuleSceneWin::Start()
 {
+
+	App->hud->drawScore = true;
+
+	App->player->Disable();
+
 	Mix_HaltMusic();
 
 	LOG("Loading background assets of the WinScene");

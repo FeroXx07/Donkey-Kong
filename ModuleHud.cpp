@@ -83,15 +83,17 @@ update_status ModuleHud::Update()
 
 update_status ModuleHud::PostUpdate()
 {
-	
 	// TODO 3: Blit the text of the score in at the bottom of the screen
-	App->fonts->BlitText(8	, 8, whiteFont, scoreText);
+	if (drawScore)
+	{
+		App->fonts->BlitText(8, 8, whiteFont, scoreText);
 
-	App->fonts->BlitText(88, 8, whiteFont, highScoreText);
+		App->fonts->BlitText(88, 8, whiteFont, highScoreText);
 
-	App->fonts->BlitText(8, 24, lightBlueFont, livesText);
+		App->fonts->BlitText(8, 24, lightBlueFont, livesText);
 
-	App->fonts->BlitText(184, 24, darkBlueFont, loopScore);
+		App->fonts->BlitText(184, 24, darkBlueFont, loopScore);
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }

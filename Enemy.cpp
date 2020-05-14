@@ -52,6 +52,7 @@ void Enemy::OnCollision(Collider* collider)
 		//Particle 300
 		App->particles->AddParticle(App->particles->score300, this->position.x - 5, this->position.y - 7, Collider::Type::NONE, 60);
 		App->hud->score += 300;
+		App->audio->PlayFx(destroyedFx);
 	}
 
 	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)
@@ -74,7 +75,9 @@ void Enemy::OnCollision(Collider* collider)
 			App->audio->PlayFx(destroyedFx);
 
 			App->particles->AddParticle(App->particles->wall, this->collider->rect.x, this->collider->rect.y, Collider::Type::WALL, 120);
-			App->particles->AddParticle(App->particles->wall, this->collider->rect.x+6, this->collider->rect.y, Collider::Type::WALL, 120);
+			App->particles->AddParticle(App->particles->wall, this->collider->rect.x+1, this->collider->rect.y, Collider::Type::WALL, 120);
+			App->scene->activeColliders += 2;
+			App->scene->totalColliders += 2;
 		}
 		// For items like hammer
 		if (this->collider->item == Collider::POWERITEMS ){

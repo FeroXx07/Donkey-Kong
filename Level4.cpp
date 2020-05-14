@@ -11,6 +11,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleInput.h"
 #include "ModuleHud.h"
+#include "ModuleParticles.h"
 
 #include "Game/SDL_mixer/include/SDL_mixer.h"
 #include "Game/SDL/include/SDL_scancode.h"
@@ -32,6 +33,8 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
+	App->hud->drawScore = true;
+
 	LOG("Loading background assets");
 
 	bool ret = true;
@@ -46,7 +49,8 @@ bool ModuleScene::Start()
 	
 	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
 	++activeFx; ++totalFx;
-
+	
+	App->particles->Enable();
 	App->collisions->Enable();
 	App->player->Enable();
 	App->hammer->Enable();
@@ -101,14 +105,14 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 41, 88, 15, 8  }, Collider::Type::GROUND); // Floor 4
 	App->collisions->AddCollider({ 63, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 	//MID LADDER
-	App->collisions->AddCollider({ 73, 88, 78, 8  }, Collider::Type::GROUND); // Floor 4
+	//App->collisions->AddCollider({ 73, 88, 78, 8  }, Collider::Type::GROUND); // Floor 4
 	//MID LADDER
 	App->collisions->AddCollider({ 160, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 	App->collisions->AddCollider({ 168, 88, 15, 8  }, Collider::Type::GROUND); // Floor 4
 	// RIGHT LADDER
 	App->collisions->AddCollider({ 193, 88, 1, 8 }, Collider::Type::GROUND); // Floor 4
 
-	activeColliders += 27; totalColliders += 27;
+	activeColliders += 27-1; totalColliders += 27-1;
 
 	App->collisions->AddCollider({ 8+3, 216-7, 8-6, 32 + 7 }, Collider::Type::LADDER); // Base
 	App->collisions->AddCollider({ 104+3, 216-6, 8-6, 32 + 6 }, Collider::Type::LADDER); // Base
@@ -128,8 +132,7 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 152 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	App->collisions->AddCollider({ 184 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	
-	activeColliders += 14; totalColliders += 14
-		;
+	activeColliders += 14; totalColliders += 14;
 	// Wall collisions
 	App->collisions->AddCollider({ -1, 216, 1, 32 }, Collider::Type::WALL); // Base Left
 	App->collisions->AddCollider({ 224, 216, 1, 32 }, Collider::Type::WALL); // Base Right
@@ -141,8 +144,8 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 204, 97, 20, 32 }, Collider::Type::WALL); // Floor 3 Right
 	App->collisions->AddCollider({ 0, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Left
 	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
-	App->collisions->AddCollider({ 71+2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
-	App->collisions->AddCollider({ 151-2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
+	App->collisions->AddCollider({ 71+2+2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
+	App->collisions->AddCollider({ 151-2-2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
 
 	activeColliders += 12; totalColliders += 12;
 
@@ -205,8 +208,8 @@ bool ModuleScene::CleanUp()
 	// TODO 2: Enable (and properly disable) the player module
 	activeTextures = activeColliders = activeFonts = activeFx = 0;
 
+	App->particles->Disable();
 	App->collisions->Disable();
-
 	App->player->Disable();
 	App->enemies->Disable();
 

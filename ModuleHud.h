@@ -33,4 +33,6 @@ public:
 	char highScoreText[10] = { "\0" };
 	char loopScore[10] = { "\0" };
 	char livesText[4] = { ",,,"};
+
+	bool drawScore = false;
 };

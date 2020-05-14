@@ -32,8 +32,12 @@ ModuleEnemies::~ModuleEnemies()
 bool ModuleEnemies::Start()
 {
 	texture = App->textures->Load("Assets/Background2Transparent.png");
-	//enemyDestroyedFx = App->audio->LoadFx("Assets/Music/SFX_Walking.wav.wav");
+	++activeTextures;  ++totalTextures;
+	enemyDestroyedFx = App->audio->LoadFx("Assets/Music/SFX_Kill.wav");
+	++activeFx; ++totalFx;
 	itemPickedFx = App->audio->LoadFx("Assets/Music/SFX_Bonus.wav");
+	++activeFx; ++totalFx;
+
 	return true;
 }
 
@@ -82,6 +86,15 @@ update_status ModuleEnemies::PostUpdate()
 // Called before quitting
 bool ModuleEnemies::CleanUp()
 {
+	activeTextures = activeColliders = activeFonts = activeFx = 0;
+
+	App->audio->UnloadFx(enemyDestroyedFx);
+	--totalFx;
+	App->audio->UnloadFx(itemPickedFx);
+	--totalFx;
+	App->textures->Unload(texture);
+	--totalTextures;
+
 	LOG("Freeing all enemies");
 
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
