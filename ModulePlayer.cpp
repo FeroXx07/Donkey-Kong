@@ -15,8 +15,8 @@
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
 
-
-const float gravity = 60.0f;         // pixels / second^2
+#define JUMPSPEED 50.0f
+const float gravity = 60.0f + 50.0f;         // pixels / second^2
 const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
@@ -241,12 +241,13 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
 	{
-		speed.y -= 30.0f;
+		speed.y -= JUMPSPEED;
 		if (currentAnimation != &jumpAnim)
 		{
 			currentAnimation = &jumpAnim;
 		}
 		isGround = false;
+		isJumping = true;
 	}
 
 	// If last movement was left, set the current animation back to left idle
@@ -392,8 +393,9 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	if (destroyed == false)
 	{
+		
 
-		if (c2->type == Collider::Type::LADDER)
+		if (c2->type == Collider::Type::LADDER && isJumping==false)
 		{
 			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
 				isLadder = true;
@@ -431,6 +433,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		if (c2->type == Collider::Type::GROUND)
 		{
 			isGround = true;
+			isJumping = false;
 			if (isLadder == true) 
 			{
 

@@ -128,7 +128,9 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 208+3, 216-7, 8-6, 32 + 7 }, Collider::Type::LADDER); // Base
 
 	App->collisions->AddCollider({ 16 + 3, 176, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 1
+	App->collisions->AddCollider({ 72 + 3+9, 176+8, 8 - 6, 32 }, Collider::Type::NOTLADDER); // Floor 1
 	App->collisions->AddCollider({ 72 + 3, 176, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 1
+	App->collisions->AddCollider({ 72 + 3-9, 176+8, 8 - 6, 32 }, Collider::Type::NOTLADDER); // Floor 1
 	App->collisions->AddCollider({ 144 + 3, 176, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 1
 	App->collisions->AddCollider({ 200 + 3, 176, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 1
 
@@ -141,7 +143,7 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 152 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	App->collisions->AddCollider({ 184 + 3, 96, 8 - 6, 32 }, Collider::Type::LADDER); // Floor 3
 	
-	activeColliders += 14; totalColliders += 14;
+	activeColliders += 14+2; totalColliders += 14+2;
 	// Wall collisions
 	App->collisions->AddCollider({ -1, 216, 1, 32 }, Collider::Type::WALL); // Base Left
 	App->collisions->AddCollider({ 224, 216, 1, 32 }, Collider::Type::WALL); // Base Right

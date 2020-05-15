@@ -23,6 +23,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::GROUND][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::NOTLADDER] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
@@ -31,6 +32,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::LADDER] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::Item_Type] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::NOTLADDER] = true;
 
 	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
@@ -39,6 +41,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::HAMMER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::NOTLADDER] = false;
 
 	matrix[Collider::Type::WALL][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true	;
@@ -47,6 +50,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::WALL][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::WALL][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::WALL][Collider::Type::NOTLADDER] = false;
 
 	matrix[Collider::Type::LADDER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::PLAYER] = true;
@@ -55,6 +59,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::LADDER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::NOTLADDER] = false;
 
 	matrix[Collider::Type::HAMMER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::PLAYER] = false;
@@ -62,7 +67,8 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::HAMMER][Collider::Type::WALL] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::HAMMER] = false;
-	matrix[Collider::Type::LADDER][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::HAMMER][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::HAMMER][Collider::Type::NOTLADDER] = false;
 
 	matrix[Collider::Type::Item_Type][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::PLAYER] = true;
@@ -70,6 +76,17 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::Item_Type][Collider::Type::WALL] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::NOTLADDER] = false;
+
+	matrix[Collider::Type::NOTLADDER][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::NOTLADDER][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::NOTLADDER][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::NOTLADDER][Collider::Type::WALL] = false;
+	matrix[Collider::Type::NOTLADDER][Collider::Type::LADDER] = false;
+	matrix[Collider::Type::NOTLADDER][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::NOTLADDER][Collider::Type::Item_Type] = false;
+
 }
 
 // Destructor
@@ -175,6 +192,9 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::Item_Type: // pink
 			App->render->DrawQuad(colliders[i]->rect, 255, 20, 147, alpha);
+			break;
+			case Collider::Type::NOTLADDER: // purple
+			App->render->DrawQuad(colliders[i]->rect, 128, 0, 128, alpha);
 			break;
 		}
 	}

@@ -28,8 +28,9 @@ struct Collider
 		LADDER,
 		HAMMER,
 		Item_Type,
+		NOTLADDER,
 
-		MAX=7
+		MAX=8
 	};
 
 	//Methods
