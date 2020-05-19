@@ -60,14 +60,13 @@ bool ModuleScene2::Start()
 	if (App->hud->lives != 3) App->hammer->Start();
 	App->enemies->Enable();
 
-	//Starting position of the Mario
-	App->player->position.x = 2;
-	App->player->position.y = 232-App->player->playerCollider->rect.h;
-
 	resetCounter = 0;
 	App->player->destroyed = false;
 
 	// Level 2 colliders:
+	App->collisions->AddCollider({ 0, 500, SCREEN_WIDTH, 8 }, Collider::Type::ENEMY);
+
+
 	App->collisions->AddCollider({ 0, 232, 24, 8 }, Collider::Type::GROUND); 
 	App->collisions->AddCollider({ 0, 192, 7, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 8 + 3, 192, 8 - 6, 40 }, Collider::Type::LADDER); 
@@ -120,11 +119,11 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);
 
-
-
-
-
-	activeColliders += 0; totalColliders += 0;
+	//Starting position of the Mario
+	App->player->position.x = 2;
+	App->player->position.y = 232 - App->player->playerCollider->rect.h;
+	App->player->speed.y = 0;
+	activeColliders += 40; totalColliders += 40;
 
 	return ret;
 }
@@ -136,7 +135,7 @@ update_status ModuleScene2::Update()
 		if (resetCounter >= 180)
 		{
 			resetCounter = -60;
-			App->fade->FadeToBlack(this, this);
+			App->fade->FadeToBlack(this, (Module*)App->level2);
 		}
 
 		if (resetCounter == 1)

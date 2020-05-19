@@ -207,8 +207,6 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-
-
 	if (isLadder == true)
 	{
 		isGround = false;
@@ -299,6 +297,10 @@ update_status ModulePlayer::Update()
 	if (position.x > 211) position.x = 211;
 	if (position.y < 0) position.y = 0;
 
+
+
+
+
 	if (isLadder == true)
 	{
 		printf("LADDER TRUE\n\n");
@@ -315,28 +317,12 @@ update_status ModulePlayer::Update()
 
 	printf("Position X: %d\n Position Y: %d\n\n", position.x, position.y);
 
-
-
-	// TODO actualizar sprite de las vidas
-	//if (getLives() == 3); // Poner el sprite completo
-
-	//else if (getLives() == 2); // Poner el sprite menos el ancho de una vida
-
-	//else if (getLives() == 1); // Poner el sprite menos el ancho de dos vidas
-
 	if (App->hud->lives == 0) {
 		
 		printf("GAMEOVER\n\n");
 	}
 
-	/*if (destroyed) { // When mario lives == 0
-		// TODO set GAME OVER screen ()
-		destroyedCountdown--;
-		if (destroyedCountdown <= 0)
-
-		return update_status::UPDATE_STOP;
-	}*/
-	printf("%d\n\n", App->hud->lives);
+	printf("Lives: %d\n\n", App->hud->lives);
 
 	if (/*	isScoring  */1) { // isScoring is  a variable in which we put it true when we have to score, i.e. jumping over barrels, fires and enemies, grabbing items, killing enemies, etc.
 		// TODO implement each type of scoring
@@ -348,7 +334,7 @@ update_status ModulePlayer::Update()
 		//isScoring = false;
 	}
 
-	// TODO put on screen current score, highscore and lives
+	if (destroyed) --App->hud->lives;
 
 
 	return update_status::UPDATE_CONTINUE;
@@ -469,7 +455,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			if (/* Enemy Type == Enemy Fire Type */        1) {
 				if (App->hud->lives > 0) {
 					// TODO para todo el codigo y actualizar animaciones
-					App->hud->lives--;
+					--App->hud->lives;
 					destroyed = true;
 
 					// TODO add fx
