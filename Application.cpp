@@ -18,6 +18,7 @@
 #include "ModuleFonts.h"
 #include "ModuleHud.h"
 #include "ModuleDebugInfo.h"
+#include "Level2.h"
 
 Application::Application()
 {
@@ -32,18 +33,21 @@ Application::Application()
 
 	modules[4] = intro = new SceneIntro(true);
 	modules[5] = sceneWin = new ModuleSceneWin(false);
-	modules[6] = scene = new ModuleScene(false);
-	modules[7] = player = new ModulePlayer(false);	//Player starts disabled
-	modules[8] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
-	modules[9] = hammer = new ModuleHammer(false);
-	modules[10] = enemies = new ModuleEnemies(false);	//Enemies start disabled
 
-	modules[11] = collisions = new ModuleCollisions(true);
-	modules[12] = fade = new ModuleFadeToBlack(true);
-	modules[13] = fonts = new ModuleFonts(true);
-	modules[14] = hud = new ModuleHud(true);
-	modules[15] = debugInfo = new ModuleDebugInfo(true);
-	modules[16] = render = new ModuleRender(true);
+	modules[6] = scene = new ModuleScene(false);
+	modules[7] = level2 = new ModuleScene2(false);
+
+	modules[8] = player = new ModulePlayer(false);	//Player starts disabled
+	modules[9] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
+	modules[10] = hammer = new ModuleHammer(false);
+	modules[11] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+
+	modules[12] = collisions = new ModuleCollisions(true);
+	modules[13] = fade = new ModuleFadeToBlack(true);
+	modules[14] = fonts = new ModuleFonts(true);
+	modules[15] = hud = new ModuleHud(true);
+	modules[16] = debugInfo = new ModuleDebugInfo(true);
+	modules[17] = render = new ModuleRender(true);
 }
 
 Application::~Application()

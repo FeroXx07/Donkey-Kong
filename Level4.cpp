@@ -47,9 +47,6 @@ bool ModuleScene::Start()
 	bgTexture = App->textures->Load("Assets/Background2.png");
 	++activeTextures; ++totalTextures;
 
-	bgTextureTransparent = App->textures->Load("Assets/Background2Transparent.png");
-	++activeTextures; ++totalTextures;
-
 	level_4BGM = App->audio->PlayMusic("Assets/Music/Stage4BGM.ogg");
 	
 	FX_Win = App->audio->LoadFx("Assets/Music/Stage_Clear_2.wav");
@@ -239,8 +236,6 @@ bool ModuleScene::CleanUp()
 	App->enemies->Disable();
 
 	App->textures->Unload(bgTexture);
-	--totalTextures;
-	App->textures->Unload(bgTextureTransparent);
 	--totalTextures;
 
 	App->audio->UnloadFx(FX_Win);

@@ -1,19 +1,16 @@
-#ifndef __MODULE_SCENE_H__
-#define __MODULE_SCENE_H__
-
 #include "Module.h"
 #include "Animation.h"
 
 struct SDL_Texture;
 
-class ModuleScene : public Module
+class ModuleScene2 : public Module
 {
 public:
 	//Constructor
-	ModuleScene(bool startEnabled);
+	ModuleScene2(bool startEnabled);
 
 	//Destructor
-	~ModuleScene();
+	~ModuleScene2();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -29,28 +26,17 @@ public:
 
 	bool CleanUp();
 public:
-
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
 
-
-	// The scene background music
-	int level_4BGM = 0;
-
-	// Counter to know how many nuts are left
-	int Nuts = 0;
-
-	// Level Sprite
-	SDL_Rect level_4;
+	// Level 2 Sprite
+	SDL_Rect level_2;
 
 	// Sound Effect of Winning
 	int FX_Win = 0;
 	int FX_Lose = 0;
 
-	int frameCount = 0;
 
 	// Counter to reset lever after dying
 	int resetCounter = 0;
 };
-
-#endif
