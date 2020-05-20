@@ -19,6 +19,8 @@
 const float gravity = 60.0f + 50.0f;         // pixels / second^2
 const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
+
+
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	//name = "player";
@@ -212,13 +214,27 @@ update_status ModulePlayer::Update()
 		isGround = false;
 		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
-			position.y -= speed.x;
+			if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
+			if (frameCountWalking == 11)
+			{
+				walkingFX = false;
+				frameCountWalking = 0;
+			}
+			++frameCountWalking;
 
+			position.y -= speed.x;
 		}
 		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
 		{
-			position.y += speed.x;
+			if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
+			if (frameCountWalking == 11)
+			{
+				walkingFX = false;
+				frameCountWalking = 0;
+			}
+			++frameCountWalking;
 
+			position.y += speed.x;
 		}
 		playerCollider->rect.w = 2;
 		temp = 5;

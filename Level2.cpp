@@ -28,6 +28,11 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 	level_2.y = 160;
 	level_2.w = SCREEN_WIDTH;
 	level_2.h = SCREEN_HEIGHT;
+
+	elevatorSprite = {536,140,16,8};
+	elevatorComplementSpriteDOWN = { 512, 136,16,16 };
+	elevatorComplementSpriteUP = { 512, 118,16,16 };
+
 }
 
 ModuleScene2::~ModuleScene2()
@@ -119,17 +124,66 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);
 
+	//Elevator
+	
+	elevator[2] = App->collisions->AddCollider({ 32, 146, 16, 8 }, Collider::Type::GROUND);
+	elevator[2]->rect.x = 32;
+	elevator[2]->rect.y = 146; //140
+
+	elevator[1] = App->collisions->AddCollider({ 32, 197, 16, 8 }, Collider::Type::GROUND);
+	elevator[1]->rect.x = 32;
+	elevator[1]->rect.y = 197;//192
+
+	elevator[0] = App->collisions->AddCollider({ 32, 248, 16, 8 }, Collider::Type::GROUND);
+	elevator[0]->rect.x = 32;
+	elevator[0]->rect.y = 248;
+
+	elevator[5] = App->collisions->AddCollider({ 96, 146, 16, 8 }, Collider::Type::GROUND);
+	elevator[5]->rect.x = 96;
+	elevator[5]->rect.y = 146; //140
+
+	elevator[4] = App->collisions->AddCollider({ 96, 197, 16, 8 }, Collider::Type::GROUND);
+	elevator[4]->rect.x = 96;
+	elevator[4]->rect.y = 197;//192
+
+	elevator[3] = App->collisions->AddCollider({ 96, 248, 16, 8 }, Collider::Type::GROUND);
+	elevator[3]->rect.x = 96;
+	elevator[3]->rect.y = 248;
+	
+
+	activeColliders += 6; totalColliders += 6;
 	//Starting position of the Mario
 	App->player->position.x = 2;
 	App->player->position.y = 232 - App->player->playerCollider->rect.h;
 	App->player->speed.y = 0;
 	activeColliders += 40; totalColliders += 40;
 
+
 	return ret;
 }
 
 update_status ModuleScene2::Update()
 {
+	// Resets elevator positions
+	for (int i = 0; i < 3; ++i)
+	{
+		elevator[i]->SetPos(elevator[i]->rect.x, --elevator[i]->rect.y);
+		if (elevator[i]->rect.y <= 104)
+		{
+			elevator[i]->rect.y = 248;
+		}
+	}
+
+	for (int i = 3; i < 6; ++i)
+	{
+		elevator[i]->SetPos(elevator[i]->rect.x, ++elevator[i]->rect.y);
+		if (elevator[i]->rect.y >= 248)
+		{
+			elevator[i]->rect.y = 104;
+		}
+	}
+
+	// Resets level when dies
 	if (App->player->destroyed && App->hud->lives > 0) {
 
 		if (resetCounter >= 180)
@@ -159,6 +213,16 @@ update_status ModuleScene2::PostUpdate()
 {
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, &level_2);
+	App->render->Blit(bgTexture, 32, 88, &elevatorComplementSpriteDOWN);
+	App->render->Blit(bgTexture, 96, 88, &elevatorComplementSpriteDOWN);
+
+	for (int i = 0; i < 6; ++i)
+	{
+		App->render->Blit(bgTexture, elevator[i]->rect.x, elevator[i]->rect.y, &elevatorSprite);
+	}
+	App->render->Blit(bgTexture, 32, 239, &elevatorComplementSpriteUP);
+	App->render->Blit(bgTexture, 96, 239, &elevatorComplementSpriteUP);
+
 
 	return update_status::UPDATE_CONTINUE;
 }

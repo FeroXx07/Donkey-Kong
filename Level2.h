@@ -1,5 +1,6 @@
 #include "Module.h"
 #include "Animation.h"
+#include "p2Point.h"
 
 struct SDL_Texture;
 
@@ -32,10 +33,16 @@ public:
 	// Level 2 Sprite
 	SDL_Rect level_2;
 
+	// Left Elevator Collider
+	Collider *elevator[6];
+	SDL_Rect elevatorSprite;
+	SDL_Rect elevatorComplementSpriteUP;
+	SDL_Rect elevatorComplementSpriteDOWN;
+
+
 	// Sound Effect of Winning
 	int FX_Win = 0;
 	int FX_Lose = 0;
-
 
 	// Counter to reset lever after dying
 	int resetCounter = 0;
