@@ -395,11 +395,10 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	if (destroyed == false)
 	{
-		/*if (c2->type == Collider::Type::NOTLADDER)  Have deactivated this because it works without it
+		if (c2->type == Collider::Type::NOTLADDER) // Have deactivated this because it works without it
 		{
 			isLadder = false;
-		}*/
-
+		}
 		if (c2->type == Collider::Type::LADDER && isJumping==false)
 		{
 			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
@@ -450,6 +449,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 					position.y = c2->rect.y - 15;
 					speed.y = 0;
 				}
+				
+				
 			}
 		}
 

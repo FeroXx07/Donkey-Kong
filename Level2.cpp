@@ -71,7 +71,6 @@ bool ModuleScene2::Start()
 	// Level 2 colliders:
 	App->collisions->AddCollider({ 0, 500, SCREEN_WIDTH, 8 }, Collider::Type::ENEMY);
 
-
 	App->collisions->AddCollider({ 0, 232, 24, 8 }, Collider::Type::GROUND); 
 	App->collisions->AddCollider({ 0, 192, 7, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 8 + 3, 192, 8 - 6, 40 }, Collider::Type::LADDER); 
@@ -83,13 +82,15 @@ bool ModuleScene2::Start()
 	
 	App->collisions->AddCollider({ 64, 208, 24, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 56, 136, 7, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 64 - 3, 136, 8 - 6, 72 }, Collider::Type::NOTLADDER);
 	App->collisions->AddCollider({ 64 + 3, 136, 8 - 6, 72 }, Collider::Type::LADDER);
+	App->collisions->AddCollider({ 64 + 10, 136, 8 - 6, 72 }, Collider::Type::NOTLADDER);
 	App->collisions->AddCollider({ 72, 136, 7, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 80 + 3, 136, 8 - 6, 72 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 88, 136, 1, 8 }, Collider::Type::GROUND);
 
 	App->collisions->AddCollider({ 120, 232, 24, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 152, 224, 16, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 152+1, 224, 16-1, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 176, 216, 16, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 200, 208, 24, 8 }, Collider::Type::GROUND);
 
@@ -124,8 +125,9 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);
 
-	//Elevator
-	
+	activeColliders += 41; totalColliders += 41;
+
+	// Elevators
 	elevator[2] = App->collisions->AddCollider({ 32, 146, 16, 8 }, Collider::Type::GROUND);
 	elevator[2]->rect.x = 32;
 	elevator[2]->rect.y = 146; //140
@@ -150,13 +152,18 @@ bool ModuleScene2::Start()
 	elevator[3]->rect.x = 96;
 	elevator[3]->rect.y = 248;
 	
-
 	activeColliders += 6; totalColliders += 6;
+
+	// Items
+	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 69, 199);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 4, 120);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 207, 94);
+	activeColliders += 3; totalColliders += 3;
+
 	//Starting position of the Mario
 	App->player->position.x = 2;
 	App->player->position.y = 232 - App->player->playerCollider->rect.h;
 	App->player->speed.y = 0;
-	activeColliders += 40; totalColliders += 40;
 
 
 	return ret;
