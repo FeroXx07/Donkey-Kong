@@ -99,9 +99,9 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 216, 184, 8, 8 }, Collider::Type::GROUND);
 
 	App->collisions->AddCollider({ 184, 176, 16, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 183, 144, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 183, 144, 1, 8-6 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 183 + 3, 144, 8 - 6, 32 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 192, 144, 32, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 192, 144, 32, 8-6 }, Collider::Type::GROUND);
 
 	App->collisions->AddCollider({ 160, 168, 16, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 136, 160, 16, 8 }, Collider::Type::GROUND);
@@ -117,9 +117,9 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 208 + 3, 104, 8 - 6, 41 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 216, 104, 8, 8 }, Collider::Type::GROUND);
 
-	App->collisions->AddCollider({ 0, 88, 160, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 0, 88, 160, 8-6 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 160 + 3, 88, 8 - 6, 32 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 168, 88, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 168, 88, 1, 8-6 }, Collider::Type::GROUND);
 
 	App->collisions->AddCollider({ 88, 56, 40, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);

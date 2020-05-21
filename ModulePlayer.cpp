@@ -15,8 +15,13 @@
 #include <stdio.h>
 #include "Game/SDL/include/SDL_scancode.h"
 
-#define JUMPSPEED 50.0f
-const float gravity = 60.0f + 50.0f;         // pixels / second^2
+//Previously was this
+//#define JUMPSPEED 50.0f
+//const float gravity = 60.0f + 50.0f
+
+//Now temporally is this
+#define JUMPSPEED 30.0f
+const float gravity = 60.0f + 30.0f;         // pixels / second^2
 const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
 
@@ -444,12 +449,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			}
 			else if (isLadder == false)
 			{
-				if (position.y + 16 > c2->rect.y ) // Collision to maintain the player to the ground
-				{ 
+				//if (position.y + 16 > c2->rect.y ) // Collision to maintain the player to the ground
+				//{ 
+				//	position.y = c2->rect.y - 15;
+				//	speed.y = 0;
+				//}
+				if (position.y + 15 >= c2->rect.y) // Collision to maintain the player to the ground
+				{
 					position.y = c2->rect.y - 15;
 					speed.y = 0;
 				}
-				
 				
 			}
 		}
