@@ -74,69 +74,88 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 0, 232, 24, 8 }, Collider::Type::GROUND); 
 	App->collisions->AddCollider({ 0, 192, 7, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 8 + 3, 192, 8 - 6, 40 }, Collider::Type::LADDER); 
-	App->collisions->AddCollider({ 16, 192, 9, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 16, 192, 9, 2 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 16, 198, 9, 2 }, Collider::Type::LOWERGROUND);
 
-	App->collisions->AddCollider({ 0, 136, 15, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 0, 136, 15, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 0, 142, 15, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 16 + 3, 136, 8 - 6, 56 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 24, 136, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 24, 136, 1, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 24, 142, 1, 2 }, Collider::Type::LOWERGROUND);
+
 	
 	App->collisions->AddCollider({ 64, 208, 24, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 56, 136, 7, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 56, 136, 7, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 56, 142, 7, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 64 - 3, 136, 8 - 6, 72 }, Collider::Type::NOTLADDER);
 	App->collisions->AddCollider({ 64 + 3, 136, 8 - 6, 72 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 64 + 10, 136, 8 - 6, 72 }, Collider::Type::NOTLADDER);
-	App->collisions->AddCollider({ 72, 136, 7, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 72, 136, 7, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 72, 142, 7, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 80 + 3, 136, 8 - 6, 72 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 88, 136, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 88, 136, 1, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 88, 142, 1, 2 }, Collider::Type::LOWERGROUND);
+
 
 	App->collisions->AddCollider({ 120, 232, 24, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 152+1, 224, 16-1, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 176, 216, 16, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 200, 208, 24, 8 }, Collider::Type::GROUND);
 
-	App->collisions->AddCollider({ 207, 184, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 207, 184, 1, 2 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 207, 190, 1, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 208 + 3, 184, 8 - 6, 24 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 216, 184, 8, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 216, 184, 8, 2 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 216, 190, 8, 2 }, Collider::Type::LOWERGROUND);
 
 	App->collisions->AddCollider({ 184, 176, 16, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 183, 144, 1, 8-6 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 183 + 3, 144, 8 - 6, 32 }, Collider::Type::LADDER);
+	App->collisions->AddCollider({ 183, 150, 1, 8 - 6 }, Collider::Type::LOWERGROUND);
+	App->collisions->AddCollider({ 183 + 4, 144, 8 - 6, 32 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 192, 144, 32, 8-6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 192, 150, 32, 2 }, Collider::Type::LOWERGROUND);
 
 	App->collisions->AddCollider({ 160, 168, 16, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 136, 160, 16, 8 }, Collider::Type::GROUND);
 
-	App->collisions->AddCollider({ 128, 128, 8, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 128, 128, 8, 5 }, Collider::Type::GROUND); //Modified
+	App->collisions->AddCollider({ 128, 134, 8, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 136 + 3, 128, 8 - 6, 32 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 144, 128, 8, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 144, 128, 8, 5 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 144, 134, 8, 2 }, Collider::Type::LOWERGROUND);
 
 
 	App->collisions->AddCollider({ 160, 120, 16, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 184, 112, 16, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 207, 104, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 207, 104, 1, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 207, 110, 1, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 208 + 3, 104, 8 - 6, 41 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 216, 104, 8, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 216, 104, 8, 6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 216, 110, 8, 2 }, Collider::Type::LOWERGROUND);
 
 	App->collisions->AddCollider({ 0, 88, 160, 8-6 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 0, 94, 140, 2  }, Collider::Type::ENEMY);
 	App->collisions->AddCollider({ 160 + 3, 88, 8 - 6, 32 }, Collider::Type::LADDER);
 	App->collisions->AddCollider({ 168, 88, 1, 8-6 }, Collider::Type::GROUND);
 
-	App->collisions->AddCollider({ 88, 56, 40, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 88, 56, 40, 2 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 88, 60, 40, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 136, 56, 1, 2 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 136, 60, 1, 2 }, Collider::Type::LOWERGROUND);
 
-	activeColliders += 41; totalColliders += 41;
+	activeColliders += 60; totalColliders += 60;
 
 	// Elevators
-	elevator[2] = App->collisions->AddCollider({ 32, 146, 16, 8 }, Collider::Type::GROUND);
+	elevator[2] = App->collisions->AddCollider({ 32, 146, 16, 6 }, Collider::Type::GROUND);
 	elevator[2]->rect.x = 32;
 	elevator[2]->rect.y = 146; //140
 
-	elevator[1] = App->collisions->AddCollider({ 32, 197, 16, 8 }, Collider::Type::GROUND);
+	elevator[1] = App->collisions->AddCollider({ 32, 197, 16, 6 }, Collider::Type::GROUND);
 	elevator[1]->rect.x = 32;
 	elevator[1]->rect.y = 197;//192
 
-	elevator[0] = App->collisions->AddCollider({ 32, 248, 16, 8 }, Collider::Type::GROUND);
+	elevator[0] = App->collisions->AddCollider({ 32, 248, 16, 6 }, Collider::Type::GROUND);
 	elevator[0]->rect.x = 32;
 	elevator[0]->rect.y = 248;
 

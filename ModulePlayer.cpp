@@ -463,6 +463,13 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
+		if (c2->type == Collider::Type::LOWERGROUND)
+		{
+			if (position.y <= c2->rect.y + c2->rect.h) // Collision to maintain the player to the ground
+			{
+				position.y = c2->rect.y + c2->rect.h;
+			}
+		}
 
 		if (c2->type == Collider::Type::WALL)
 		{

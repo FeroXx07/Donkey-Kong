@@ -29,8 +29,9 @@ struct Collider
 		HAMMER,
 		Item_Type,
 		NOTLADDER,
+		LOWERGROUND,
 
-		MAX=8
+		MAX=9
 	};
 
 	//Methods

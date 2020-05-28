@@ -35,6 +35,7 @@ public:
 
 	// Left Elevator Collider
 	Collider *elevator[6];
+
 	SDL_Rect elevatorSprite;
 	SDL_Rect elevatorComplementSpriteUP;
 	SDL_Rect elevatorComplementSpriteDOWN;
