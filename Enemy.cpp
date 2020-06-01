@@ -115,14 +115,12 @@ void Enemy::OnCollision(Collider* collider)
 			climbingUP = false;
 	}
 
-	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER && climbingUP == true) {
+	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER && (this->position.x + 4 < collider->rect.x && this->position.x + 9 > collider->rect.x + 1) &&climbingUP == true) {
 		this->enemySpeed.x = 0;
-		if (this->position.y > collider->rect.y)
+		/*if (this->position.y > collider->rect.y && climbingUP)
 		{
 			if (climbingUP)
 				--this->position.y;
-			if (climbingDOWN)
-				this->position.y;
 		}
 		else if (this->position.y <= collider->rect.y)
 		{
@@ -132,11 +130,37 @@ void Enemy::OnCollision(Collider* collider)
 				this->position.y = collider->rect.y - this->collider->rect.h;
 				this->enemySpeed.x = -1;
 			}
-			else if(climbingDOWN)
+		}*/
+		if (climbingUP)
+		{
+			if (this->position.y > collider->rect.y)
 			{
-				climbingDOWN = false;
-				this->position.y = collider->rect.y + collider->rect.h - this->collider->rect.h;
-				this->enemySpeed.x = -1;
+			--this->position.y;
+			}
+			else if (this->position.y <= collider->rect.y)
+			{
+				if (climbingUP)
+				{
+					climbingUP = false;
+					this->position.y = collider->rect.y - this->collider->rect.h;
+					this->enemySpeed.x = -1;
+				}
+			}
+		}
+		if (climbingDOWN)
+		{
+			if (this->position.y + this->collider->rect.h < collider->rect.y + collider->rect.h)
+			{
+				++this->position.y;
+			}
+			else if (this->position.y + this->collider->rect.h >= collider->rect.y + collider->rect.h)
+			{
+				if (climbingDOWN)
+				{
+					climbingDOWN = false;
+					this->position.y = collider->rect.y + collider->rect.h - this->collider->rect.h;
+					this->enemySpeed.x = +1;
+				}
 			}
 		}
 	}
