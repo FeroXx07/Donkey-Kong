@@ -52,7 +52,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::LADDER] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::LADDER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::HAMMER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::Item_Type] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::NOTLADDER] = false;
@@ -69,7 +69,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 
 	matrix[Collider::Type::LADDER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::LADDER][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::LADDER][Collider::Type::WALL] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::HAMMER] = false;

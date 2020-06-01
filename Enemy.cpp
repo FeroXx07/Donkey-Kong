@@ -87,19 +87,74 @@ void Enemy::OnCollision(Collider* collider)
 	}
 	
 	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::WALL) {
-		if (this->collider->rect.x < collider->rect.x + collider->rect.w) // Left wall collider
+		if (this->collider->rect.x < collider->rect.x + collider->rect.w-10) // Left wall collider
 		{
 			this->position.x = collider->rect.x - this->collider->rect.w;
 			this->enemySpeed.x = -this->enemySpeed.x;
 			goingLeft = true;
 		}
-		else if (this->collider->rect.x + this->collider->rect.w > collider->rect.x) // Right wall collider
+		else if (this->collider->rect.x + this->collider->rect.w > collider->rect.x+10) // Right wall collider
 		{
 			this->position.x = collider->rect.x + collider->rect.w;
 			this->enemySpeed.x = -this->enemySpeed.x;
 			goingLeft = false;
 		}
 	}
+
+	if (climbingUP == false)
+	{
+		climbingUP = (rand() % 100) < 1;
+		if (climbingUP)
+			climbingDOWN = false;
+	}
+
+	if (climbingDOWN == false)
+	{
+		climbingDOWN = (rand() % 100) < 1;
+		if (climbingDOWN)
+			climbingUP = false;
+	}
+
+	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER && climbingUP == true) {
+		this->enemySpeed.x = 0;
+		if (this->position.y > collider->rect.y)
+		{
+			if (climbingUP)
+				--this->position.y;
+			if (climbingDOWN)
+				this->position.y;
+		}
+		else if (this->position.y <= collider->rect.y)
+		{
+			if (climbingUP)
+			{
+				climbingUP = false;
+				this->position.y = collider->rect.y - this->collider->rect.h;
+				this->enemySpeed.x = -1;
+			}
+			else if(climbingDOWN)
+			{
+				climbingDOWN = false;
+				this->position.y = collider->rect.y + collider->rect.h - this->collider->rect.h;
+				this->enemySpeed.x = -1;
+			}
+		}
+	}
+
+	//if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::GROUND) {
+	//	if (this->collider->rect.x <= collider->rect.x) // Left wall collider
+	//	{
+	//		this->enemySpeed.x = -this->enemySpeed.x;
+	//		goingLeft = false;
+	//	}
+	//	else if (this->collider->rect.x + this->collider->rect.w >= collider->rect.x + collider->rect.w) // Right wall collider
+	//	{
+	//		this->enemySpeed.x = -this->enemySpeed.x;
+	//		goingLeft = true;
+	//	}
+	//}
+
+	
 }
 
 void Enemy::SetToDelete()

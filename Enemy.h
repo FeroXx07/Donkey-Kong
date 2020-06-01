@@ -59,6 +59,11 @@ protected:
 	iPoint enemySpeed = { 0,0 };
 
 	bool goingLeft = true;
+
+	bool climbingUP = false;
+
+	bool climbingDOWN = false;
+
 };
 
 #endif // __ENEMY_H__
