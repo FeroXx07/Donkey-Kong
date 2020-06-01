@@ -87,13 +87,13 @@ void Enemy::OnCollision(Collider* collider)
 	}
 	
 	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::WALL) {
-		if (this->collider->rect.x < collider->rect.x + collider->rect.w-10) // Left wall collider
+		if (this->collider->rect.x < collider->rect.x + collider->rect.w+10) // Left wall collider
 		{
 			this->position.x = collider->rect.x - this->collider->rect.w;
 			this->enemySpeed.x = -this->enemySpeed.x;
 			goingLeft = true;
 		}
-		else if (this->collider->rect.x + this->collider->rect.w > collider->rect.x+10) // Right wall collider
+		else if (this->collider->rect.x + this->collider->rect.w > collider->rect.x-10) // Right wall collider
 		{
 			this->position.x = collider->rect.x + collider->rect.w;
 			this->enemySpeed.x = -this->enemySpeed.x;
@@ -101,21 +101,12 @@ void Enemy::OnCollision(Collider* collider)
 		}
 	}
 
-	if (climbingUP == false)
-	{
-		climbingUP = (rand() % 100) < 1;
-		if (climbingUP)
-			climbingDOWN = false;
-	}
+	
+	
 
-	if (climbingDOWN == false)
-	{
-		climbingDOWN = (rand() % 100) < 1;
-		if (climbingDOWN)
-			climbingUP = false;
-	}
+	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER &&
+		(this->position.x + 4 < collider->rect.x && this->position.x + 9 > collider->rect.x + 1)) {
 
-	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER && (this->position.x + 4 < collider->rect.x && this->position.x + 9 > collider->rect.x + 1) &&climbingUP == true) {
 		this->enemySpeed.x = 0;
 		/*if (this->position.y > collider->rect.y && climbingUP)
 		{
@@ -131,6 +122,24 @@ void Enemy::OnCollision(Collider* collider)
 				this->enemySpeed.x = -1;
 			}
 		}*/
+
+
+		if (climbingUP == false )
+		{
+			climbingUP = (rand() % 100) < 1;
+			if (climbingUP)
+				climbingDOWN = false;
+	
+		}
+
+		if (climbingDOWN == false )
+		{
+			climbingDOWN = (rand() % 100) < 1;
+			if (climbingDOWN)
+				climbingUP = false;
+		}
+
+
 		if (climbingUP)
 		{
 			if (this->position.y > collider->rect.y)
@@ -164,6 +173,7 @@ void Enemy::OnCollision(Collider* collider)
 			}
 		}
 	}
+	
 
 	//if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::GROUND) {
 	//	if (this->collider->rect.x <= collider->rect.x) // Left wall collider

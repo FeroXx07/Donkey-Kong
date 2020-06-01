@@ -64,6 +64,7 @@ protected:
 
 	bool climbingDOWN = false;
 
+	bool inCollision = false;
 };
 
 #endif // __ENEMY_H__
