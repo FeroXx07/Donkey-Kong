@@ -57,7 +57,7 @@ bool ModuleParticles::Start()
 	score500.anim.speed = 0.1f;
 	score500.lifetime = 60;
 
-	wall.anim.PushBack({ 0,0,2,3 });
+	wall.anim.PushBack({ 0,0,4,3 });
 	wall.anim.loop = true;
 	wall.anim.speed = 0.1f;
 	wall.lifetime = 10000;

@@ -75,7 +75,6 @@ void Enemy::OnCollision(Collider* collider)
 			App->audio->PlayFx(destroyedFx);
 
 			App->particles->AddParticle(App->particles->wall, this->collider->rect.x, this->collider->rect.y, Collider::Type::WALL, 120);
-			App->particles->AddParticle(App->particles->wall, this->collider->rect.x+1, this->collider->rect.y, Collider::Type::WALL, 120);
 			App->scene->activeColliders += 2;
 			App->scene->totalColliders += 2;
 		}

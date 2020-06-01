@@ -20,8 +20,8 @@
 //const float gravity = 60.0f + 50.0f
 
 //Now temporally is this
-#define JUMPSPEED 30.0f
-const float gravity = 60.0f + 30.0f;         // pixels / second^2
+#define JUMPSPEED 50.0f
+const float gravity = 60.0f + 50.0f;         // pixels / second^2
 const float deltaTime = 1.0f / 25.0f; // More or less 60 frames per second
 
 
@@ -473,15 +473,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 
 		if (c2->type == Collider::Type::WALL)
 		{
-				if ((position.x < c2->rect.x + c2->rect.w) && (position.x > c2->rect.x)) // si viene el mario de la derecha
-				{
-					position.x = c2->rect.x + c2->rect.w;
-				}
-				if ((position.x + c1->rect.w > c2->rect.x) && (position.x < c2->rect.x)) // si viene el mario de la izquierda
-				{
-					position.x = c2->rect.x - c1->rect.w;
-				}
+			if (position.x > c2->rect.x + c2->rect.w / 2)
+			{
+				position.x = c2->rect.x + c2->rect.w;
+			}
+			if (position.x < c2->rect.x + c2->rect.w / 2)
+			{
+				position.x = c2->rect.x - 13;
+			}
 		}
+		
 
 		if (c2->type == Collider::Type::ENEMY && isGod == false)
 		{

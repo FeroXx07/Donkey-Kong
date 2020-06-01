@@ -152,10 +152,9 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 204, 97, 20, 32 }, Collider::Type::WALL); // Floor 3 Right
 	App->collisions->AddCollider({ 0, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Left
 	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::WALL); // Floor 4 Right
-	App->collisions->AddCollider({ 71+2+2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Left
-	App->collisions->AddCollider({ 151-2-2, 56, 2, 32 }, Collider::Type::WALL); // TopBar Right
+	App->collisions->AddCollider({ 71+2+2, 56, 74, 32 }, Collider::Type::WALL); // TopBar Left
 
-	activeColliders += 12; totalColliders += 12;
+	activeColliders += 11; totalColliders += 11;
 
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 80); //  Enemy floor 2

@@ -115,7 +115,7 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 192, 144, 32, 8-6 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 192, 150, 32, 2 }, Collider::Type::LOWERGROUND);
 
-	App->collisions->AddCollider({ 160, 168, 16, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 160, 168, 15, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 136, 160, 16, 8 }, Collider::Type::GROUND);
 
 	App->collisions->AddCollider({ 128, 128, 8, 5 }, Collider::Type::GROUND); //Modified
@@ -145,6 +145,18 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 136, 60, 1, 2 }, Collider::Type::LOWERGROUND);
 
 	activeColliders += 60; totalColliders += 60;
+
+	// Walls
+	App->collisions->AddCollider({ 151, 229, 2, 3 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 175, 221, 2, 3 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 199, 212, 2, 3 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 199, 180, 3, 4 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 175, 173, 3, 4 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 151, 164, 3, 4 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 158, 124, 3, 4 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 183, 116, 2, 3 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 206, 108, 2, 3 }, Collider::Type::WALL);
+
 
 	// Elevators
 	elevator[2] = App->collisions->AddCollider({ 32, 146, 16, 6 }, Collider::Type::GROUND);
