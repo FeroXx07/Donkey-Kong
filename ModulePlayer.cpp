@@ -298,7 +298,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//Gravity
-	if (isLadder == false )
+	if (isLadder == false  )
 	{ 
 		
 		position.y += speed.y * deltaTime;      // Apply vertical velocity to X position
@@ -355,7 +355,7 @@ update_status ModulePlayer::Update()
 		//isScoring = false;
 	}
 
-	if (destroyed) --App->hud->lives;
+	
 
 
 	return update_status::UPDATE_CONTINUE;
@@ -487,7 +487,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		if (c2->type == Collider::Type::ENEMY && isGod == false)
 		{
 			if (/* Enemy Type == Enemy Fire Type */        1) {
-				if (App->hud->lives > 0) {
+				if (App->hud->lives > 0 && destroyed ==false) {
 					// TODO para todo el codigo y actualizar animaciones
 					--App->hud->lives;
 					destroyed = true;

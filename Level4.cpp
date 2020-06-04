@@ -174,7 +174,12 @@ bool ModuleScene::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_HAMMER, 8, 138);
 
 	activeColliders += 15; totalColliders += 15;
-	
+
+	//Starting position of the Mario
+	App->player->position.x = 0;
+	App->player->position.y = 232;
+	App->player->speed.y = 0;
+
 	return ret;
 }
 

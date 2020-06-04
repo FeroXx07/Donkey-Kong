@@ -101,7 +101,20 @@ void Enemy::OnCollision(Collider* collider)
 		}
 	}
 
-	
+	/*if (climbingUP == false)
+	{
+		climbingUP = (rand() % 100) < 1;
+		if (climbingUP)
+			climbingDOWN = false;
+
+	}
+
+	if (climbingDOWN == false)
+	{
+		climbingDOWN = (rand() % 100) < 1;
+		if (climbingDOWN)
+			climbingUP = false;
+	}*/
 	
 
 	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER &&
@@ -174,7 +187,7 @@ void Enemy::OnCollision(Collider* collider)
 		}
 	}
 	
-
+   
 	//if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::GROUND) {
 	//	if (this->collider->rect.x <= collider->rect.x) // Left wall collider
 	//	{
