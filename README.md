@@ -17,25 +17,35 @@ look the same way as the original.
  1. Left-click the "Donkey Kong.exe" file
  2. Wait until the game starts & enjoy!
 
+## Playing the game
+
+This game is about a man who needs to save a princess from a monster called Donky Kong. The objective is to reach the place where the princess is in each level. But be careful, that monster throws you barrels and you can day, you only have 3 lives!
+Well, despite of all the other enemies the game has, which makes it more interesting!
+
 ## Game Controls
 
  - A Key: Going Left
  - D Key: Going Right
- - Space Key: Jump
  - W Key: Climb stairs up
  - S Key: Climb stairs down
+ - Space Key: Jump
+
+## Secret Controls
+
  - F1 Key: Show colliders
  - F2 Key: Toggle Hammer off
  - F3 Key: Toggle Hammer on
  - F4 Key: Insta win
  - F5 Key: Toggle God mode;
 
-## Team Members
+## Team Members & Important Links
+
+[GitHup Project Page](https://github.com/FeroXx07/Donkey-Kong)
 
  - David Montufo | [Montuuh](https://github.com/Montuuh)
- - Víctor Jara | [Kerali](https://github.com/Kerali)
+ - VÃ­ctor Jara | [Kerali](https://github.com/Kerali)
  - Ali Hassan Shahid | [FeroXx07](https://github.com/FeroXx07)
- - Martí Buxeda | [BooStar](https://github.com/BooStarGamer)
+ - MartÃ­ Buxeda | [BooStar](https://github.com/BooStarGamer)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
