@@ -30,6 +30,18 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 	level_4.h = SCREEN_HEIGHT;
 
 
+	dkAnimIdle.PushBack({ 256, 56, 40, 32 });
+	dkRightHand.PushBack({ 357, 56, 46, 32 });
+	dkLeftHand.PushBack({ 304, 56, 46, 32 });
+	dkAnimIdle.speed = 0.1f;
+	dkRightHand.speed = 0.1f;
+	dkLeftHand.speed = 0.1f;
+
+	donkeyPath.PushBack({ 0,0, }, 120, &dkAnimIdle);
+	donkeyPath.PushBack({ 0,0, }, 30, &dkRightHand);
+	donkeyPath.PushBack({ 0,0, }, 30, &dkLeftHand);
+	donkeyPath.PushBack({ 0,0, }, 30, &dkRightHand);
+	donkeyPath.loop = true;
 }
 
 ModuleScene::~ModuleScene()
@@ -56,6 +68,9 @@ bool ModuleScene::Start()
 
 	FX_Lose = App->audio->LoadFx("Assets/Music/SFX_Death.wav");
 	++activeFx; ++totalFx;
+
+	FX_Stomp = App->audio->LoadFx("Assets/Music/SFX_Stomp.wav");
+	++activeFx; ++totalFx;
 	
 	App->particles->Enable();
 	App->collisions->Enable();
@@ -68,10 +83,10 @@ bool ModuleScene::Start()
 	App->player->position.x = 0;
 	App->player->position.y = 232;
 
-
 	Nuts = 8;
 	frameCount = 0;
 	resetCounter = 0;
+	donkeyCounterFX = 0;
 	App->player->destroyed = false;
 
 	// Level 4 colliders:
@@ -178,6 +193,7 @@ bool ModuleScene::Start()
 
 	activeColliders += 15; totalColliders += 15;
 
+
 	//Starting position of the Mario
 	App->player->position.x = 0;
 	App->player->position.y = 232;
@@ -221,7 +237,18 @@ update_status ModuleScene::Update()
 
 	}
 
-	
+	++donkeyCounterFX;
+	if (donkeyCounterFX == 150 || donkeyCounterFX == 180 || donkeyCounterFX == 210)
+	{
+		App->audio->PlayFx(FX_Stomp);
+	}
+	else if (donkeyCounterFX > 210)
+	{
+		donkeyCounterFX = 0;
+	}
+
+	donkeyPath.Update();
+	currentAnimDonkey = donkeyPath.GetCurrentAnimation();
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -232,7 +259,12 @@ update_status ModuleScene::PostUpdate()
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, &level_4);
 
-	
+	if (currentAnimDonkey != nullptr)
+	{
+		LOG("Drawing DONKEY KONG of the WinScene");
+		App->render->Blit(bgTexture, 92, 56, &(currentAnimDonkey->GetCurrentFrame()));
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
