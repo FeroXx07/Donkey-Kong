@@ -298,7 +298,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//Gravity
-	if (isLadder == false  )
+	if (isLadder == false && destroyed == false)
 	{ 
 		
 		position.y += speed.y * deltaTime;      // Apply vertical velocity to X position
@@ -317,9 +317,6 @@ update_status ModulePlayer::Update()
 	if (position.x < 0) position.x = 0;
 	if (position.x > 211) position.x = 211;
 	if (position.y < 0) position.y = 0;
-
-
-
 
 
 	if (isLadder == true)

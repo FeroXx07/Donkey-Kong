@@ -64,6 +64,19 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 	donkeyPath.PushBack({ 0,0, }, 30, &dkRightHand);
 	donkeyPath.loop = true;
 
+
+	prAnimRight.PushBack({ 96,103,15,22 });
+	prAnimRight.PushBack({ 121,103,15,22 });
+	prAnimRight.speed = 0.1f;
+	prAnimRight.loop = true;
+	prAnimRightIdle.PushBack({ 143,103,16,22 });
+
+	princessPathRight.PushBack({ 0,0 }, 150, &prAnimRightIdle);
+	princessPathRight.PushBack({ 0,0 }, 60, &prAnimRight);
+	princessPathRight.loop = true;
+
+	helpRight = { 216,108,23,8 };
+	
 }
 
 ModuleScene2::~ModuleScene2()
@@ -107,6 +120,7 @@ bool ModuleScene2::Start()
 
 	resetCounter = 0;
 	donkeyCounterFX = 0;
+	helpCounter = 0;
 
 	App->player->destroyed = false;
 
@@ -129,9 +143,7 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 64, 208, 24, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 56, 136, 7, 6 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 56, 142, 7, 2 }, Collider::Type::LOWERGROUND);
-	App->collisions->AddCollider({ 64 - 3, 136, 8 - 6, 72 }, Collider::Type::NOTLADDER);
 	App->collisions->AddCollider({ 64 + 3, 136, 8 - 6, 72 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 64 + 10, 136, 8 - 6, 72 }, Collider::Type::NOTLADDER);
 	App->collisions->AddCollider({ 72, 136, 7, 6 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 72, 142, 7, 2 }, Collider::Type::LOWERGROUND);
 	App->collisions->AddCollider({ 80 + 3, 136, 8 - 6, 72 }, Collider::Type::LADDER);
@@ -186,7 +198,7 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 136, 56, 1, 2 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 136, 60, 1, 2 }, Collider::Type::LOWERGROUND);
 
-	activeColliders += 60; totalColliders += 60;
+	activeColliders += 58; totalColliders += 58;
 
 	// Walls
 	App->collisions->AddCollider({ 151, 229, 2, 3 }, Collider::Type::WALL);
@@ -199,6 +211,7 @@ bool ModuleScene2::Start()
 	App->collisions->AddCollider({ 183, 116, 2, 3 }, Collider::Type::WALL);
 	App->collisions->AddCollider({ 206, 108, 2, 3 }, Collider::Type::WALL);
 
+	activeColliders += 9; totalColliders += 9;
 
 	// Elevators
 	elevator[2] = App->collisions->AddCollider({ 32, 146, 16, 6 }, Collider::Type::GROUND);
@@ -233,6 +246,25 @@ bool ModuleScene2::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 207, 94);
 	donkeyCollider = App->collisions->AddCollider({ 24, 56, 40, 32 }, Collider::Type::ENEMY);
 	activeColliders += 4; totalColliders += 4;
+
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 70, 124);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 211, 92);
+	activeColliders += 2; totalColliders += 2;
+
+	// Walls
+	App->collisions->AddCollider({ 54-5, 128, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 88+5, 128, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 60-5, 200, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 90+5, 200, 2, 8 }, Collider::Type::ENEMYWALL);
+
+	App->collisions->AddCollider({ 206 - 5, 92, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 224 + 5, 92, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 182 - 5, 132, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 224 + 5, 132, 2, 8 }, Collider::Type::ENEMYWALL);
+
+	App->collisions->AddCollider({ 181 - 5, 168, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 200 + 5, 168, 2, 8 }, Collider::Type::ENEMYWALL);
+	activeColliders += 10; totalColliders += 10;
 
 	//Starting position of the Mario
 	App->player->position.x = 2;
@@ -327,8 +359,20 @@ update_status ModuleScene2::Update()
 	jumperCollider->SetPos(jumperPosition.x+1, jumperPosition.y+1);
 	currentAnimJumper->Update();
 
+	princessPathRight.Update();
+	currentAnimPrincess = princessPathRight.GetCurrentAnimation();
+	currentAnimPrincess->Update();
+
 	donkeyPath.Update();
 	currentAnimDonkey = donkeyPath.GetCurrentAnimation();
+
+	// counter for Help signal
+	++helpCounter;
+	if (helpCounter >= 210)
+	{
+		helpCounter = 0;
+	}
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -359,6 +403,16 @@ update_status ModuleScene2::PostUpdate()
 		App->render->Blit(bgTexture, jumperPosition.x, jumperPosition.y, &(currentAnimJumper->GetCurrentFrame()));
 	}
 
+	if (currentAnimPrincess != nullptr)
+	{
+		LOG("Drawing the Princess ");
+		App->render->Blit(bgTexture, 88, 34, &(currentAnimPrincess->GetCurrentFrame()));
+		if (helpCounter >= 150)
+		{
+			if (currentAnimPrincess == &prAnimRight)
+				App->render->Blit(bgTexture, 107, 34, &helpRight);
+		}
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }

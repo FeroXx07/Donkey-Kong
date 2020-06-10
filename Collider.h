@@ -30,8 +30,9 @@ struct Collider
 		Item_Type,
 		NOTLADDER,
 		LOWERGROUND,
+		ENEMYWALL,
 
-		MAX=9
+		MAX=10
 	};
 
 	//Methods

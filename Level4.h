@@ -52,7 +52,6 @@ public:
 	// Counter to reset lever after dying
 	int resetCounter = 0;
 
-
 	// Donkey 
 	Path donkeyPath;
 	Collider* donkeyCollider;
@@ -60,9 +59,20 @@ public:
 	// Donkey FX
 	int FX_Stomp = 0;
 	int donkeyCounterFX = 0;
-	// Enemy animations
+
+	// Donkey animations
 	Animation dkAnimIdle, dkRightHand, dkLeftHand;
-	Animation* currentAnimDonkey;
+	Animation* currentAnimDonkey; 
+
+	// Princess animations
+	Animation prAnimRightIdle, prAnimLeftIdle;
+	Animation prAnimRight, prAnimLeft;
+	Animation* currentAnimPrincess;
+	Path princessPathRight, princessPathLeft;
+
+	// Help sign
+	SDL_Rect helpLeft, helpRight;
+	int helpCounter = 0;
 };
 
 #endif

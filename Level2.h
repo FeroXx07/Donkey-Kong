@@ -70,4 +70,14 @@ public:
 	// Enemy animations
 	Animation dkAnimIdle, dkRightHand, dkLeftHand;
 	Animation* currentAnimDonkey;
+
+	// Princess animations
+	Animation prAnimRightIdle;
+	Animation prAnimRight;
+	Animation* currentAnimPrincess;
+	Path princessPathRight;
+
+	// Help sign
+	SDL_Rect helpRight;
+	int helpCounter = 0;
 };

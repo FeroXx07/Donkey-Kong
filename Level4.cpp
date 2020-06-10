@@ -42,6 +42,31 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 	donkeyPath.PushBack({ 0,0, }, 30, &dkLeftHand);
 	donkeyPath.PushBack({ 0,0, }, 30, &dkRightHand);
 	donkeyPath.loop = true;
+
+	prAnimRight.PushBack({ 96,103,15,22 });
+	prAnimRight.PushBack({ 121,103,15,22 });
+	
+	prAnimRight.speed = 0.1f;
+	prAnimRight.loop = true;
+	prAnimRightIdle.PushBack({ 143,103,16,22 });
+
+	prAnimLeft.PushBack({ 96,131,15,22 });
+	prAnimLeft.PushBack({ 121,131,15,22 });
+	
+	prAnimLeft.speed = 0.1f;
+	prAnimLeft.loop = true;
+	prAnimLeftIdle.PushBack({ 143,131,16,22 });
+
+	princessPathRight.PushBack({ 0,0 }, 150, &prAnimRightIdle);
+	princessPathRight.PushBack({ 0,0 }, 60, &prAnimRight);
+	princessPathRight.loop = true;
+
+	princessPathLeft.PushBack({ 0,0 }, 150, &prAnimLeftIdle);
+	princessPathLeft.PushBack({ 0,0 }, 60, &prAnimLeft);
+	princessPathRight.loop = true;
+
+	helpRight = {280,108,24,8};
+	helpLeft = {248,108,23,8};
 }
 
 ModuleScene::~ModuleScene()
@@ -87,6 +112,7 @@ bool ModuleScene::Start()
 	frameCount = 0;
 	resetCounter = 0;
 	donkeyCounterFX = 0;
+	helpCounter = 0;
 	App->player->destroyed = false;
 
 	// Level 4 colliders:
@@ -174,6 +200,21 @@ bool ModuleScene::Start()
 
 	activeColliders += 11; totalColliders += 11;
 
+	//ENEMY Wall collisions
+	App->collisions->AddCollider({ -1, 216, 1, 32 }, Collider::Type::ENEMYWALL); // Base Left
+	App->collisions->AddCollider({ 224, 216, 1, 32 }, Collider::Type::ENEMYWALL); // Base Right
+	App->collisions->AddCollider({ 0, 177, 4, 31 }, Collider::Type::ENEMYWALL); // Floor 1 Left
+	App->collisions->AddCollider({ 220, 177, 4, 31 }, Collider::Type::ENEMYWALL); // Floor 1 Right
+	App->collisions->AddCollider({ 0, 137, 12, 31 }, Collider::Type::ENEMYWALL); // Floor 2 Left
+	App->collisions->AddCollider({ 212, 137, 12, 31 }, Collider::Type::ENEMYWALL); // Floor 2 Right
+	App->collisions->AddCollider({ 0, 97, 20, 32 }, Collider::Type::ENEMYWALL); // Floor 3 Left
+	App->collisions->AddCollider({ 204, 97, 20, 32 }, Collider::Type::ENEMYWALL); // Floor 3 Right
+	App->collisions->AddCollider({ 0, 60, 28, 28 }, Collider::Type::ENEMYWALL); // Floor 4 Left
+	App->collisions->AddCollider({ 196, 60, 28, 28 }, Collider::Type::ENEMYWALL); // Floor 4 Right
+	App->collisions->AddCollider({ 71 + 2 + 2, 56, 74, 32 }, Collider::Type::ENEMYWALL); // TopBar Left
+
+	activeColliders += 11; totalColliders += 11;
+
 	// Adding enemy
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12 - 80); //  Enemy floor 2
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 132, 248 - 12); // Enemy at the base
@@ -247,9 +288,23 @@ update_status ModuleScene::Update()
 		donkeyCounterFX = 0;
 	}
 
+	princessPathLeft.Update();
+	princessPathRight.Update();
+
+	if (App->player->position.x >= SCREEN_WIDTH / 2)
+		currentAnimPrincess = princessPathRight.GetCurrentAnimation();
+	else
+		currentAnimPrincess = princessPathLeft.GetCurrentAnimation();
+	currentAnimPrincess->Update();
+
 	donkeyPath.Update();
 	currentAnimDonkey = donkeyPath.GetCurrentAnimation();
 
+	++helpCounter;
+	if (helpCounter >= 210)
+	{
+		helpCounter = 0;
+	}
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -263,6 +318,19 @@ update_status ModuleScene::PostUpdate()
 	{
 		LOG("Drawing DONKEY KONG of the WinScene");
 		App->render->Blit(bgTexture, 92, 56, &(currentAnimDonkey->GetCurrentFrame()));
+	}
+
+	if (currentAnimPrincess != nullptr)
+	{
+		LOG("Drawing DONKEY KONG of the WinScene");
+		App->render->Blit(bgTexture, 105, 26, &(currentAnimPrincess->GetCurrentFrame()));
+		if (helpCounter >= 150)
+		{
+			if (currentAnimPrincess == &prAnimLeft)
+				App->render->Blit(bgTexture, 78, 24, &helpLeft);
+			else if (currentAnimPrincess == &prAnimRight)
+				App->render->Blit(bgTexture, 120, 24, &helpRight);
+		}
 	}
 
 	return update_status::UPDATE_CONTINUE;

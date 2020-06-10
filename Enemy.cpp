@@ -75,6 +75,7 @@ void Enemy::OnCollision(Collider* collider)
 			App->audio->PlayFx(destroyedFx);
 
 			App->particles->AddParticle(App->particles->wall, this->collider->rect.x, this->collider->rect.y, Collider::Type::WALL, 120);
+			App->particles->AddParticle(App->particles->wall, this->collider->rect.x, this->collider->rect.y, Collider::Type::ENEMYWALL, 120);
 			App->level4->activeColliders += 2;
 			App->level4->totalColliders += 2;
 		}
@@ -86,7 +87,7 @@ void Enemy::OnCollision(Collider* collider)
 		}
 	}
 	
-	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::WALL) {
+	if (this->collider->type == Collider::Type::ENEMY && (collider->type == Collider::Type::ENEMYWALL)) {
 		if (this->collider->rect.x < collider->rect.x + collider->rect.w+10) // Left wall collider
 		{
 			this->position.x = collider->rect.x - this->collider->rect.w;
