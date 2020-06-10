@@ -35,6 +35,11 @@ iPoint Path::GetRelativePosition() const
 	return iPoint((int)relativePosition.x, (int)relativePosition.y);
 }
 
+void Path::ResetrelativePosition()
+{
+	relativePosition = { 0,0 };
+}
+
 Animation* Path::GetCurrentAnimation()
 {
 	return steps[currentStep].animation;

@@ -67,7 +67,7 @@ void Enemy::OnCollision(Collider* collider)
 		}
 		// For nuts
 		if (((collider->rect.x < this->collider->rect.x) && (collider->rect.x + collider->rect.w >= this->collider->rect.x + this->collider->rect.w)) && this->collider->IMPORTANTITEMS) {
-			App->scene->Nuts--;
+			App->level4->Nuts--;
 			App->hud->score += 100;
 			//Particle 100
 			App->particles->AddParticle(App->particles->score100, this->position.x - 5, this->position.y - 7, Collider::Type::NONE,5);
@@ -75,8 +75,8 @@ void Enemy::OnCollision(Collider* collider)
 			App->audio->PlayFx(destroyedFx);
 
 			App->particles->AddParticle(App->particles->wall, this->collider->rect.x, this->collider->rect.y, Collider::Type::WALL, 120);
-			App->scene->activeColliders += 2;
-			App->scene->totalColliders += 2;
+			App->level4->activeColliders += 2;
+			App->level4->totalColliders += 2;
 		}
 		// For items like hammer
 		if (this->collider->item == Collider::POWERITEMS ){

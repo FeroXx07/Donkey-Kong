@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "Path.h"
 
 struct SDL_Texture;
 
@@ -33,7 +34,6 @@ public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
 
-
 	// The scene background music
 	int level_4BGM = 0;
 
@@ -51,6 +51,7 @@ public:
 
 	// Counter to reset lever after dying
 	int resetCounter = 0;
+
 };
 
 #endif

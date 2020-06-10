@@ -103,6 +103,8 @@ bool ModuleSceneWin::Start()
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 
+	path.Reset();
+	path.ResetrelativePosition();
 	currentAnim = path.GetCurrentAnimation();
 	frameCount = 0;
 	return ret;

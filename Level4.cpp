@@ -28,6 +28,8 @@ ModuleScene::ModuleScene(bool startEnabled) : Module(startEnabled)
 	level_4.y = 160;
 	level_4.w = SCREEN_WIDTH;
 	level_4.h = SCREEN_HEIGHT;
+
+
 }
 
 ModuleScene::~ModuleScene()
@@ -65,6 +67,7 @@ bool ModuleScene::Start()
 	//Starting position of the Mario
 	App->player->position.x = 0;
 	App->player->position.y = 232;
+
 
 	Nuts = 8;
 	frameCount = 0;
@@ -185,6 +188,7 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update()
 {
+
 	if (App->input->keys[SDL_SCANCODE_F4] == KEY_DOWN )
 	{
 		Nuts = 0;
@@ -217,6 +221,8 @@ update_status ModuleScene::Update()
 
 	}
 
+	
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -226,6 +232,7 @@ update_status ModuleScene::PostUpdate()
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, &level_4);
 
+	
 	return update_status::UPDATE_CONTINUE;
 }
 

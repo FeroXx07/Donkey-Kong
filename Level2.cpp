@@ -12,6 +12,7 @@
 #include "ModuleInput.h"
 #include "ModuleHud.h"
 #include "ModuleParticles.h"
+#include <stdio.h>
 
 #include "Game/SDL_mixer/include/SDL_mixer.h"
 #include "Game/SDL/include/SDL_scancode.h"
@@ -32,6 +33,36 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 	elevatorSprite = {536,140,16,8};
 	elevatorComplementSpriteDOWN = { 512, 136,16,16 };
 	elevatorComplementSpriteUP = { 512, 118,16,16 };
+
+
+	jumperAnim.PushBack({ 466,137,12,15 });
+	jumperAnim.PushBack({ 488,141,16,11 });
+	jumperAnim.loop = true;
+	jumperAnim.speed = 0.1f;
+
+
+	pathJumper.loop = true;
+	pathJumper.PushBack({ 1.5, 1 }, 20, &jumperAnim);
+	pathJumper.PushBack({ 1.5, -1 }, 20, &jumperAnim);
+	pathJumper.PushBack({ 1.5, 1 }, 20, &jumperAnim);
+	pathJumper.PushBack({ 1.5, -1 }, 20, &jumperAnim);
+	pathJumper.PushBack({ 1.5, 1 }, 20, &jumperAnim);
+	pathJumper.PushBack({ 1.5, -1 }, 20, &jumperAnim);
+	pathJumper.PushBack({ 0, 2 }, 120, &jumperAnim);
+	currentAnimJumper = pathJumper.GetCurrentAnimation();
+
+	dkAnimIdle.PushBack({ 256, 56, 40, 32 });
+	dkRightHand.PushBack({ 357, 56, 46, 32 });
+	dkLeftHand.PushBack({ 304, 56, 46, 32 });
+	dkAnimIdle.speed = 0.1f;
+	dkRightHand.speed = 0.1f;
+	dkLeftHand.speed = 0.1f;
+
+	donkeyPath.PushBack({ 0,0, }, 120, &dkAnimIdle);
+	donkeyPath.PushBack({ 0,0, }, 30, &dkRightHand);
+	donkeyPath.PushBack({ 0,0, }, 30, &dkLeftHand);
+	donkeyPath.PushBack({ 0,0, }, 30, &dkRightHand);
+	donkeyPath.loop = true;
 
 }
 
@@ -58,6 +89,15 @@ bool ModuleScene2::Start()
 	FX_Lose = App->audio->LoadFx("Assets/Music/SFX_Death.wav");
 	++activeFx; ++totalFx;
 
+	FX_Jumps = App->audio->LoadFx("Assets/Music/SFX_EnemyJumper.wav");
+	++activeFx; ++totalFx;
+
+	FX_Fall = App->audio->LoadFx("Assets/Music/SFX_Fall.wav");
+	++activeFx; ++totalFx;
+
+	FX_Stomp = App->audio->LoadFx("Assets/Music/SFX_Stomp.wav");
+	++activeFx; ++totalFx;
+
 	App->particles->Enable();
 	App->collisions->Enable();
 	App->player->Enable();
@@ -66,6 +106,8 @@ bool ModuleScene2::Start()
 	App->enemies->Enable();
 
 	resetCounter = 0;
+	donkeyCounterFX = 0;
+
 	App->player->destroyed = false;
 
 	// Level 2 colliders:
@@ -189,14 +231,19 @@ bool ModuleScene2::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 69, 199);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 4, 120);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 207, 94);
-	activeColliders += 3; totalColliders += 3;
+	donkeyCollider = App->collisions->AddCollider({ 24, 56, 40, 32 }, Collider::Type::ENEMY);
+	activeColliders += 4; totalColliders += 4;
 
 	//Starting position of the Mario
 	App->player->position.x = 2;
 	App->player->position.y = 232 - App->player->playerCollider->rect.h;
 	App->player->speed.y = 0;
 
-
+	jumperPosition.x = 0;
+	jumperPosition.y = 0;
+	spawnPosition = { 0,57 };
+	jumperCollider = App->collisions->AddCollider({ jumperPosition.x ,jumperPosition.y,4,4 }, Collider::Type::ENEMY);
+	activeColliders += 6; totalColliders += 6;
 	return ret;
 }
 
@@ -243,6 +290,45 @@ update_status ModuleScene2::Update()
 
 	}
 
+	if (jumperPosition.x == 31 || jumperPosition.x == 94 || jumperPosition.x == 159)
+	{
+		App->audio->PlayFx(FX_Jumps);
+	}
+	if (jumperPosition.x == 187 && jumperPosition.y == 72)
+	{
+		App->audio->PlayFx(FX_Fall);
+	}
+	++donkeyCounterFX;
+	if (donkeyCounterFX == 150 || donkeyCounterFX == 180 || donkeyCounterFX == 210)
+	{
+		App->audio->PlayFx(FX_Stomp);
+	}
+	else if (donkeyCounterFX > 210)
+	{
+		donkeyCounterFX = 0;
+	}
+
+	// Update path of the jumper
+	pathJumper.Update();
+
+	// Limit the jumper to a certain position to make it reset
+	if (jumperPosition.y >= 248)
+	{
+		pathJumper.ResetrelativePosition();
+		pathJumper.Reset();
+		jumperPosition.y = spawnPosition.y;
+		jumperPosition.x = spawnPosition.x;
+	}
+
+	// Update pos, coll and anim of the jumper
+	jumperPosition = spawnPosition + pathJumper.GetRelativePosition();
+	printf("DK.Y= %d\n\n", jumperPosition.y);
+	printf("DK.X= %d\n\n", jumperPosition.x);
+	jumperCollider->SetPos(jumperPosition.x+1, jumperPosition.y+1);
+	currentAnimJumper->Update();
+
+	donkeyPath.Update();
+	currentAnimDonkey = donkeyPath.GetCurrentAnimation();
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -260,6 +346,18 @@ update_status ModuleScene2::PostUpdate()
 	}
 	App->render->Blit(bgTexture, 32, 239, &elevatorComplementSpriteUP);
 	App->render->Blit(bgTexture, 96, 239, &elevatorComplementSpriteUP);
+
+	if (currentAnimDonkey != nullptr)
+	{
+		LOG("Drawing DONKEY KONG of the WinScene");
+		App->render->Blit(bgTexture, 24, 56, &(currentAnimDonkey->GetCurrentFrame()));
+	}
+
+	if (currentAnimJumper != nullptr)
+	{
+		LOG("Drawing DONKEY KONG of the WinScene");
+		App->render->Blit(bgTexture, jumperPosition.x, jumperPosition.y, &(currentAnimJumper->GetCurrentFrame()));
+	}
 
 
 	return update_status::UPDATE_CONTINUE;
@@ -279,6 +377,15 @@ bool ModuleScene2::CleanUp()
 	--totalFx;
 
 	App->audio->UnloadFx(FX_Lose);
+	--totalFx;
+
+	App->audio->UnloadFx(FX_Jumps);
+	--totalFx;
+
+	App->audio->UnloadFx(FX_Fall);
+	--totalFx;
+
+	App->audio->UnloadFx(FX_Stomp);
 	--totalFx;
 
 	App->textures->Unload(bgTexture);

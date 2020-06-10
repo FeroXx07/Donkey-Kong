@@ -34,7 +34,7 @@ Application::Application()
 	modules[4] = intro = new SceneIntro(true);
 	modules[5] = sceneWin = new ModuleSceneWin(false);
 
-	modules[6] = scene = new ModuleScene(false);
+	modules[6] = level4 = new ModuleScene(false);
 	modules[7] = level2 = new ModuleScene2(false);
 
 	modules[8] = player = new ModulePlayer(false);	//Player starts disabled

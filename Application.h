@@ -57,7 +57,7 @@ public:
 	ModulePlayer* player = nullptr;
 	ModuleHammer* hammer = nullptr;
 	ModuleSceneWin* sceneWin = nullptr;
-	ModuleScene* scene = nullptr;
+	ModuleScene* level4 = nullptr;
 	ModuleScene2* level2 = nullptr;
 	SceneIntro* intro = nullptr;
 	ModuleEnemies* enemies = nullptr;

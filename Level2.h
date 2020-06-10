@@ -1,7 +1,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
-
+#include "Path.h"
 struct SDL_Texture;
 
 class ModuleScene2 : public Module
@@ -45,6 +45,29 @@ public:
 	int FX_Win = 0;
 	int FX_Lose = 0;
 
+	// Sound Effect of Enemy Jumper
+	int FX_Jumps = 0;
+	int FX_Fall = 0;
+
 	// Counter to reset lever after dying
 	int resetCounter = 0;
+
+	// The path that will define the position in the world
+	Animation* currentAnimJumper = nullptr;
+	Path pathJumper;
+
+	Animation jumperAnim;
+	iPoint jumperPosition, spawnPosition;
+	Collider* jumperCollider;
+
+	// Donkey 
+	Path donkeyPath;
+	Collider* donkeyCollider;
+
+	// Donkey FX
+	int FX_Stomp = 0;
+	int donkeyCounterFX = 0;
+	// Enemy animations
+	Animation dkAnimIdle, dkRightHand, dkLeftHand;
+	Animation* currentAnimDonkey;
 };

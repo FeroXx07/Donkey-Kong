@@ -50,7 +50,7 @@ update_status ModuleDebugInfo::Update()
 		inspectedModule = (Module*)App->hammer;
 
 	if (App->input->keys[SDL_SCANCODE_F9] == KEY_DOWN)
-		inspectedModule = (Module*)App->scene;
+		inspectedModule = (Module*)App->level4;
 
 	if (App->input->keys[SDL_SCANCODE_F10] == KEY_DOWN)
 		inspectedModule = (Module*)App->intro;
