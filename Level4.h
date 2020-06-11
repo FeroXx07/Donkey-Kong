@@ -73,6 +73,9 @@ public:
 	// Help sign
 	SDL_Rect helpLeft, helpRight;
 	int helpCounter = 0;
+
+	// Black Quad Rect
+	SDL_Rect blackQuad = { 64,176,96,32 };
 };
 
 #endif

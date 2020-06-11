@@ -31,7 +31,7 @@ ModuleEnemies::~ModuleEnemies()
 
 bool ModuleEnemies::Start()
 {
-	texture = App->textures->Load("Assets/Background2Transparent.png");
+	texture = App->textures->Load("Assets/Background2.png");
 	++activeTextures;  ++totalTextures;
 	enemyDestroyedFx = App->audio->LoadFx("Assets/Music/SFX_Kill.wav");
 	++activeFx; ++totalFx;

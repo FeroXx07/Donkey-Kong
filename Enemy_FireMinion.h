@@ -25,6 +25,8 @@ private:
 	// The enemy animation
 	Animation enemy_FireMinionLeftAnim;
 	Animation enemy_FireMinionRightAnim;
+	Animation enemy_FireMinionLeftAnimHammer;
+	Animation enemy_FireMinionRightAnimHammer;
 	
 	int enemyFireMinionSpeed = 1;
 };

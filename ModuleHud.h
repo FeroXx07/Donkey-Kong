@@ -35,4 +35,5 @@ public:
 	char livesText[4] = { ",,,"};
 
 	bool drawScore = false;
+	
 };

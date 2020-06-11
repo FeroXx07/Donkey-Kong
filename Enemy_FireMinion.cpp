@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleCollisions.h"
+#include "ModuleHammer.h"
 
 Enemy_FireMinion::Enemy_FireMinion(int x, int y) : Enemy(x, y)
 {
@@ -19,6 +20,16 @@ Enemy_FireMinion::Enemy_FireMinion(int x, int y) : Enemy(x, y)
 	enemy_FireMinionRightAnim.speed = 0.1f;
 	enemy_FireMinionRightAnim.loop = true;
 
+	enemy_FireMinionLeftAnimHammer.PushBack({ 609,140,15,12 });
+	enemy_FireMinionLeftAnimHammer.PushBack({ 632,140,16,12 });
+	enemy_FireMinionLeftAnimHammer.speed = 0.1f;
+	enemy_FireMinionLeftAnimHammer.loop = true;
+
+	enemy_FireMinionRightAnimHammer.PushBack({ 609,128,15,12 });
+	enemy_FireMinionRightAnimHammer.PushBack({ 632,128,16,12 });
+	enemy_FireMinionRightAnimHammer.speed = 0.1f;
+	enemy_FireMinionRightAnimHammer.loop = true;
+
 	collider = App->collisions->AddCollider({0, 0, 15, 12}, Collider::Type::ENEMY, (Module*) App->enemies);
 }
 
@@ -31,8 +42,16 @@ void Enemy_FireMinion::Update()
 	spawnDelay++;
 
 	// Fire Minion animations
-	if (goingLeft) currentAnim = &enemy_FireMinionLeftAnim;
-	else currentAnim = &enemy_FireMinionRightAnim;
+	if (App->hammer->hammerExist)
+	{
+		if (goingLeft) currentAnim = &enemy_FireMinionLeftAnimHammer;
+		else currentAnim = &enemy_FireMinionRightAnimHammer;
+	}
+	else
+	{
+		if (goingLeft) currentAnim = &enemy_FireMinionLeftAnim;
+		else currentAnim = &enemy_FireMinionRightAnim;
+	}
 
 	Enemy::Update();
 }

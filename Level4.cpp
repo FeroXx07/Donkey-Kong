@@ -12,6 +12,9 @@
 #include "ModuleInput.h"
 #include "ModuleHud.h"
 #include "ModuleParticles.h"
+#include "SceneIntro.h"
+#include "ModuleFonts.h"
+
 
 #include "Game/SDL_mixer/include/SDL_mixer.h"
 #include "Game/SDL/include/SDL_scancode.h"
@@ -275,7 +278,20 @@ update_status ModuleScene::Update()
 		++resetCounter;
 	}
 	else if (App->player->destroyed && App->hud->lives == 0) {
+		
+		if (resetCounter >= 500)
+		{
+			resetCounter = -60;
+			App->fade->FadeToBlack(this, (Module*)App->intro);
+		}
 
+		if (resetCounter == 1)
+		{
+			Mix_HaltMusic();
+			App->audio->PlayFx(FX_Lose);
+			App->particles->AddParticle(App->particles->marioDeath, App->player->playerCollider->rect.x, App->player->playerCollider->rect.y);
+		}
+		++resetCounter;
 	}
 
 	++donkeyCounterFX;
@@ -331,6 +347,10 @@ update_status ModuleScene::PostUpdate()
 			else if (currentAnimPrincess == &prAnimRight)
 				App->render->Blit(bgTexture, 120, 24, &helpRight);
 		}
+	}
+
+	if (App->player->destroyed && App->hud->lives == 0) {
+		App->render->DrawQuad(blackQuad, 0, 0, 0, 80 );
 	}
 
 	return update_status::UPDATE_CONTINUE;

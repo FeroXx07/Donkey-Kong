@@ -319,7 +319,19 @@ update_status ModuleScene2::Update()
 		++resetCounter;
 	}
 	else if (App->player->destroyed && App->hud->lives == 0) {
+		if (resetCounter >= 500)
+		{
+			resetCounter = -60;
+			App->fade->FadeToBlack(this, (Module*)App->intro);
+		}
 
+		if (resetCounter == 1)
+		{
+			Mix_HaltMusic();
+			App->audio->PlayFx(FX_Lose);
+			App->particles->AddParticle(App->particles->marioDeath, App->player->playerCollider->rect.x, App->player->playerCollider->rect.y);
+		}
+		++resetCounter;
 	}
 
 	if (jumperPosition.x == 31 || jumperPosition.x == 94 || jumperPosition.x == 159)

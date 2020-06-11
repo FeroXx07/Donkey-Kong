@@ -5,6 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleFonts.h"
 #include "ModulePlayer.h"
+#include "SceneIntro.h"
 #include <stdio.h>
 ModuleHud::ModuleHud(bool startEnabled) : Module(startEnabled)
 {
@@ -93,7 +94,14 @@ update_status ModuleHud::PostUpdate()
 		App->fonts->BlitText(8, 24, lightBlueFont, livesText);
 
 		App->fonts->BlitText(184, 24, darkBlueFont, loopScore);
+
+		if (App->player->destroyed && App->hud->lives == 0 && App->intro->IsEnabled() == false)
+		{
+			App->fonts->BlitText(78, 185, lightBlueFont, "GAME");
+			App->fonts->BlitText(120, 185, lightBlueFont, "OVER");
+		}
 	}
+
 
 	return update_status::UPDATE_CONTINUE;
 }
