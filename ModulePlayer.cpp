@@ -254,7 +254,7 @@ update_status ModulePlayer::Update()
 	if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT)
 	{
 		playerCollider->rect.h = 18;
-		playerCollider->rect.w = 2+2;
+		playerCollider->rect.w = 2+2+1;
 		temp = 5-1;
 	}
 

@@ -19,6 +19,7 @@
 #include "ModuleHud.h"
 #include "ModuleDebugInfo.h"
 #include "Level2.h"
+#include "Level3.h"
 
 Application::Application()
 {
@@ -36,18 +37,19 @@ Application::Application()
 
 	modules[6] = level4 = new ModuleScene(false);
 	modules[7] = level2 = new ModuleScene2(false);
+	modules[8] = level3 = new ModuleScene3(false);
 
-	modules[8] = player = new ModulePlayer(false);	//Player starts disabled
-	modules[9] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
-	modules[10] = hammer = new ModuleHammer(false);
-	modules[11] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+	modules[9] = player = new ModulePlayer(false);	//Player starts disabled
+	modules[10] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
+	modules[11] = hammer = new ModuleHammer(false);
+	modules[12] = enemies = new ModuleEnemies(false);	//Enemies start disabled
 
-	modules[12] = collisions = new ModuleCollisions(true);
-	modules[13] = fade = new ModuleFadeToBlack(true);
-	modules[14] = fonts = new ModuleFonts(true);
-	modules[15] = hud = new ModuleHud(true);
-	modules[16] = debugInfo = new ModuleDebugInfo(true);
-	modules[17] = render = new ModuleRender(true);
+	modules[13] = collisions = new ModuleCollisions(true);
+	modules[14] = fade = new ModuleFadeToBlack(true);
+	modules[15] = fonts = new ModuleFonts(true);
+	modules[16] = hud = new ModuleHud(true);
+	modules[17] = debugInfo = new ModuleDebugInfo(true);
+	modules[18] = render = new ModuleRender(true);
 }
 
 Application::~Application()

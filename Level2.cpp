@@ -75,7 +75,7 @@ ModuleScene2::ModuleScene2(bool startEnabled) : Module(startEnabled)
 	princessPathRight.PushBack({ 0,0 }, 60, &prAnimRight);
 	princessPathRight.loop = true;
 
-	helpRight = { 216,108,23,8 };
+	helpRight = { 280,117,24,8 };
 	
 }
 
