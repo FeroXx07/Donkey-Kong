@@ -44,12 +44,16 @@ void Enemy_FireMinion::Update()
 	// Fire Minion animations
 	if (App->hammer->hammerExist)
 	{
-		if (goingLeft) currentAnim = &enemy_FireMinionLeftAnimHammer;
+		//if (goingLeft)
+		if (enemySpeed.x < 0)
+			currentAnim = &enemy_FireMinionLeftAnimHammer;
 		else currentAnim = &enemy_FireMinionRightAnimHammer;
 	}
 	else
 	{
-		if (goingLeft) currentAnim = &enemy_FireMinionLeftAnim;
+		///if (goingLeft)
+		if (enemySpeed.x < 0) 
+			currentAnim = &enemy_FireMinionLeftAnim;
 		else currentAnim = &enemy_FireMinionRightAnim;
 	}
 
