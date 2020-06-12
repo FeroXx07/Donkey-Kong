@@ -47,14 +47,14 @@ void Enemy_FireMinion::Update()
 		//if (goingLeft)
 		if (enemySpeed.x < 0)
 			currentAnim = &enemy_FireMinionLeftAnimHammer;
-		else currentAnim = &enemy_FireMinionRightAnimHammer;
+		else if (enemySpeed.x > 0) currentAnim = &enemy_FireMinionRightAnimHammer;
 	}
 	else
 	{
 		///if (goingLeft)
 		if (enemySpeed.x < 0) 
 			currentAnim = &enemy_FireMinionLeftAnim;
-		else currentAnim = &enemy_FireMinionRightAnim;
+		else if (enemySpeed.x > 0) currentAnim = &enemy_FireMinionRightAnim;
 	}
 
 	Enemy::Update();
