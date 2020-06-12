@@ -65,6 +65,8 @@ protected:
 	bool climbingDOWN = false;
 
 	bool inCollision = false;
+
+	int tempx = 0;
 };
 
 #endif // __ENEMY_H__

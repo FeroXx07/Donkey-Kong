@@ -56,6 +56,14 @@ void Enemy_FireMinion::Update()
 			currentAnim = &enemy_FireMinionLeftAnim;
 		else if (enemySpeed.x > 0) currentAnim = &enemy_FireMinionRightAnim;
 	}
-
+	if (/*			!isGround			*//*			climbingUP || climbingDOWN			*/0) {
+		collider->rect.w = 5;
+		tempx = 4;
+	}
+	else {
+		collider->rect.w = 15;
+		tempx = 0;
+	}
+	collider->SetPos(position.x + tempx, position.y);
 	Enemy::Update();
 }
