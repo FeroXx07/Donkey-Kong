@@ -223,8 +223,8 @@ bool ModuleScene3::Start()
 	activeColliders += 3; totalColliders += 3;
 
 	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 88, 56, 40, 8 }, Collider::Type::GROUND);// Conveyor
-	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 88, 56, 40, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);
 
 	activeColliders += 8; totalColliders += 8;
 
