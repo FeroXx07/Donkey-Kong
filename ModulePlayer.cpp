@@ -147,7 +147,7 @@ bool ModulePlayer::Start()
 	++activeFx; ++totalFx;
 
 	frameCountWalking = 0;
-
+	conveyorCounter = 0;
 
 	return ret;
 }
@@ -353,7 +353,12 @@ update_status ModulePlayer::Update()
 	}
 
 	
-
+	if (conveyorCounter >= 600)
+	{
+		conveyorSenseLeft = !conveyorSenseLeft;
+		conveyorCounter = 0;
+	}
+	++conveyorCounter;
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -397,10 +402,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	if (destroyed == false)
 	{
-		if (c2->type == Collider::Type::NOTLADDER) // Have deactivated this because it works without it
-		{
-			isLadder = false;
-		}
 		if (c2->type == Collider::Type::LADDER && isJumping==false)
 		{
 			if (position.x + 4 < c2->rect.x && position.x + 9 > c2->rect.x + 1) 
@@ -460,6 +461,33 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 			}
 		}
 
+		if (c2->type == Collider::Type::CONVEYORGROUND)
+		{
+			isGround = true;
+			isJumping = false;
+			if (isLadder == true)
+			{
+			}
+			else if (isLadder == false)
+			{
+				if (position.y + 15 >= c2->rect.y) // Collision to maintain the player to the ground
+				{
+					position.y = c2->rect.y - 15;
+					speed.y = 0;
+
+					if (!(App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true)))
+					{
+						if (conveyorSenseLeft)
+							--position.x;
+						else if (conveyorSenseLeft == false)
+							++position.x;
+					}
+
+				}
+
+			}
+		}
+
 		if (c2->type == Collider::Type::LOWERGROUND)
 		{
 			if (position.y <= c2->rect.y + c2->rect.h) // Collision to maintain the player to the ground
@@ -481,24 +509,12 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 		}
 		
 
-		if (c2->type == Collider::Type::ENEMY && isGod == false)
+		if (c2->type == Collider::Type::ENEMY || c2->type == Collider::Type::FIREBARREL && isGod == false)
 		{
-			if (/* Enemy Type == Enemy Fire Type */        1) {
-				if (App->hud->lives > 0 && destroyed ==false) {
-					// TODO para todo el codigo y actualizar animaciones
-					--App->hud->lives;
-					destroyed = true;
-
-					// TODO add fx
-
-					// TODO add level 4 screen during x seconds
-				}
-
+			if (App->hud->lives > 0 && destroyed ==false) {
+				--App->hud->lives;
+				destroyed = true;
 			}
-			if (/* Enemy Type == Enemy Item Type */    1) {
-				//Items implementation
-			}
-
 		}
 	}
 }

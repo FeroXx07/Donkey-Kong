@@ -16,6 +16,7 @@ struct Collider
 		SCOREITEMS,
 		IMPORTANTITEMS,
 		POWERITEMS,
+		MINECART,
 	};
 
 	enum Type
@@ -28,11 +29,12 @@ struct Collider
 		LADDER,
 		HAMMER,
 		Item_Type,
-		NOTLADDER,
+		FIREBARREL,
 		LOWERGROUND,
 		ENEMYWALL,
-
-		MAX=10
+		CONVEYORGROUND,
+		
+		MAX=11
 	};
 
 	//Methods

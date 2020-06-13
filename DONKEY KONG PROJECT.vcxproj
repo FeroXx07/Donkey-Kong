@@ -146,6 +146,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy_FireMinion.cpp" />
+    <ClCompile Include="Enemy_Minecart.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Item_Bag.cpp" />
     <ClCompile Include="Item_Hammer.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_FireMinion.h" />
+    <ClInclude Include="Enemy_Minecart.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Item_Bag.h" />
     <ClInclude Include="Item_Hammer.h" />

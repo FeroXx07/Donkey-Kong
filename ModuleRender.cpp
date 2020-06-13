@@ -38,6 +38,8 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
+	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	return ret;
 }
 
@@ -70,14 +72,14 @@ update_status ModuleRender::Update()
 	if (App->input->keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT)
 		camera.x += cameraSpeed;
 
-	if (camera.x <= 0)
-		camera.x = 0;
-	if (camera.x > 0)
-		camera.x = 0;
-	if (camera.y <= 0)
-		camera.y = 0;
-	if (camera.y > 0)
-		camera.y = 0;
+	//if (camera.x <= 0)
+	//	camera.x = 0;
+	//if (camera.x > 0)
+	//	camera.x = 0;
+	//if (camera.y <= 0)
+	//	camera.y = 0;
+	//if (camera.y > 0)
+	//	camera.y = 0;
 
 	return update_status::UPDATE_CONTINUE;
 }

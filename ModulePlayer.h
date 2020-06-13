@@ -95,12 +95,12 @@ public:
 
 	// The scene fx sounds
 	int FX_Walking = 0;
-	
 
 	int frameCountWalking = 0;
 	bool walkingFX = false;
 
-
+	int conveyorCounter = 0;
+	bool conveyorSenseLeft = true;
 };
 
 #endif //!__MODULE_PLAYER_H__

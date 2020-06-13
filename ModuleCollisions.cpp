@@ -23,10 +23,10 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::GROUND][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::GROUND][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::GROUND][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::GROUND][Collider::Type::ENEMYWALL] = false;
-
+	matrix[Collider::Type::GROUND][Collider::Type::CONVEYORGROUND] = false;
 
 	matrix[Collider::Type::LOWERGROUND][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::LOWERGROUND][Collider::Type::GROUND] = false;
@@ -36,9 +36,9 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::LOWERGROUND][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::LOWERGROUND][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::LOWERGROUND][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::LOWERGROUND][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::LOWERGROUND][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::LOWERGROUND][Collider::Type::ENEMYWALL] = false;
-
+	matrix[Collider::Type::LOWERGROUND][Collider::Type::CONVEYORGROUND] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::LOWERGROUND] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = true;
@@ -48,10 +48,11 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::LADDER] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::Item_Type] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::NOTLADDER] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::FIREBARREL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::CONVEYORGROUND] = true;
 
-	matrix[Collider::Type::ENEMY][Collider::Type::LOWERGROUND] = true;
+	matrix[Collider::Type::ENEMY][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
@@ -59,10 +60,11 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::LADDER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::HAMMER] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::ENEMY][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::FIREBARREL] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMYWALL] = true;
+	matrix[Collider::Type::ENEMY][Collider::Type::CONVEYORGROUND] = false;
 
-
+	
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::PLAYER] = false;
@@ -71,20 +73,21 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::CONVEYORGROUND] = false;
 
-	matrix[Collider::Type::WALL][Collider::Type::GROUND] = false; //true
+	matrix[Collider::Type::WALL][Collider::Type::GROUND] = false; 
 	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true	;
-	matrix[Collider::Type::WALL][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::WALL][Collider::Type::ENEMY] = false;
 	matrix[Collider::Type::WALL][Collider::Type::WALL] = false;
 	matrix[Collider::Type::WALL][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::WALL][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::WALL][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::WALL][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::WALL][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::WALL][Collider::Type::LOWERGROUND] = false;	
 	matrix[Collider::Type::WALL][Collider::Type::ENEMYWALL] = false;
-
+	matrix[Collider::Type::WALL][Collider::Type::CONVEYORGROUND] = false;
 
 	matrix[Collider::Type::LADDER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::PLAYER] = true;
@@ -93,9 +96,10 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::LADDER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::LADDER][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::LADDER][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::LADDER][Collider::Type::CONVEYORGROUND] = false;
 
 	matrix[Collider::Type::HAMMER][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::PLAYER] = false;
@@ -104,9 +108,10 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::HAMMER][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::HAMMER][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::HAMMER][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::HAMMER][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::HAMMER][Collider::Type::CONVEYORGROUND] = false;
 
 	matrix[Collider::Type::Item_Type][Collider::Type::GROUND] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::PLAYER] = true;
@@ -115,21 +120,34 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::Item_Type][Collider::Type::LADDER] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::HAMMER] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::Item_Type][Collider::Type::NOTLADDER] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::FIREBARREL] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::LOWERGROUND] = false;
 	matrix[Collider::Type::Item_Type][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::Item_Type][Collider::Type::CONVEYORGROUND] = false;
 
-	matrix[Collider::Type::NOTLADDER][Collider::Type::GROUND] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::WALL] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::LADDER] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::HAMMER] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::Item_Type] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::LOWERGROUND] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::NOTLADDER] = false;
-	matrix[Collider::Type::NOTLADDER][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::WALL] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::LADDER] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::LOWERGROUND] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::FIREBARREL] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::FIREBARREL][Collider::Type::CONVEYORGROUND] = false;
 
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::GROUND] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::WALL] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::LADDER] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::HAMMER] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::Item_Type] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::LOWERGROUND] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::FIREBARREL] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::ENEMYWALL] = false;
+	matrix[Collider::Type::CONVEYORGROUND][Collider::Type::CONVEYORGROUND] = false;
 }
 
 // Destructor
@@ -236,7 +254,7 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::Item_Type: // pink
 			App->render->DrawQuad(colliders[i]->rect, 255, 20, 147, alpha);
 			break;
-			case Collider::Type::NOTLADDER: // purple
+			case Collider::Type::FIREBARREL: // purple
 			App->render->DrawQuad(colliders[i]->rect, 128, 0, 128, alpha);
 			break;
 			case Collider::Type::ENEMYWALL: // purple
@@ -244,6 +262,9 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::LOWERGROUND: 
 			App->render->DrawQuad(colliders[i]->rect, 255, 20, 147, alpha);
+			break;
+			case Collider::Type::CONVEYORGROUND: // purple
+			App->render->DrawQuad(colliders[i]->rect, 128, 0, 128, alpha);
 			break;
 		}
 	}

@@ -172,9 +172,9 @@ bool ModuleScene::Start()
 	App->collisions->AddCollider({ 208+3, 216 - 8, 8-6, 32 + 8 }, Collider::Type::LADDER); // Base
 
 	App->collisions->AddCollider({ 16 + 3, 176-8, 8 - 6, 32+8 }, Collider::Type::LADDER); // Floor 1
-	App->collisions->AddCollider({ 72 + 3+9, 176+8, 8 - 6, 32 }, Collider::Type::NOTLADDER); // Floor 1
+	App->collisions->AddCollider({ 72 + 3+9, 176+8, 8 - 6, 32 }, Collider::Type::FIREBARREL); // Floor 1
 	App->collisions->AddCollider({ 72 + 3, 176-8, 8 - 6, 32+8 }, Collider::Type::LADDER); // Floor 1
-	App->collisions->AddCollider({ 72 + 3-9, 176+8, 8 - 6, 32 }, Collider::Type::NOTLADDER); // Floor 1
+	App->collisions->AddCollider({ 72 + 3-9, 176+8, 8 - 6, 32 }, Collider::Type::FIREBARREL); // Floor 1
 	App->collisions->AddCollider({ 144 + 3, 176-8, 8 - 6, 32+8 }, Collider::Type::LADDER); // Floor 1
 	App->collisions->AddCollider({ 200 + 3, 176-8, 8 - 6, 32+8 }, Collider::Type::LADDER); // Floor 1
 

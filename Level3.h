@@ -36,12 +36,23 @@ public:
 
 	// Left Elevator Collider
 	SDL_Rect elevatorLadderSprite;
-	Collider* elevatingLadder[2];
 
-	Animation conveyorBeltLeft;
-	Animation conveyorBeltRight;
+	Collider* elevatingLadder[2];
+	int elevatingSenseCounter = 0;
+	enum LadderState { NONE, DOWN, UP };
+	LadderState ladderstate;
+
+	Animation conveyorBeltLeft_ClockWise;
+	Animation conveyorBeltLeft_CounterClockWise;
+
+	Animation conveyorBeltRight_ClockWise;
+	Animation conveyorBeltRight_CounterClockWise;
+
 	Path conveyorPathLeft;
 	Path conveyorPathRight;
+
+	Collider* leftConveyor[3];
+	Collider* rightConveyor[3];
 
 	Animation oilBarrelAnim;
 

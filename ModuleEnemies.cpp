@@ -13,6 +13,7 @@
 #include "Item_Umbrella.h"
 #include "Item_Bag.h"
 #include "Item_Hammer.h"
+#include "Enemy_Minecart.h"
 
 
 #define SPAWN_MARGIN 50
@@ -206,6 +207,13 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				case Enemy_Type::ITEM_HAMMER:
 				{
 					enemies[i] = new Item_Hammer(info.x, info.y);
+					enemies[i]->texture = texture;
+					enemies[i]->destroyedFx = itemPickedFx;
+					break;
+				}
+				case Enemy_Type::ENEMY_MINECART:
+				{
+					enemies[i] = new Enemy_Minecart(info.x, info.y);
 					enemies[i]->texture = texture;
 					enemies[i]->destroyedFx = itemPickedFx;
 					break;

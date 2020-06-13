@@ -14,6 +14,7 @@ enum class Enemy_Type
 	ITEM_BAG,
 	ITEM_HAMMER,
 	ENEMY_FIREMINION,
+	ENEMY_MINECART
 };
 
 struct EnemySpawnpoint

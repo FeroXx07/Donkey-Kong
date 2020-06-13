@@ -30,22 +30,41 @@ ModuleScene3::ModuleScene3(bool startEnabled) : Module(startEnabled)
 	level_3.w = SCREEN_WIDTH;
 	level_3.h = SCREEN_HEIGHT;
 
-	conveyorBeltLeft.PushBack({850,155,11,10});
-	conveyorBeltLeft.PushBack({ 874,155,11,10 });
-	conveyorBeltLeft.PushBack({ 898,155,11,10 });
-	conveyorBeltLeft.loop =false;
-	conveyorBeltLeft.pingpong = true;
-	conveyorBeltLeft.speed = 0.1f;
+	conveyorBeltLeft_ClockWise.PushBack({850,155,11,10});
+	conveyorBeltLeft_ClockWise.PushBack({874,155,11,10 });
+	conveyorBeltLeft_ClockWise.PushBack({898,155,11,10 });
+	conveyorBeltLeft_ClockWise.loop =true;
+	conveyorBeltLeft_ClockWise.pingpong = false;
+	conveyorBeltLeft_ClockWise.speed = 0.1f;
 
-	conveyorBeltRight.PushBack({ 850,145,11,10 });
-	conveyorBeltRight.PushBack({ 874,145,11,10 });
-	conveyorBeltRight.PushBack({ 898,145,11,10 });
-	conveyorBeltRight.loop = true;
-	conveyorBeltRight.pingpong = true;
-	conveyorBeltRight.speed = 0.1f;
+	conveyorBeltLeft_CounterClockWise.PushBack({ 898,155,11,10 });
+	conveyorBeltLeft_CounterClockWise.PushBack({ 874,155,11,10 });
+	conveyorBeltLeft_CounterClockWise.PushBack({ 850,155,11,10 });
+	conveyorBeltLeft_CounterClockWise.loop = true;
+	conveyorBeltLeft_CounterClockWise.pingpong = false;
+	conveyorBeltLeft_CounterClockWise.speed = 0.1f;
 
-	conveyorPathLeft.PushBack({ 0,0 }, 540, &conveyorBeltLeft);
+	conveyorBeltRight_ClockWise.PushBack({ 850,145,11,10 });
+	conveyorBeltRight_ClockWise.PushBack({ 874,145,11,10 });
+	conveyorBeltRight_ClockWise.PushBack({ 898,145,11,10 });
+	conveyorBeltRight_ClockWise.loop = true;
+	conveyorBeltRight_ClockWise.pingpong = false;
+	conveyorBeltRight_ClockWise.speed = 0.1f;
 
+	conveyorBeltRight_CounterClockWise.PushBack({ 898,145,11,10 });
+	conveyorBeltRight_CounterClockWise.PushBack({ 874,145,11,10 });
+	conveyorBeltRight_CounterClockWise.PushBack({ 850,145,11,10 });
+	conveyorBeltRight_CounterClockWise.loop = true;
+	conveyorBeltRight_CounterClockWise.pingpong = false;
+	conveyorBeltRight_CounterClockWise.speed = 0.1f;
+
+	conveyorPathLeft.PushBack({ 0,0 }, 600, &conveyorBeltLeft_CounterClockWise);
+	conveyorPathLeft.PushBack({ 0,0 }, 600, &conveyorBeltLeft_ClockWise);
+	conveyorPathLeft.loop = true;
+
+	conveyorPathRight.PushBack({ 0,0 }, 600, &conveyorBeltRight_CounterClockWise);
+	conveyorPathRight.PushBack({ 0,0 }, 600, &conveyorBeltRight_ClockWise);
+	conveyorPathLeft.loop = true;
 
 	elevatorLadderSprite = {827,152,10,16};
 
@@ -122,22 +141,19 @@ bool ModuleScene3::Start()
 	resetCounter = 0;
 	donkeyCounterFX = 0;
 	helpCounter = 0;
-
+	elevatingSenseCounter = 0;
 	App->player->destroyed = false;
 
-	// Level 2 colliders:
-	//App->collisions->AddCollider({ 0, 500, SCREEN_WIDTH, 8 }, Collider::Type::ENEMY);
-
 	App->collisions->AddCollider({ 0, 248, 224, 8 }, Collider::Type::GROUND);
-	App->collisions->AddCollider({ 8, 208, 16, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 8, 208, 16, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 24 + 3, 208, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 32, 208, 48, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 32, 208, 48, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 80 + 3, 208, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 88, 208, 48, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 88, 208, 48, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 136 + 3, 208, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 144, 208, 48, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 144, 208, 48, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 192 + 3, 208, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 200, 208, 22, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 200, 208, 22, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	activeColliders += 10; totalColliders += 10;
 
 	App->collisions->AddCollider({ 8, 168, 40, 8 }, Collider::Type::GROUND);
@@ -149,39 +165,46 @@ bool ModuleScene3::Start()
 	App->collisions->AddCollider({ 168, 168, 48, 8 }, Collider::Type::GROUND);
 	activeColliders += 6; totalColliders += 6;
 
-	App->collisions->AddCollider({ 0, 128, 24, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 0, 128, 24, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 24 + 3, 128, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 32, 128, 48, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 32, 128, 48, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 80 + 3, 128, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 88, 128, 8, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 88, 128, 8, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 
-	App->collisions->AddCollider({ 128, 128, 8, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 128, 128, 8, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 136 + 3, 128, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 144, 128, 48, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 144, 128, 48, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
 	App->collisions->AddCollider({ 192 + 3, 128, 8 - 6, 40 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 200, 128, 24, 8 }, Collider::Type::GROUND);// Conveyor
-	activeColliders += 10; totalColliders += 10;
+	App->collisions->AddCollider({ 200, 128, 24, 8 }, Collider::Type::CONVEYORGROUND);// Conveyor
+	activeColliders += 8; totalColliders += 8;
 
-	
+	App->collisions->AddCollider({ 104+5, 112, 15-10, 16 }, Collider::Type::FIREBARREL);
+	leftConveyor[0] = App->collisions->AddCollider({ 2, 207, 10, 10 }, Collider::Type::NONE);
+	leftConveyor[1] = App->collisions->AddCollider({ 2, 87, 10, 10 }, Collider::Type::NONE);
+	leftConveyor[2] = App->collisions->AddCollider({ 119, 127, 10, 10 }, Collider::Type::NONE);
 
+	rightConveyor[0] = App->collisions->AddCollider({ 211, 207, 10, 10 }, Collider::Type::NONE);
+	rightConveyor[1] = App->collisions->AddCollider({ 95, 127, 10, 10 }, Collider::Type::NONE);
+	rightConveyor[2] = App->collisions->AddCollider({ 211, 87, 10, 10 }, Collider::Type::NONE);
+	activeColliders += 7; totalColliders += 7;
 
-	// Elevators
-	//elevatingLadder[1] = App->collisions->AddCollider({ 32, 197, 16, 6 }, Collider::Type::GROUND);
-	//elevatingLadder[1]->rect.x = 32;
-	//elevatingLadder[1]->rect.y = 197;//192
-
-	//elevatingLadder[0] = App->collisions->AddCollider({ 32, 248, 16, 6 }, Collider::Type::GROUND);
-	//elevatingLadder[0]->rect.x = 32;
-	//elevatingLadder[0]->rect.y = 248;
-
-	
-	activeColliders += 3; totalColliders += 3;
+	App->collisions->AddCollider({ 15 + 3, 112, 8 - 6, 16 }, Collider::Type::LADDER);
+	App->collisions->AddCollider({ 199 + 3, 112, 8 - 6, 16 }, Collider::Type::LADDER);
+	elevatingLadder[0] = App->collisions->AddCollider({ 15 + 3, 88, 8 - 6, 24 }, Collider::Type::LADDER);
+	elevatingLadder[1] = App->collisions->AddCollider({ 199 + 3, 88, 8 - 6, 25 }, Collider::Type::LADDER);
+	App->collisions->AddCollider({ 2, 88, 13, 8 }, Collider::Type::GROUND);// ADD GROUND FOR THE LADDERS
+	App->collisions->AddCollider({ 25, 88, 174, 8 }, Collider::Type::GROUND);
+	App->collisions->AddCollider({ 209, 88, 13, 8 }, Collider::Type::GROUND);
+	activeColliders += 7; totalColliders += 7;
 
 	// Items
 	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 61, 159);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 196, 152);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 119, 238);
 	donkeyCollider = App->collisions->AddCollider({ 24, 56, 40, 32 }, Collider::Type::ENEMY);
+
+	App->collisions->AddCollider({ 280 , 0, 4, SCREEN_HEIGHT }, Collider::Type::FIREBARREL);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART,210+50,120);
 	activeColliders += 4; totalColliders += 4;
 
 
@@ -202,24 +225,16 @@ bool ModuleScene3::Start()
 	activeColliders += 10; totalColliders += 10;*/
 
 	//Starting position of the Mario
-	App->player->position.x = 48;
-	App->player->position.y = 232 - App->player->playerCollider->rect.h;
 	App->player->speed.y = 0;
+	App->player->position.x = 42;
+	App->player->position.y = 232;
+	ladderstate = NONE;
 
 	return ret;
 }
 
 update_status ModuleScene3::Update()
 {
-	// Resets elevator positions
-	/*for (int i = 0; i < 2; ++i)
-	{
-		elevatingLadder[i]->SetPos(elevatingLadder[i]->rect.x, --elevatingLadder[i]->rect.y);
-		if (elevatingLadder[i]->rect.y <= 104)
-		{
-			elevatingLadder[i]->rect.y = 248;
-		}
-	}*/
 
 	// Resets level when dies
 	if (App->player->destroyed && App->hud->lives > 0) {
@@ -265,6 +280,11 @@ update_status ModuleScene3::Update()
 		donkeyCounterFX = 0;
 	}
 
+	// Animations and path updates
+	conveyorPathLeft.Update();
+	conveyorPathLeft.GetCurrentAnimation()->Update();
+	conveyorPathRight.Update();
+	conveyorPathRight.GetCurrentAnimation()->Update();
 
 	princessPathRight.Update();
 	currentAnimPrincess = princessPathRight.GetCurrentAnimation();
@@ -280,6 +300,45 @@ update_status ModuleScene3::Update()
 		helpCounter = 0;
 	}
 
+	++elevatingSenseCounter;
+	if (elevatingSenseCounter <= 360 ) // Every 6 seconds == 360 frames
+	{
+		ladderstate = NONE;
+	}
+	else if (elevatingSenseCounter > 361 && elevatingSenseCounter <= 384 )
+	{
+		ladderstate = DOWN;
+	}
+	else if (elevatingSenseCounter > 384 && elevatingSenseCounter <= 1080)
+	{
+		ladderstate = NONE;
+	}
+	else if (elevatingSenseCounter > 1080 && elevatingSenseCounter <= 1103)
+	{
+		ladderstate = UP;
+		
+	}
+	else if (elevatingSenseCounter > 1103)
+	{
+		ladderstate = NONE;
+		if (elevatingSenseCounter == 1440)
+		{
+			elevatingSenseCounter = 0;
+		}
+	}
+	printf("Elevating sense is %d\n\n", ladderstate);
+	for (int i = 0; i < 2; ++i)
+	{
+		if (ladderstate == UP)
+		{
+			--elevatingLadder[i]->rect.y;
+		}
+		else if (ladderstate == DOWN)
+		{
+			++elevatingLadder[i]->rect.y;
+		}
+	}
+
 	oilBarrelAnim.Update();
 	return update_status::UPDATE_CONTINUE;
 }
@@ -292,7 +351,14 @@ update_status ModuleScene3::PostUpdate()
 	
 	for (int i = 0; i < 2; ++i)
 	{
-		//App->render->Blit(bgTexture, elevatingLadder[i]->rect.x, elevatingLadder[i]->rect.y, &elevatorLadderSprite);
+		App->render->Blit(bgTexture, elevatingLadder[i]->rect.x-3, elevatingLadder[i]->rect.y+8, &elevatorLadderSprite);
+	}
+
+	// Left Conveyor Grinds Sprites
+	for (int i = 0; i < 3; ++i)
+	{
+		App->render->Blit(bgTexture, leftConveyor[i]->rect.x, leftConveyor[i]->rect.y,&conveyorPathLeft.GetCurrentAnimation()->GetCurrentFrame());
+		App->render->Blit(bgTexture, rightConveyor[i]->rect.x, rightConveyor[i]->rect.y, &conveyorPathRight.GetCurrentAnimation()->GetCurrentFrame());
 	}
 
 	App->render->Blit(bgTexture, 104, 113, &oilBarrelAnim.GetCurrentFrame());

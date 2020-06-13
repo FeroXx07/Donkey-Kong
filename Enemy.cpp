@@ -43,7 +43,6 @@ void Enemy::Draw()
 
 void Enemy::OnCollision(Collider* collider)
 {
-	
 	if (collider->type == Collider::Type::HAMMER)
 	{
 		// For enemies
@@ -53,6 +52,16 @@ void Enemy::OnCollision(Collider* collider)
 		App->particles->AddParticle(App->particles->score300, this->position.x - 5, this->position.y - 7, Collider::Type::NONE, 60);
 		App->hud->score += 300;
 		App->audio->PlayFx(destroyedFx);
+	}
+
+	
+	if ((collider->type == Collider::Type::FIREBARREL || collider->type == Collider::Type::HAMMER) )
+	{
+		if (this->collider->item == Collider::MINECART)
+		{
+			App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART, spawnPos.x, spawnPos.y);
+		}
+		SetToDelete();
 	}
 
 	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)
@@ -103,7 +112,7 @@ void Enemy::OnCollision(Collider* collider)
 	}
 	
 
-	if (this->collider->type == Collider::Type::ENEMY && collider->type == Collider::Type::LADDER &&
+	if (this->collider->type == Collider::Type::ENEMY && this->collider->type == Collider::Items::None && collider->type == Collider::Type::LADDER &&
 		(this->position.x + 4 < collider->rect.x && this->position.x + 9 > collider->rect.x + 1)) {
 
 		if (climbingUP == false && climbingDOWN == false)
