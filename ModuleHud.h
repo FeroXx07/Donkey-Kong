@@ -36,4 +36,5 @@ public:
 
 	bool drawScore = false;
 	
+	int LevelWins = 0;
 };

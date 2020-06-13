@@ -17,6 +17,7 @@ struct Collider
 		IMPORTANTITEMS,
 		POWERITEMS,
 		MINECART,
+		ELEVATINGLADDER
 	};
 
 	enum Type

@@ -8,7 +8,12 @@ Enemy_FireMinion::Enemy_FireMinion(int x, int y) : Enemy(x, y)
 {
 	spawnDelay = 0;
 	
-	enemySpeed.x = -1;
+	if ((rand() % 100) < 50)
+	{
+		enemySpeed.x = -1;
+	}
+	else
+		enemySpeed.x = 1;
 
 	enemy_FireMinionLeftAnim.PushBack({ 561,140,15,12 });
 	enemy_FireMinionLeftAnim.PushBack({ 584,140,16,12 });

@@ -18,7 +18,7 @@
 #pragma comment( lib, "Game/SDL_mixer/libx86/SDL2_mixer.lib" )
 
 
-ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
+Level4Win::Level4Win(bool startEnabled) : Module(startEnabled)
 {
 	normalScene.x = 8;
 	normalScene.y = 628;
@@ -66,13 +66,13 @@ ModuleSceneWin::ModuleSceneWin(bool startEnabled) : Module(startEnabled)
 	heartSprite = { 553, 598,15,13 };
 }
 
-ModuleSceneWin::~ModuleSceneWin()
+Level4Win::~Level4Win()
 {
 
 }
 
 // Load assets
-bool ModuleSceneWin::Start()
+bool Level4Win::Start()
 {
 
 	App->hud->drawScore = true;
@@ -110,7 +110,7 @@ bool ModuleSceneWin::Start()
 	return ret;
 }
 
-update_status ModuleSceneWin::Update()
+update_status Level4Win::Update()
 {
 
 	LOG("Updating background assets of the WinScene");
@@ -136,7 +136,7 @@ update_status ModuleSceneWin::Update()
 }
 
 // Update: draw background
-update_status ModuleSceneWin::PostUpdate()
+update_status Level4Win::PostUpdate()
 {
 	LOG("Drawing background assets of the WinScene");
 	if (frameCount < 15) 
@@ -175,7 +175,7 @@ update_status ModuleSceneWin::PostUpdate()
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool ModuleSceneWin::CleanUp()
+bool Level4Win::CleanUp()
 {
 	//App->audio->FreeAll();
 	App->collisions->Disable();

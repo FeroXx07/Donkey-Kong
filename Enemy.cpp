@@ -55,13 +55,13 @@ void Enemy::OnCollision(Collider* collider)
 	}
 
 	
-	if ((collider->type == Collider::Type::FIREBARREL || collider->type == Collider::Type::HAMMER) )
+	if ((collider->type == Collider::Type::FIREBARREL || collider->type == Collider::Type::HAMMER))
 	{
 		if (this->collider->item == Collider::MINECART)
 		{
 			App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART, spawnPos.x, spawnPos.y);
+			SetToDelete();
 		}
-		SetToDelete();
 	}
 
 	if (this->collider->type == Collider::Type::Item_Type && collider->type == Collider::Type::PLAYER)
@@ -96,7 +96,7 @@ void Enemy::OnCollision(Collider* collider)
 		}
 	}
 	
-	if (this->collider->type == Collider::Type::ENEMY && (collider->type == Collider::Type::ENEMYWALL)) {
+	if (this->collider->type == Collider::Type::ENEMY && (collider->type == Collider::Type::ENEMYWALL) && this->collider->item != Collider::Items::MINECART) {
 		if (this->position.x <	collider->rect.x + collider->rect.w / 2) // Left wall collider
 		{
 			this->position.x = collider->rect.x - this->collider->rect.w;
@@ -112,7 +112,7 @@ void Enemy::OnCollision(Collider* collider)
 	}
 	
 
-	if (this->collider->type == Collider::Type::ENEMY && this->collider->type == Collider::Items::None && collider->type == Collider::Type::LADDER &&
+	if (this->collider->type == Collider::Type::ENEMY && this->collider->item == Collider::Items::None && collider->item != Collider::Items::ELEVATINGLADDER && collider->type == Collider::Type::LADDER &&
 		(this->position.x + 4 < collider->rect.x && this->position.x + 9 > collider->rect.x + 1)) {
 
 		if (climbingUP == false && climbingDOWN == false)

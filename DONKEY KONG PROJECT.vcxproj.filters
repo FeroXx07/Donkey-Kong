@@ -135,6 +135,12 @@
     <ClCompile Include="Enemy_Minecart.cpp">
       <Filter>Archivos de origen\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Level2Win.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Level3Win.cpp">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -247,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="Enemy_Minecart.h">
       <Filter>Archivos de origen\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Level2Win.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Level3Win.h">
+      <Filter>Archivos de origen\Modulos\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

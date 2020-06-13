@@ -154,8 +154,9 @@ bool ModulePlayer::Start()
 
 update_status ModulePlayer::Update()
 {
+	GamePad& pad = App->input->pads[0];
 
-	if (App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
+	if ((App->input->keys[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT || pad.l_x) && (isGround == true || isJumping == true))
 	{
 		position.x -= speed.x;
 
@@ -186,7 +187,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (isGround == true || isJumping == true))
+	if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || pad.l_x > 0.0f) && (isGround == true || isJumping == true))
 	{
 		position.x += speed.x;
 
@@ -217,7 +218,7 @@ update_status ModulePlayer::Update()
 	if (isLadder == true)
 	{
 		isGround = false;
-		if (App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
+		if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || pad.l_y < 0.0f) && App->hammer->hammerExist == false)
 		{
 			if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
 			if (frameCountWalking == 11)
@@ -229,7 +230,7 @@ update_status ModulePlayer::Update()
 
 			position.y -= speed.x;
 		}
-		if (App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT && App->hammer->hammerExist == false)
+		if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || pad.l_y > 0.0f) && App->hammer->hammerExist == false)
 		{
 			if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
 			if (frameCountWalking == 11)
@@ -258,7 +259,7 @@ update_status ModulePlayer::Update()
 		temp = 5-1;
 	}
 
-	if (App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN && isGround == true)
+	if ((App->input->keys[SDL_SCANCODE_SPACE] == KEY_STATE::KEY_DOWN || pad.a == true) && isGround == true)
 	{
 		speed.y -= JUMPSPEED;
 		if (currentAnimation != &jumpAnim)
@@ -286,6 +287,12 @@ update_status ModulePlayer::Update()
 		currentAnimation = &rightIdleAnim;
 	else if (App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_UP && App->hammer->hammerExist == true)
 		currentAnimation = &hammerRightIdleAnim;
+
+	if (pad.enabled)
+	{
+		if (pad.l_x == 0.0f && pad.l_y == 0.0f)
+			currentAnimation = &rightIdleAnim;
+	}
 
 	if (App->input->keys[SDL_SCANCODE_F2] == KEY_DOWN && App->hammer->hammerExist == true)
 	{

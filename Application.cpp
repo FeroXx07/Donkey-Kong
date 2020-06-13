@@ -20,7 +20,8 @@
 #include "ModuleDebugInfo.h"
 #include "Level2.h"
 #include "Level3.h"
-
+#include "Level2Win.h"
+#include "Level3Win.h"
 Application::Application()
 {
 	// The order in which the modules are added is very important.
@@ -33,23 +34,26 @@ Application::Application()
 	modules[3] = audio = new ModuleAudio(true);
 
 	modules[4] = intro = new SceneIntro(true);
-	modules[5] = sceneWin = new ModuleSceneWin(false);
+	modules[5] = level4win = new Level4Win(false);
+	modules[6] = level2win = new Level2Win(false);
+	modules[7] = level3win = new Level3Win(false);
 
-	modules[6] = level4 = new ModuleScene(false);
-	modules[7] = level2 = new ModuleScene2(false);
-	modules[8] = level3 = new ModuleScene3(false);
 
-	modules[9] = player = new ModulePlayer(false);	//Player starts disabled
-	modules[10] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
-	modules[11] = hammer = new ModuleHammer(false);
-	modules[12] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+	modules[8] = level4 = new ModuleScene(false);
+	modules[9] = level2 = new ModuleScene2(false);
+	modules[10] = level3 = new ModuleScene3(false);
 
-	modules[13] = collisions = new ModuleCollisions(true);
-	modules[14] = fade = new ModuleFadeToBlack(true);
-	modules[15] = fonts = new ModuleFonts(true);
-	modules[16] = hud = new ModuleHud(true);
-	modules[17] = debugInfo = new ModuleDebugInfo(true);
-	modules[18] = render = new ModuleRender(true);
+	modules[11] = player = new ModulePlayer(false);	//Player starts disabled
+	modules[12] = particles = new ModuleParticles(true);//Gameplay scene starts disabled
+	modules[13] = hammer = new ModuleHammer(false);
+	modules[14] = enemies = new ModuleEnemies(false);	//Enemies start disabled
+
+	modules[15] = collisions = new ModuleCollisions(true);
+	modules[16] = fade = new ModuleFadeToBlack(true);
+	modules[17] = fonts = new ModuleFonts(true);
+	modules[18] = hud = new ModuleHud(true);
+	modules[19] = debugInfo = new ModuleDebugInfo(true);
+	modules[20] = render = new ModuleRender(true);
 }
 
 Application::~Application()

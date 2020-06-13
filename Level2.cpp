@@ -274,7 +274,7 @@ bool ModuleScene2::Start()
 	jumperPosition.x = 0;
 	jumperPosition.y = 0;
 	spawnPosition = { 0,57 };
-	jumperCollider = App->collisions->AddCollider({ jumperPosition.x ,jumperPosition.y,4,4 }, Collider::Type::ENEMY);
+	jumperCollider = App->collisions->AddCollider({ jumperPosition.x+1 ,jumperPosition.y+1,2,2 }, Collider::Type::ENEMY);
 	activeColliders += 6; totalColliders += 6;
 	return ret;
 }
@@ -368,7 +368,7 @@ update_status ModuleScene2::Update()
 	jumperPosition = spawnPosition + pathJumper.GetRelativePosition();
 	printf("DK.Y= %d\n\n", jumperPosition.y);
 	printf("DK.X= %d\n\n", jumperPosition.x);
-	jumperCollider->SetPos(jumperPosition.x+1, jumperPosition.y+1);
+	jumperCollider->SetPos(jumperPosition.x+1, jumperPosition.y+3);
 	currentAnimJumper->Update();
 
 	princessPathRight.Update();
@@ -383,6 +383,19 @@ update_status ModuleScene2::Update()
 	if (helpCounter >= 210)
 	{
 		helpCounter = 0;
+	}
+
+	if (App->input->keys[SDL_SCANCODE_F4] == KEY_DOWN)
+	{
+		App->player->position.x = 126;
+		App->player->position.y = 40;
+	}
+
+	if (App->player->position.y <= 41)
+	{
+		App->hud->LevelWins += 25;
+		App->fade->FadeToBlack(this, (Module*)App->level2win);
+
 	}
 
 	return update_status::UPDATE_CONTINUE;

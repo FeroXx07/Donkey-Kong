@@ -257,7 +257,7 @@ update_status ModuleScene::Update()
 	if (Nuts == 0)
 	{
 		App->audio->PlayFx(FX_Win);
-		App->fade->FadeToBlack(this, (Module*)App->sceneWin, 10);
+		App->fade->FadeToBlack(this, (Module*)App->level4win, 10);
 	}
 
 	if (App->player->destroyed && App->hud->lives > 0) {

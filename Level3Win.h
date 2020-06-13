@@ -1,18 +1,16 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Path.h"
-
-
 struct SDL_Texture;
 
-class Level4Win : public Module
+class Level3Win : public Module
 {
 public:
 	//Constructor
-	Level4Win(bool startEnabled);
+	Level3Win(bool startEnabled);
 
 	//Destructor
-	~Level4Win();
+	~Level3Win();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -30,29 +28,36 @@ public:
 
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
+	SDL_Texture* bgTextureScene = nullptr;
 	SDL_Texture* bgTexture = nullptr;
-	
+	SDL_Texture* monkeyTexture = nullptr;
+
+	SDL_Rect level3win;
+
 	// The path that will define the position in the world
 	Animation* currentAnim = nullptr;
-	Path path;
+	Path donkeyPath;
+	Path heart;
 
 	// The three stages of this scene
-	SDL_Rect normalScene, fallingScene, celebrationScene;
-	SDL_Rect princessSprite, marioSprite, heartSprite;
-	// Enemy animations
-	iPoint spawnPosition,donkeyPosition;
+	SDL_Rect princessSprite, marioSprite;
+	Animation heartSprite, brokenHeartSprite;
+	Animation* currentAnimHeart = nullptr;
 
-	// The three animations of donkey
-	Animation angryAnim, fallAnim, hurtAnim;
+	SDL_Rect black = { 0,0,SCREEN_WIDTH,24 };
+	SDL_Rect monkeyScreen;
+
+	// Enemy animations
+	iPoint spawnPosition, donkeyPosition;
+
+	// Donkey Animations
+	Animation idleDonkey, climbDonkey, climbPrincessDonkey;
 
 	int frameCount = 0;
 
 	// Sound efects pointers
 	int FX_DK_Defeated = 0;
-	int FX_DK_Falling = 0;
-	int FX_DK_Stomp = 0;
-	int FX_WinMusic = 0;
-	
+	int FX_DK_BrokenHeart = 0;
+	int FX_Monkey = 0;
 	int spaceCounter = 0;
 };
-

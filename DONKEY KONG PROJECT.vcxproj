@@ -91,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,7 +156,9 @@
     <ClCompile Include="Item_Nut.cpp" />
     <ClCompile Include="Item_Umbrella.cpp" />
     <ClCompile Include="Level2.cpp" />
+    <ClCompile Include="Level2Win.cpp" />
     <ClCompile Include="Level3.cpp" />
+    <ClCompile Include="Level3Win.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
@@ -191,7 +195,9 @@
     <ClInclude Include="Item_Nut.h" />
     <ClInclude Include="Item_Umbrella.h" />
     <ClInclude Include="Level2.h" />
+    <ClInclude Include="Level2Win.h" />
     <ClInclude Include="Level3.h" />
+    <ClInclude Include="Level3Win.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />

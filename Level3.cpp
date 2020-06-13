@@ -188,10 +188,10 @@ bool ModuleScene3::Start()
 	rightConveyor[2] = App->collisions->AddCollider({ 211, 87, 10, 10 }, Collider::Type::NONE);
 	activeColliders += 7; totalColliders += 7;
 
-	App->collisions->AddCollider({ 15 + 3, 112, 8 - 6, 16 }, Collider::Type::LADDER);
-	App->collisions->AddCollider({ 199 + 3, 112, 8 - 6, 16 }, Collider::Type::LADDER);
-	elevatingLadder[0] = App->collisions->AddCollider({ 15 + 3, 88, 8 - 6, 24 }, Collider::Type::LADDER);
-	elevatingLadder[1] = App->collisions->AddCollider({ 199 + 3, 88, 8 - 6, 25 }, Collider::Type::LADDER);
+	App->collisions->AddCollider({ 15 + 3, 112, 8 - 6, 16 }, Collider::Type::LADDER, nullptr, Collider::Items::ELEVATINGLADDER);
+	App->collisions->AddCollider({ 199 + 3, 112, 8 - 6, 16 }, Collider::Type::LADDER, nullptr, Collider::Items::ELEVATINGLADDER);
+	elevatingLadder[0] = App->collisions->AddCollider({ 15 + 3, 88, 8 - 6, 24 }, Collider::Type::LADDER, nullptr, Collider::Items::ELEVATINGLADDER);
+	elevatingLadder[1] = App->collisions->AddCollider({ 199 + 3, 88, 8 - 6, 25 }, Collider::Type::LADDER, nullptr, Collider::Items::ELEVATINGLADDER);
 	App->collisions->AddCollider({ 2, 88, 13, 8 }, Collider::Type::GROUND);// ADD GROUND FOR THE LADDERS
 	App->collisions->AddCollider({ 25, 88, 174, 8 }, Collider::Type::GROUND);
 	App->collisions->AddCollider({ 209, 88, 13, 8 }, Collider::Type::GROUND);
@@ -205,24 +205,28 @@ bool ModuleScene3::Start()
 
 	App->collisions->AddCollider({ 280 , 0, 4, SCREEN_HEIGHT }, Collider::Type::FIREBARREL);
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART,210+50,120);
-	activeColliders += 4; totalColliders += 4;
+	App->collisions->AddCollider({ 0-100 , 0, 4, SCREEN_HEIGHT }, Collider::Type::FIREBARREL);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART,0-10, 120);
+	activeColliders += 8; totalColliders += 8;
 
+	App->collisions->AddCollider({ -3, 0, 2, 247 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ SCREEN_WIDTH + 2, 0, 2, 247 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 4, 137, 2, 32 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 54, 137, 2, 32 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 159, 137, 2, 32 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 218, 137, 2, 32 }, Collider::Type::ENEMYWALL);
+	activeColliders += 6; totalColliders += 6;
 
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 20, 116);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 20, 116);
+	App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, 106, 116);
+	activeColliders += 3; totalColliders += 3;
 
-	// Walls
-	/*App->collisions->AddCollider({ 54 - 5, 128, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 88 + 5, 128, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 60 - 5, 200, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 90 + 5, 200, 2, 8 }, Collider::Type::ENEMYWALL);
+	App->collisions->AddCollider({ 128 + 3, 56, 8 - 6, 32 }, Collider::Type::LADDER);
+	App->collisions->AddCollider({ 88, 56, 40, 8 }, Collider::Type::GROUND);// Conveyor
+	App->collisions->AddCollider({ 136, 56, 1, 8 }, Collider::Type::GROUND);// Conveyor
 
-	App->collisions->AddCollider({ 206 - 5, 92, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 224 + 5, 92, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 182 - 5, 132, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 224 + 5, 132, 2, 8 }, Collider::Type::ENEMYWALL);
-
-	App->collisions->AddCollider({ 181 - 5, 168, 2, 8 }, Collider::Type::ENEMYWALL);
-	App->collisions->AddCollider({ 200 + 5, 168, 2, 8 }, Collider::Type::ENEMYWALL);
-	activeColliders += 10; totalColliders += 10;*/
+	activeColliders += 8; totalColliders += 8;
 
 	//Starting position of the Mario
 	App->player->speed.y = 0;
@@ -337,6 +341,19 @@ update_status ModuleScene3::Update()
 		{
 			++elevatingLadder[i]->rect.y;
 		}
+	}
+
+	if (App->input->keys[SDL_SCANCODE_F4] == KEY_DOWN)
+	{
+		App->player->position.x = 126;
+		App->player->position.y = 40;
+	}
+
+	if (App->player->position.y <= 41)
+	{
+		App->hud->LevelWins += 25;
+		App->fade->FadeToBlack(this, (Module*)App->level3win);
+
 	}
 
 	oilBarrelAnim.Update();
