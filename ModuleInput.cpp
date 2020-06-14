@@ -62,6 +62,17 @@ update_status ModuleInput::PreUpdate()
 	{
 		switch (event.type)
 		{
+		case(SDL_KEYDOWN):
+		{
+			switch (event.key.keysym.sym)
+			{
+			case (SDLK_ESCAPE):
+				{
+					return update_status::UPDATE_STOP;
+					break;
+				}
+			}
+		}
 		case(SDL_CONTROLLERDEVICEADDED):
 		{
 			HandleDeviceConnection(event.cdevice.which);
@@ -76,7 +87,12 @@ update_status ModuleInput::PreUpdate()
 		{
 			//Get mouse position
 			click = true;
-			App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, event.motion.x/3, event.motion.y/3);
+			if (SCREEN_SIZE == 3)
+			{
+				App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, event.motion.x / 3, event.motion.y / 3);
+			}
+			else
+				App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, event.motion.x , event.motion.y );
 			break;
 		}
 		case(SDL_QUIT):
