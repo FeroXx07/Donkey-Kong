@@ -49,6 +49,8 @@ Well, despite of all the other enemies the game has, which makes it more interes
  - Víctor Jara | [Kerali](https://github.com/Kerali)
  - Ali Hassan Shahid | [FeroXx07](https://github.com/FeroXx07)
  - Martí Buxeda | [BooStar](https://github.com/BooStarGamer)
+ 
+[Direct Download link]( https://github.com/FeroXx07/Donkey-Kong/releases)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
