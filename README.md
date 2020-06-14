@@ -42,7 +42,7 @@ Well, despite of all the other enemies the game has, which makes it more interes
 
 [GitHup Project Page](https://github.com/FeroXx07/Donkey-Kong)
 
-<iframe width="[1280]" height="[720]" src="[https://www.youtube.com/watch?v=T9MWUt2MXPU]"> </iframe>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/T9MWUt2MXPU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
  - David Montufo | [Montuuh](https://github.com/Montuuh)
