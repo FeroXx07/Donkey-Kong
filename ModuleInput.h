@@ -11,6 +11,7 @@
 struct _SDL_GameController;
 struct _SDL_Haptic;
 
+
 enum KEY_STATE
 {
 	KEY_IDLE,
@@ -73,6 +74,9 @@ public:
 	bool ShakeController(int id, int duration, float strength = 0.5f);
 	const char* GetControllerName(int id) const;
 
+	bool click = false;
+	int x = 0;
+	int y = 0;
 public:
 	// An array to fill in the state of all the keyboard keys
 	KEY_STATE keys[MAX_KEYS] = { KEY_IDLE };

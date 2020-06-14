@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleEnemies.h"
 #include "Game/SDL/include/SDL.h"
 
 ModuleInput::ModuleInput(bool startEnabled) : Module(startEnabled)
@@ -69,6 +70,13 @@ update_status ModuleInput::PreUpdate()
 		case(SDL_CONTROLLERDEVICEREMOVED):
 		{
 			HandleDeviceRemoval(event.cdevice.which);
+			break;
+		}
+		case(SDL_MOUSEBUTTONDOWN):
+		{
+			//Get mouse position
+			click = true;
+			App->enemies->AddEnemy(Enemy_Type::ENEMY_FIREMINION, event.motion.x/3, event.motion.y/3);
 			break;
 		}
 		case(SDL_QUIT):

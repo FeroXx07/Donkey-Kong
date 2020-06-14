@@ -12,6 +12,7 @@
 #include "ModuleInput.h"
 #include "ModuleHud.h"
 #include "ModuleParticles.h"
+#include "ModuleInput.h"
 #include <stdio.h>
 
 #include "Game/SDL_mixer/include/SDL_mixer.h"
