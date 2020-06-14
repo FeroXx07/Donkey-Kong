@@ -50,7 +50,7 @@ Well, despite of all the other enemies the game has, which makes it more interes
  - Ali Hassan Shahid | [FeroXx07](https://github.com/FeroXx07)
  - Martí Buxeda | [BooStar](https://github.com/BooStarGamer)
  
-[Direct Download link]( https://github.com/FeroXx07/Donkey-Kong/releases)
+[Direct Download link]( https://github.com/FeroXx07/Donkey-Kong/releases/download/1.0/EFE_Prodcutions_Donkey_Kong_1.0v.zip)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
