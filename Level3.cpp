@@ -201,13 +201,15 @@ bool ModuleScene3::Start()
 	App->enemies->AddEnemy(Enemy_Type::ITEM_IRON, 61, 159);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_UMBRELLA, 196, 152);
 	App->enemies->AddEnemy(Enemy_Type::ITEM_BAG, 119, 238);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_HAMMER, 16, 139);
+	App->enemies->AddEnemy(Enemy_Type::ITEM_HAMMER, 104, 178);
 	donkeyCollider = App->collisions->AddCollider({ 24, 56, 40, 32 }, Collider::Type::ENEMY);
 
 	App->collisions->AddCollider({ 280 , 0, 4, SCREEN_HEIGHT }, Collider::Type::FIREBARREL);
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART,210+50,120);
 	App->collisions->AddCollider({ 0-100 , 0, 4, SCREEN_HEIGHT }, Collider::Type::FIREBARREL);
 	App->enemies->AddEnemy(Enemy_Type::ENEMY_MINECART,0-10, 120);
-	activeColliders += 8; totalColliders += 8;
+	activeColliders += 10; totalColliders += 10;
 
 	App->collisions->AddCollider({ -3, 0, 2, 247 }, Collider::Type::ENEMYWALL);
 	App->collisions->AddCollider({ SCREEN_WIDTH + 2, 0, 2, 247 }, Collider::Type::ENEMYWALL);

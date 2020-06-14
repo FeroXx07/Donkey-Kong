@@ -53,6 +53,8 @@ bool SceneIntro::Start()
 	App->audio->PlayFx(FX_InsertCoin);
 
 	App->hud->drawScore = false;
+
+	App->hud->lives = 3;
 	return ret;
 }
 
