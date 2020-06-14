@@ -187,7 +187,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || pad.l_x > 0.0f) && (isGround == true || isJumping == true))
+	if ((App->input->keys[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT || (pad.l_x > 0.0f)) && (isGround == true || isJumping == true))
 	{
 		position.x += speed.x;
 
@@ -218,7 +218,7 @@ update_status ModulePlayer::Update()
 	if (isLadder == true)
 	{
 		isGround = false;
-		if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || pad.l_y < 0.0f) && App->hammer->hammerExist == false)
+		if ((App->input->keys[SDL_SCANCODE_W] == KEY_STATE::KEY_REPEAT || (pad.l_y < 0.0f)) && App->hammer->hammerExist == false)
 		{
 			if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
 			if (frameCountWalking == 11)
@@ -230,7 +230,7 @@ update_status ModulePlayer::Update()
 
 			position.y -= speed.x;
 		}
-		if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || pad.l_y > 0.0f) && App->hammer->hammerExist == false)
+		if ((App->input->keys[SDL_SCANCODE_S] == KEY_STATE::KEY_REPEAT || (pad.l_y > 0.0f)) && App->hammer->hammerExist == false)
 		{
 			if (walkingFX == false) walkingFX = App->audio->PlayFx(FX_Walking);
 			if (frameCountWalking == 11)
